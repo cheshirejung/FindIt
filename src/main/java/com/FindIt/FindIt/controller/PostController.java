@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PostController {
 
+    /* 게시판 생성 페이지 이동 */
     @GetMapping("/create")
     public String create() {
         return "create";
