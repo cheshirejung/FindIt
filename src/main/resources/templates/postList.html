@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -143,28 +143,16 @@
 </div>
 
 <!-- 게시물 리스트 -->
-<div class="post-list">
-    <div class="post">
-        <img src="item1.jpg" alt="item1">
-        <div class="post-title">[찾고있어요] 에어팟 2세대</div>
-        <div class="post-date">2024-11-05</div>
+<form action="/post">
+    <div class="post-list" th:each="items : ${items}">
+        <div class="post">
+            <img src="item1.jpg" alt="item1">
+            <div class="post-title" th:text="${items.title}"></div>
+            <div class="post-createdAt" th:text="${items.createdAt}"></div>
+        </div>
     </div>
-    <div class="post">
-        <img src="item2.jpg" alt="item2">
-        <div class="post-title">[찾고있어요] 갤럭시탭 S9</div>
-        <div class="post-date">2024-11-01</div>
-    </div>
-    <div class="post">
-        <img src="item3.jpg" alt="item3">
-        <div class="post-title">[습득했어요] 인공눈물</div>
-        <div class="post-date">2024-10-29</div>
-    </div>
-    <div class="post">
-        <img src="item4.jpg" alt="item4">
-        <div class="post-title">[습득했어요] 짱구 키링</div>
-        <div class="post-date">2024-10-27</div>
-    </div>
-</div>
+</form>
+
 
 <!-- 페이지 네비게이션 -->
 <div class="pagination">
