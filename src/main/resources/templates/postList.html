@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* 전체 레이아웃 설정 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            background-color: #7030A0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            color: white;
+        }
+        .header img {
+            width: 50px;
+            height: 50px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .header .profile {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            color: #7030A0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* 탭 메뉴 스타일 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            border-bottom: 2px solid black;
+        }
+        .tab {
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* 검색바 스타일 */
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 20px;
+        }
+        .search-bar input[type="text"] {
+            padding: 5px;
+            font-size: 16px;
+        }
+        .search-bar button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            font-size: 16px;
+            background-color: #d1e7c5;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 게시물 리스트 스타일 */
+        .post-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .post {
+            text-align: center;
+            font-size: 16px;
+        }
+        .post img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .post-title {
+            font-weight: bold;
+        }
+        .post-date {
+            color: #666;
+        }
+
+        /* 페이지 네비게이션 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        /* 등록/삭제 버튼 스타일 */
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 10px 20px;
+        }
+        .actions button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #d1e7c5;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <title>게시글 페이지</title>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="header">
+    <img src="logo.png" alt="Logo"> <!-- 로고 이미지를 실제 파일로 대체 -->
+    <h1>elice</h1>
+    <div class="profile">my</div>
+</div>
+
+<!-- 탭 메뉴 -->
+<div class="tabs">
+    <div class="tab">찾고있어요</div>
+    <div class="tab">습득했어요</div>
+</div>
+
+<!-- 검색바 -->
+<div class="search-bar">
+    <input type="text" placeholder="검색어 입력">
+    <button>검색</button>
+</div>
+
+<!-- 게시물 리스트 -->
+<div class="post-list">
+    <div class="post">
+        <img src="item1.jpg" alt="item1">
+        <div class="post-title">[찾고있어요] 에어팟 2세대</div>
+        <div class="post-date">2024-11-05</div>
+    </div>
+    <div class="post">
+        <img src="item2.jpg" alt="item2">
+        <div class="post-title">[찾고있어요] 갤럭시탭 S9</div>
+        <div class="post-date">2024-11-01</div>
+    </div>
+    <div class="post">
+        <img src="item3.jpg" alt="item3">
+        <div class="post-title">[습득했어요] 인공눈물</div>
+        <div class="post-date">2024-10-29</div>
+    </div>
+    <div class="post">
+        <img src="item4.jpg" alt="item4">
+        <div class="post-title">[습득했어요] 짱구 키링</div>
+        <div class="post-date">2024-10-27</div>
+    </div>
+</div>
+
+<!-- 페이지 네비게이션 -->
+<div class="pagination">
+    <span>&lt;</span>
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+    <span>&gt;</span>
+</div>
+
+<!-- 등록/삭제 버튼 -->
+<div class="actions">
+    <button>등록</button>
+    <button>삭제</button>
+</div>
+
+</body>
+</html>
