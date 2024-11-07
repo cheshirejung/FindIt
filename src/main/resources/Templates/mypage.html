@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<meta charset="UTF-8">
+<title>My Page</title>
+<style>
+    /* 기본 스타일 */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    /* 헤더 스타일 */
+    .header {
+        background-color: #6a2c91;
+        color: #ffffff;
+        padding: 10px 20px;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .header .right {
+        margin-right: 20px;
+        font-size: 14px;
+        background-color: #ffffff;
+        color: #6a2c91;
+        padding: 8px 12px;
+        border-radius: 50%;
+        font-weight: bold;
+    }
+
+    /* 폼 컨테이너 스타일 */
+    .form-container {
+        background-color: #6a2c91;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    .form-container label {
+        color: #ffffff;
+        font-size: 14px;
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* 버튼 스타일 */
+    .button-group {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+
+    .button-group button {
+        background-color: #d8e9d7;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="header">
+    <img src="logo.png" alt="Logo"> <!-- 왼쪽 상단 이미지 경로 넣는곳 -->
+    <span>elice</span>
+    <div class="right">my</div>
+</div>
+
+<!-- 폼 컨테이너 -->
+<div class="form-container">
+    <form action="/updateProfile" method="post">
+        <label for="name">name</label>
+        <input type="text" id="name" name="name" value="get">
+
+        <label for="id">id</label>
+        <input type="text" id="id" name="id" value="get" readonly> <!-- readonly :  읽기 전용, 수정 불가 -->
+
+        <label for="email">email</label>
+        <input type="text" id="email" name="email" value="get">
+
+        <label for="password">password</label>
+        <input type="password" id="password" name="password" value="get">
+
+        <label for="re_password">Re_password</label>
+        <input type="password" id="re_password" name="re_password" value="get">
+
+        <!-- 버튼 그룹 -->
+        <div class="button-group">
+            <button type="submit">수정</button>
+            <button type="button" onclick="location.href='/cancel'">취소</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
