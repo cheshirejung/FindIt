@@ -16,5 +16,10 @@ public class BoardController {
         return "board";
     }
 
+    // 게시판 생성 페이지
+    @GetMapping("/create")
+    public String boardCreatePage() {
+        return "board/create";
+    }
 
 }
