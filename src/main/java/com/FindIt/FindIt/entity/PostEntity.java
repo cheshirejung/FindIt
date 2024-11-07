@@ -14,7 +14,7 @@ import lombok.*;
 @Setter
 @Builder
 @Entity
-public class PostEntity extends BaseTimeEntity {
+public class PostEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
