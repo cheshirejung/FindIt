@@ -1,9 +1,7 @@
 package com.FindIt.FindIt.repository;
 
 import com.FindIt.FindIt.entity.PostEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
-public interface PostRepository {
-    Optional<PostEntity> findById(Long postId); // 1건 조회
+public interface PostRepository extends JpaRepository<PostEntity,Long> {
 }
