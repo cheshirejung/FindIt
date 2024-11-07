@@ -1,11 +1,12 @@
 package com.FindIt.FindIt.repository;
 
 
-import com.FindIt.FindIt.entity.UserEntity;
-import org.apache.catalina.User;
+
+import com.FindIt.FindIt.entity.UserTestEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserRepository {
-
+public interface UserRepository extends JpaRepository<UserTestEntity, Integer> {
+    Optional<UserTestEntity> findByLoginId(String loginId);
 }
