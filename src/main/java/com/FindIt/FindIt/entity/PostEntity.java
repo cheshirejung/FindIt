@@ -1,28 +1,28 @@
 package com.FindIt.FindIt.entity;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
-public class Post extends BaseTimeEntity {
+public class PostEntity extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-
-
-    /*임시로 생성한 컬럼입니다*/
-    private String username;
     private String title;
+    private String boardId;
+    private String body;
+    private String userId;
+
 
 }
