@@ -28,4 +28,5 @@ public class PostController {
         model.addAttribute("post", postService.findById(id));
         return "postDetail";
     }
+
 }
