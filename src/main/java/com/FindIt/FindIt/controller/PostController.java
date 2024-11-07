@@ -27,6 +27,7 @@ public class PostController {
     public String postDetailPage(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.findById(id));
         return "postDetail";
+
     }
 
 }
