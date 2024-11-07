@@ -5,10 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardDto {
-    private Long boardId;
-    private String title;
-    private Long userId;
+public class BoardImgDto {
     private Long boardImgId;
-
+    private Long boardId;
+    private String storePath;
 }
