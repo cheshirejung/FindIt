@@ -23,7 +23,7 @@ public class PostController {
         return "postList";
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/{id}")
     public String postDetailPage(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.findById(id));
         return "postDetail";
