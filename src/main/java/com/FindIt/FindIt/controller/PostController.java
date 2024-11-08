@@ -27,7 +27,7 @@ public class PostController {
     @GetMapping
     public String postListPage(Model model) {
         model.addAttribute("items",postService.findAll());
-        return "postList";
+        return "post/postList";
     }
 
     @GetMapping("/{id}")
