@@ -30,7 +30,7 @@ public class BoardService {
     @Transactional
     public BoardDto createBoard(Long userId, String title, MultipartFile boardImage) {
         log.debug("@@@@@@@@@@@@ createBoard 111");
-        String imagePath = uploadImage(boardImage); // 이미지 저장 후 경로 반환
+        String imagePath = uploadImage("board", boardImage); // 이미지 저장 후 경로 반환
 
         // BoardEntity 생성 및 저장
         BoardEntity boardEntity = new BoardEntity(null, title, userId, null);
@@ -54,8 +54,9 @@ public class BoardService {
     }
 
     // 이미지 업로드 메서드
-    private String uploadImage(MultipartFile image) {
-        String imageDirectoryPath = String.valueOf(Paths.get("src/main/static/images").toAbsolutePath().normalize());
+    private String uploadImage(String subPath, MultipartFile image) {
+        //String imageDirectoryPath = String.valueOf(Paths.get("src/main/static/images").toAbsolutePath().normalize());
+        String imageDirectoryPath = "C:/webserver_storage/"+ subPath +"/";
         log.debug("######### imageDirectoryPath : " + imageDirectoryPath);
         File imageDirectory = new File(imageDirectoryPath);
 
@@ -63,7 +64,7 @@ public class BoardService {
             imageDirectory.mkdirs();
         }
 
-        String imagePath = imageDirectoryPath + "/" + image.getOriginalFilename();
+        String imagePath = imageDirectoryPath + image.getOriginalFilename();
         File file = new File(imagePath);
 
         try {
@@ -73,7 +74,7 @@ public class BoardService {
             throw new RuntimeException("Image upload failed: " + e.getMessage());
         }
 
-        return "/images/" + image.getOriginalFilename();
+        return "/upload/"+ subPath +"/" + image.getOriginalFilename();
     }
 
 }
