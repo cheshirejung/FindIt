@@ -1,7 +1,7 @@
 package com.FindIt.FindIt.service;
 
 import com.FindIt.FindIt.dto.CustomUserDetails;
-import com.FindIt.FindIt.entity.UserTestEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        UserTestEntity user = userRepository.findByLoginId(loginId).orElseThrow(() -> new UsernameNotFoundException(loginId));
+        UserEntity user = userRepository.findByLoginId(loginId).orElseThrow(() -> new UsernameNotFoundException(loginId));
 
         if(user != null) {
             return new CustomUserDetails(user);

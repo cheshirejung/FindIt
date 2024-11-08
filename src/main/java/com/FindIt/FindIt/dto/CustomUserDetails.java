@@ -1,6 +1,6 @@
 package com.FindIt.FindIt.dto;
 
-import com.FindIt.FindIt.entity.UserTestEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,9 +9,9 @@ import java.util.Collection;
 
 
 public class CustomUserDetails implements UserDetails {
-    private final UserTestEntity user;
+    private final UserEntity user;
 
-    public CustomUserDetails(UserTestEntity user) {
+    public CustomUserDetails(UserEntity user) {
         this.user = user;
     }
     /*user 권한을 가져옴*/
