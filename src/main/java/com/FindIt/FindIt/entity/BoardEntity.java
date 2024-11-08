@@ -15,6 +15,7 @@ public class BoardEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long boardId;
+    @Column(name = "title")
     private String title;
     @Column(name = "user_id")
     private Long userId;

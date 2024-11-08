@@ -17,12 +17,12 @@ import lombok.Setter;
 public class BoardImgEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "board_img_id")
+    @Column(name = "board_img_id")
     private Long boardImgId;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
-    @JoinColumn(name = "store_path")
+    @Column(name = "store_path")
     private String storePath;
 
     public BoardImgDto toDto() {

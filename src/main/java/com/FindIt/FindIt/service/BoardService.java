@@ -42,6 +42,10 @@ public class BoardService {
         boardImgEntity.setBoardEntity(savedBoardEntity);
         BoardImgEntity savedBoardImgEntity = boardImgRepository.save(boardImgEntity);
 
+        // BoardEntity에 boardImgId 저장
+        savedBoardEntity.setBoardImgId(savedBoardImgEntity.getBoardImgId());
+        boardRepository.save(savedBoardEntity);
+
         // Entity -> Dto 변환
         BoardDto boardDto = savedBoardEntity.toDto();
         boardDto.setBoardImgId(savedBoardImgEntity.getBoardImgId());
