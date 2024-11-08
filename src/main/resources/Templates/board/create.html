@@ -79,15 +79,20 @@
   <!--헤더-->
   <div class="title">게시판 등록</div>
 
-  <div class="input-box">
-    <input type="text" placeholder="게시판 이름을 입력해 주세요"><br>
-    <input type="file">
-  </div>
+  <form action="/board/create" method="POST" enctype="multipart/form-data">
+    <div class="input-box">
+      <input type="text" name="boardName" placeholder="게시판 이름을 입력해 주세요" required><br>
+      <div class="file-box">
+        <input type="file" name="boardImage" accept="image/*" required>
+      </div>
+    </div>
 
-  <div class="buttons">
-    <button class="register-btn" type="submit">등록</button>
-    <button class="cancel-btn">취소</button>
-  </div>
+    <div class="buttons">
+      <button class="register-btn" type="submit">등록</button>
+      <button type="button" class="cancel-btn" onclick="window.history.back()">취소</button>
+    </div>
+  </form>
+
 </div>
 
 </body>

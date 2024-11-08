@@ -1,6 +1,7 @@
 package com.FindIt.FindIt.dto;
 
 import com.FindIt.FindIt.entity.BoardEntity;
+import com.FindIt.FindIt.entity.BoardImgEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BoardDto {
-    private Long boardId;
-    private String title;
-    private Long userId;
+public class BoardImgDto {
     private Long boardImgId;
+    private Long boardId;
+    private String storePath;
 
-    public BoardEntity toEntity() {
-        return new BoardEntity(this.boardId, this.title, this.userId, this.boardImgId);
+    public BoardImgEntity toEntity(BoardEntity boardEntity) {
+        return new BoardImgEntity(this.boardImgId, boardEntity, this.storePath);
     }
+
 }
