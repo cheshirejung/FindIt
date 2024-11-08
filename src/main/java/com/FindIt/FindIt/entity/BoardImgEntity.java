@@ -1,6 +1,9 @@
 package com.FindIt.FindIt.entity;
 
+import com.FindIt.FindIt.dto.BoardDto;
+import com.FindIt.FindIt.dto.BoardImgDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +21,17 @@ public class BoardImgEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
-    private BoardEntity boardId;
+    @NotNull
+    private BoardEntity boardEntity;
+
+    @NotNull
     private String storePath;
+
+    public BoardImgDto toDto() {
+        return new BoardImgDto(
+                this.boardImgId,
+                this.boardEntity != null ? this.boardEntity.getBoardId() : null,
+                this.storePath
+        );
+    }
 }
