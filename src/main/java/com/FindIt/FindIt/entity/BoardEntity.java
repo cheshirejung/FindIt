@@ -13,12 +13,12 @@ import lombok.*;
 public class BoardEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long boardId;
-    @NotNull
     private String title;
-    @NotNull
+    @Column(name = "user_id")
     private Long userId;
-    @NotNull
+    @Column(name = "board_img_id")
     private Long boardImgId;
 
     public BoardDto toDto() {

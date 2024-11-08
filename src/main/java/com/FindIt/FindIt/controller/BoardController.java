@@ -1,15 +1,14 @@
 package com.FindIt.FindIt.controller;
 
-import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.dto.BoardReqDto;
 import com.FindIt.FindIt.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -19,24 +18,21 @@ public class BoardController {
 
     @GetMapping
     public String boardPage(){
-        return "board";
+        return "/board/boardlist";
     }
 
     // 게시판 생성 페이지
     @GetMapping("/create")
     public String boardCreatePage() {
-        return "board/create";
+        return "/board/create";
     }
 
     // 게시판 생성 api
     @PostMapping("/create")
-    public ResponseEntity<BoardDto> createBoard(@ModelAttribute BoardReqDto boardReqDto) {
-        try {
-            BoardDto savedBoardDto = boardService.createBoard(boardReqDto.getUserId(), boardReqDto.getTitle(), boardReqDto.getBoardImage());
-            return new ResponseEntity<>(savedBoardDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public String createBoard(@ModelAttribute BoardReqDto boardReqDto) {
+        log.debug("@@@@@@@@@@@@ createBoard");
+        boardService.createBoard(boardReqDto.getUserId(), boardReqDto.getTitle(), boardReqDto.getBoardImage());
+        return "redirect:/board";
     }
 
     // 게시판 수정 페이지

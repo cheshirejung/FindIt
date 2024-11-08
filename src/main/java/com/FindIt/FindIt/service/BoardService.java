@@ -5,6 +5,7 @@ import com.FindIt.FindIt.entity.BoardEntity;
 import com.FindIt.FindIt.entity.BoardImgEntity;
 import com.FindIt.FindIt.repository.BoardImgRepository;
 import com.FindIt.FindIt.repository.BoardRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
+@Slf4j
 @Service
 public class BoardService {
     private final BoardRepository boardRepository; // 게시판 저장
@@ -26,6 +29,7 @@ public class BoardService {
 
     @Transactional
     public BoardDto createBoard(Long userId, String title, MultipartFile boardImage) {
+        log.debug("@@@@@@@@@@@@ createBoard 111");
         String imagePath = uploadImage(boardImage); // 이미지 저장 후 경로 반환
 
         // BoardEntity 생성 및 저장
@@ -47,7 +51,8 @@ public class BoardService {
 
     // 이미지 업로드 메서드
     private String uploadImage(MultipartFile image) {
-        String imageDirectoryPath = "src/main/resources/static/images";
+        String imageDirectoryPath = String.valueOf(Paths.get("src/main/static/images").toAbsolutePath().normalize());
+        log.debug("######### imageDirectoryPath : " + imageDirectoryPath);
         File imageDirectory = new File(imageDirectoryPath);
 
         if (!imageDirectory.exists()) {
