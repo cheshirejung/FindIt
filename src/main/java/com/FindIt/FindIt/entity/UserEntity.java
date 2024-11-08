@@ -1,7 +1,6 @@
 package com.FindIt.FindIt.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jdk.jfr.Enabled;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,17 +15,27 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @ToString
-public class UserEntity {
+@Table(name = "user_entity") // 테이블 이름 지정
+public class UserEntity extends BaseEntity {
 
     @Id
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "login_id", nullable = false)
+    private String loginId; // user가 로그인할 때 필요한 id
+
+    @Column(name = "user_name", nullable = false)
     private String userName;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "role", nullable = false)
     private String role;
-    @CreatedDate
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    private LocalDateTime lastedAt;
 
 }
