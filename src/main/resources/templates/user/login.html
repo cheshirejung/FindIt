@@ -57,6 +57,7 @@
         }
     </style>
     <title>FindIt</title>
+    <script src="/js/alert.js"></script> <!-- 회원가입이 정상적으로 완료됐을때 알람이 뜨게하는 기능 추가 -->
 </head>
 <body>
 <div class="header">
@@ -64,18 +65,21 @@
     <h1>FindIt</h1>
 </div>
 <div class="container">
-    <label for="id">ID</label>
-    <input type="text" id="id">
+    <form action="/user/login" method="post" name="loginForm">
+        <label for="loginId">ID</label>
+        <input type="text" id="loginId" name="loginId"/>
 
-    <label for="password">Password</label>
-    <input type="password" id="password">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"/>
 
-    <label for="email">Email</label>
-    <input type="email" id="email">
-
+        <input type="submit" value="login">
+    </form>
     <div class="link-container">
-        <a href="">Sign Up</a>
+        <a href="/user/signup">Sign Up</a>
     </div>
 </div>
+
+
+
 </body>
 </html>
