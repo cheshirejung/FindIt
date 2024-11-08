@@ -18,10 +18,10 @@ public class PostController {
         this.postService = postService;
     }
 
-    /* 게시판 생성 페이지 이동 */
+    /* 게시글 생성 페이지 이동 */
     @GetMapping("/create")
     public String create() {
-        return "create";
+        return "post/create";
     }
 
     @GetMapping
@@ -41,7 +41,7 @@ public class PostController {
     public String postUpdate(/* @PathVariable int postId, */ Model model) {
         //PostEntity post = postService.findPost(postId);
         //model.addAllAttributes("post", post);
-        return "update";
+        return "post/update";
     }
 
 }

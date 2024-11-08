@@ -26,9 +26,10 @@ public class SecurityConfig {
         /*비로그인 사용자는 사이트 접속 시 로그인 페이지와 회원가입 페이지만 사용할 수 있게 설정*/
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/user/login","/user/signup").permitAll()
+                        .requestMatchers("/user/login","/user/signup","/css/**","/js/**").permitAll()
                         .anyRequest().authenticated()
                 );
+
 
         /*시큐리티 기본 로그인 폼에서 커스텀 로그인 폼으록 변경하여 사용*/
         /*비로그인 사용자는 사이트 접속 시 로그인 페이지로 리다이렉트 되도록 설정*/
