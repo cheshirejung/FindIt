@@ -30,10 +30,10 @@ public class PostController {
         return "post/postList";
     }
 
-    @GetMapping("/{id}")
-    public String postDetailPage(@PathVariable Long id, Model model) {
-        model.addAttribute("post", postService.findById(id));
-        return "postDetail";
+    @GetMapping("/{postId}")
+    public String postDetailPage(@PathVariable Long postId, Model model) {
+        model.addAttribute("post", postService.findById(postId));
+        return "post/postDetail";
 
     }
 
