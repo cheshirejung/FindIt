@@ -64,7 +64,8 @@
     <img src="logo.png" alt="Logo"> <!-- 로고 이미지의 src 경로를 실제 이미지 파일로 대체하세요 -->
     <h1>FindIt</h1>
 </div>
-<form action="/loginProc" method="post" name="loginForm">
+<div class="container">
+    <form action="/user/login" method="post" name="loginForm">
         <label for="loginId">ID</label>
         <input type="text" id="loginId" name="loginId"/>
 
@@ -72,10 +73,12 @@
         <input type="password" id="password" name="password"/>
 
         <input type="submit" value="login">
-</form>
-        <div class="link-container">
-            <a href="">Sign Up</a>
-        </div>
+    </form>
+    <div class="link-container">
+        <a href="/user/signup">Sign Up</a>
+    </div>
+</div>
+
 
 
 </body>
