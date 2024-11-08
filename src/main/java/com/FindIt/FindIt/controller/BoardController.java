@@ -18,7 +18,7 @@ public class BoardController {
 
     @GetMapping
     public String boardPage(){
-        return "/board/boardlist";
+        return "/board/boardList";
     }
 
     // 게시판 생성 페이지
