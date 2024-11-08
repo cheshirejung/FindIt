@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,15 @@ public class UserController {
     // 회원 가입 페이지
     @GetMapping("/signup")
     public String showSignupPage(Model model) {
-        model.addAttribute("userEntity", new UserEntity());
+        model.addAttribute("userSignupDto", new UserSignupDto());
         return "user/signup"; // signup 뷰 반환
     }
 
     // 회원 가입 api
     @PostMapping("/signup")
-    public String registerUser(@RequestBody UserEntity userEntity, Model model) {
+    public String registerUser(@ModelAttribute UserSignupDto userSignupDto, Model model) {
         try { // 로그인 id 중복 검사
-
-            userService.registerUser(userEntity);
+            userService.registerUser(userSignupDto);
             return "redirect:/user/login?success=true";
         } catch (IllegalArgumentException e) {
             // 오류 메시지를 모델에 추가하고 회원가입 페이지로 리턴
