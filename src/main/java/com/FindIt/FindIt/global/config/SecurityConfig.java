@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .formLogin((auth) -> auth.loginPage("/user/login")
                         .loginProcessingUrl("/user/login") //스프링 시큐리티 기본 로그인 요청 url에서 지정 url로 변경
                         .usernameParameter("loginId")  // 기본 인자값이 username로 설정되어 있어 인자값을 loginId로 설정
-                        .defaultSuccessUrl("/home", true) // 로그인 성공 시 리다이렉트할 경로
+                        .defaultSuccessUrl("/board", true) // 로그인 성공 시 리다이렉트할 경로
                         .successHandler(new LoginSuccessHandler())
                         .failureUrl("/user/login?error=true") // 로그인 실패 시 리다이렉트할 경로
                         .permitAll());

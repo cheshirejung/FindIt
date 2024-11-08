@@ -17,6 +17,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
         log.info("아이디 : {}", user.getUsername()); //로그인한 유저 아이디를 로깅
-        response.sendRedirect("/home"); //로그인 성공 후 임시 메인페이지로 리다이렉트
+        response.sendRedirect("/board"); //로그인 성공 후 임시 메인페이지로 리다이렉트
     }
 }
