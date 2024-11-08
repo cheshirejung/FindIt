@@ -1,6 +1,6 @@
-package com.FindIt.FindIt.globale.config;
+package com.FindIt.FindIt.global.config;
 
-import com.FindIt.FindIt.globale.handler.LoginSuccessHandler;
+import com.FindIt.FindIt.global.handler.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

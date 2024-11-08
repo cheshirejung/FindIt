@@ -1,4 +1,4 @@
-package com.FindIt.FindIt.globale.handler;
+package com.FindIt.FindIt.global.handler;
 
 import com.FindIt.FindIt.dto.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
