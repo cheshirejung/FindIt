@@ -12,10 +12,12 @@
         <div class="message-box">
             <div th:text="${post.title}"></div>
         </div>
+        <p th:text="${post.createdAt}"></p>
 
         <div class="message-box">
             <div th:text="${post.body}"></div>
         </div>
+
 
         <div class="input-section">
             <input type="text" placeholder="댓글 목록">
