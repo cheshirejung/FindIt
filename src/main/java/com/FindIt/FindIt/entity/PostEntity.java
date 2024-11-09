@@ -2,6 +2,7 @@ package com.FindIt.FindIt.entity;
 
 
 
+import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import lombok.*;
 @Setter
 @Builder
 @Entity
-public class PostEntity extends BaseEntity {
+public class PostEntity extends BaseCreateByEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
