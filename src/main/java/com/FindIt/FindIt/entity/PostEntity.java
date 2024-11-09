@@ -1,12 +1,7 @@
 package com.FindIt.FindIt.entity;
 
-
-
 import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -16,14 +11,17 @@ import lombok.*;
 @Builder
 @Entity
 public class PostEntity extends BaseCreateByEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long postId;
+    @Column(name = "title")
     private String title;
-    private String boardId;
+    @Column(name = "board_id")
+    private Long boardId;
+    @Column(name = "body")
     private String body;
+    @Column(name = "user_id")
     private String userId;
-
 
 }

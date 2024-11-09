@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class PostDto {
-    private Long postId;
+public class PostReqDto {
     private String title;
-    private String boardId;
     private String body;
+    private MultipartFile postImage;
+    private Long boardId;
     private String userId;
 }

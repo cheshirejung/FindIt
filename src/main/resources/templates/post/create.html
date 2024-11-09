@@ -14,16 +14,17 @@
 <!-- 게시글 등록 폼 -->
 <div class="form-container">
     <h1>게시글 등록</h1>
-    <form action="/createPost" method="post" enctype="multipart/form-data">
+    <form action="/post/create" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="boardId" th:value="${boardId}" />
 
         <label for="title"></label>
         <input type="text" id="title" name="title" placeholder="제목을 입력하세요.">
 
         <label for="content"></label>
-        <textarea id="content" name="content" placeholder="내용을 입력하세요."></textarea>
+        <textarea id="content" name="body" placeholder="내용을 입력하세요."></textarea>
 
         <label for="file"></label>
-        <input type="file" id="file" name="file">
+        <input type="file" id="file" name="postImage">
 
         <!-- 버튼 그룹 -->
         <div class="button-group">
