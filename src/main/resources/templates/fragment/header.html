@@ -9,8 +9,14 @@
                     <img src="logo.png" alt="logo"> <!-- 좌측 엘리스 로고 넣는 곳 -->
                 </a>
             </div>
-            <div class="center">elice</div>
-            <a href="/user/mypage" class="right">my</a>
+            <div class="center">FindIt</div>
+            <div class="right-section">
+                <!-- 로그아웃 버튼 추가 -->
+                <form action="/user/logout" method="post" style="display: inline;">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+                <a href="/user/mypage" class="right">my</a>
+            </div>
         </div>
     </header>
 </div>
