@@ -1,6 +1,7 @@
 package com.FindIt.FindIt.global.config;
 
 import com.FindIt.FindIt.global.handler.LoginSuccessHandler;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +42,16 @@ public class SecurityConfig {
                         .successHandler(new LoginSuccessHandler())
                         .failureUrl("/user/login?error=true") // 로그인 실패 시 리다이렉트할 경로
                         .permitAll());
+        http
+                .logout((auth) -> auth.logoutUrl("/user/logout")
+                        .logoutSuccessUrl("/user/login")
+                        .addLogoutHandler((request, response, authentication) -> {
+                            HttpSession session = request.getSession();
+                            session.invalidate();
+                        })
+                        .logoutSuccessHandler((request, response, authentication) -> response.sendRedirect("/user/login"))
+                        .deleteCookies("JSESSIONID")
+                );
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
