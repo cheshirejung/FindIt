@@ -9,11 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -29,7 +30,7 @@ public class BoardService {
 
     @Transactional
     public BoardDto createBoard(Long userId, String title, MultipartFile boardImage) {
-        log.debug("@@@@@@@@@@@@ createBoard 111");
+        //log.debug("######### createBoard 111");
         String imagePath = uploadImage("board", boardImage); // 이미지 저장 후 경로 반환
 
         // BoardEntity 생성 및 저장
@@ -55,7 +56,6 @@ public class BoardService {
 
     // 이미지 업로드 메서드
     private String uploadImage(String subPath, MultipartFile image) {
-        //String imageDirectoryPath = String.valueOf(Paths.get("src/main/static/images").toAbsolutePath().normalize());
         String imageDirectoryPath = "C:/webserver_storage/"+ subPath +"/";
         log.debug("######### imageDirectoryPath : " + imageDirectoryPath);
         File imageDirectory = new File(imageDirectoryPath);
@@ -64,8 +64,23 @@ public class BoardService {
             imageDirectory.mkdirs();
         }
 
-        String imagePath = imageDirectoryPath + image.getOriginalFilename();
-        File file = new File(imagePath);
+        String extension = "";
+        if (image != null) {
+            extension = StringUtils.getFilenameExtension(image.getOriginalFilename());
+            if (extension != null) {
+                log.debug("######### extension : " + extension);
+            } else {
+                throw new IllegalArgumentException("No file extension");
+            }
+        }
+
+        String savePath = imageDirectoryPath;
+        log.debug("######### savePath : " + savePath);
+        String saveFilename = UUID.randomUUID() +"."+ extension;
+        log.debug("######### saveFilename : " + saveFilename);
+        String fullPath = savePath + saveFilename;
+        log.debug("######### fullPath : " + fullPath);
+        File file = new File(fullPath);
 
         try {
             image.transferTo(file);
@@ -73,8 +88,10 @@ public class BoardService {
             e.printStackTrace();
             throw new RuntimeException("Image upload failed: " + e.getMessage());
         }
+        String dbPath = "/upload/"+ subPath +"/" + saveFilename;
+        log.debug("######### dbPath : " + dbPath);
 
-        return "/upload/"+ subPath +"/" + image.getOriginalFilename();
+        return dbPath;
     }
 
 }
