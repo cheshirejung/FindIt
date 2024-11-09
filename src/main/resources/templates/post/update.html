@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시판 수정</title>
     <link rel="stylesheet" href="/css/postCreate.css">
+  <link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
 
 <!-- 헤더 -->
-<div class="header">
-  <div class="left">
-    <a href="/board">
-      <img src="logo.png" alt="Logo"> <!-- 좌측 로고 넣는 곳 -->
-    </a>
-  </div>
-  <div class="center">FindIt</div>
-  <a href="/user/mypage" class="right">my</a>
-</div>
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 
 <!-- 게시글 수정 폼 -->
 <div class="form-container">

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>게시판 수정 페이지</title>
   <link rel="stylesheet" href="/css/boardCreate.css">
+  <link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
+<!-- 헤더 -->
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 <div class="container">
-  <!-- 헤더 -->
+
   <div class="title">게시판 수정</div>
 
   <form action="/update-board" method="POST" enctype="multipart/form-data">

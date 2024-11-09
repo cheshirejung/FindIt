@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <title>게시글 페이지</title>
     <link rel="stylesheet" href="/css/postList.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
 
 <!-- 헤더 -->
-<div class="header">
-    <img src="logo.png" alt="Logo"> <!-- 로고 이미지를 실제 파일로 대체 -->
-    <h1>elice</h1>
-    <div class="profile">my</div>
-</div>
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 
 <!-- 탭 메뉴 -->
 <div class="tabs">

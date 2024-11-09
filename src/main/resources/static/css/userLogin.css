@@ -33,20 +33,3 @@ a {
     margin-top: 20px; /* 위쪽 여백을 추가하여 다른 요소들과 간격을 벌림 */
     text-decoration: none;
 }
-.header {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.header img {
-    width: 100px; /* 로고 크기 조정 */
-    height: 100px;
-}
-.header h1 {
-    color: white;
-    font-size: 40px;
-    margin: 0;
-}

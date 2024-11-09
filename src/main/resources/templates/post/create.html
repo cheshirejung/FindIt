@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시글 생성 페이지</title>
     <link rel="stylesheet" href="/css/postCreate.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
 
 <!-- 헤더 -->
-<div class="header">
-    <div class="left">
-        <a href="/board">
-            <img src="logo.png" alt="logo"> <!-- 좌측 엘리스 로고 넣는 곳 -->
-        </a>
-    </div>
-    <div class="center">elice</div>
-    <a href="/user/mypage" class="right">my</a>
-</div>
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 
 <!-- 게시글 등록 폼 -->
 <div class="form-container">

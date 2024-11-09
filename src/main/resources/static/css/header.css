@@ -1,0 +1,54 @@
+/* 헤더 스타일 */
+.header {
+    background-color: #6a2c91;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between; /* 좌측, 우측 항목을 양쪽 끝으로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+
+.header .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: #ffffff; /* 로고 텍스트 색상 */
+    margin-right: auto; /* 로고를 왼쪽으로 이동 */
+}
+
+.header .left {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    text-decoration: none; /* 링크의 밑줄 제거 */
+}
+
+.header .left img {
+    width: 40px;
+    height: 40px;
+}
+
+.header .center {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.header .right {
+    margin-left: auto; /* my 버튼을 오른쪽으로 이동 */
+    margin-right: 20px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #6a2c91;
+    padding: 8px 12px;
+    border-radius: 50%;
+    font-weight: bold;
+    text-decoration: none; /* 링크의 밑줄 제거 */
+}

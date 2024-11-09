@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <title>게시판 목록 조회 페이지</title>
     <link rel="stylesheet" href="/css/boardList.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
-<div class="header">
-    <img src="logo.png" alt="Logo" class="logo">
-    <div>FindIt</div>
-    <div class="profile">my</div>
-</div>
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 
 <div class="content">
     <!-- 성수 LAB 섹션 -->

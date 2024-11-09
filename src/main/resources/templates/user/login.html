@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>FindIt</title>
     <link rel="stylesheet" type="text/css" href="/css/userLogin.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
     <script src="/js/alert.js"></script> <!-- 회원가입이 정상적으로 완료됐을때 알람이 뜨게하는 기능 추가 -->
 </head>
 <body>
-<div class="header">
-    <img src="logo.png" alt="Logo"> <!-- 로고 이미지의 src 경로를 실제 이미지 파일로 대체하세요 -->
-    <h1>FindIt</h1>
-</div>
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 <div class="container">
     <form action="/user/login" method="post" name="loginForm">
         <label for="loginId">ID</label>
