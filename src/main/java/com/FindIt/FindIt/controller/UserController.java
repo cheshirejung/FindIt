@@ -40,6 +40,14 @@ public class UserController {
         }
     }
 
+    /* 마이페이지 접근 */
+    @GetMapping("/mypage")
+    public String myPage(Model model) {
+        /* @AuthenticationPrincipal : 스프링 시큐리티인데 현재 로그인한 사용자의 정보를 가져오는데 쓴다고 함 */
+        return "user/mypage";
+    }
+
+    /*로그인 페이지 접근*/
     @GetMapping("/login")
     public String loginPage() {
         return "user/login";
