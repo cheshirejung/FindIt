@@ -1,7 +1,6 @@
 package com.FindIt.FindIt.dto;
 
 import com.FindIt.FindIt.entity.UserEntity;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,9 +2,7 @@ package com.FindIt.FindIt.service;
 
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.entity.UserEntity;
-import com.FindIt.FindIt.mapper.UserMapper;
 import com.FindIt.FindIt.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

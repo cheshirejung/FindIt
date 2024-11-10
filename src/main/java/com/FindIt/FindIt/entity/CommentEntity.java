@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "comment")
+//@Table(name = "comment")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,5 +19,4 @@ public class CommentEntity extends BaseCreateByEntity {
     private Long postId;
     private Long parentCommentId;
     private String body;
-
 }

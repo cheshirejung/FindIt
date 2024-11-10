@@ -1,6 +1,5 @@
 package com.FindIt.FindIt.dto;
 
-import com.FindIt.FindIt.entity.BoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

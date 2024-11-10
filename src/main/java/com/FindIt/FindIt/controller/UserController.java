@@ -1,7 +1,6 @@
 package com.FindIt.FindIt.controller;
 
 import com.FindIt.FindIt.dto.UserSignupDto;
-import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

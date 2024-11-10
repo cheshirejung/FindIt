@@ -2,7 +2,6 @@ package com.FindIt.FindIt.entity;
 
 import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
