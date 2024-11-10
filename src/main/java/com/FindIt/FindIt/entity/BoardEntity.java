@@ -12,6 +12,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 public class BoardEntity extends BaseCreateByEntity {
     @Id

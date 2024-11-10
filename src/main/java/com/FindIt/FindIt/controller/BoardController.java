@@ -31,10 +31,14 @@ public class BoardController {
 
     // 게시판 생성 api
     @PostMapping("/create")
-    public String createBoard(@ModelAttribute BoardReqDto boardReqDto) {
-        log.debug("@@@@@@@@@@@@ createBoard");
-        boardService.createBoard(boardReqDto.getUserId(), boardReqDto.getTitle(), boardReqDto.getBoardImage());
-        return "redirect:/board";
+    public String createBoard(@ModelAttribute BoardReqDto boardReqDto, Model model) {
+        try {
+            boardService.createBoard(boardReqDto);
+            return "redirect:/board";
+        } catch (Exception e) {
+            model.addAttribute("error", "게시판 생성 중 오류가 발생했습니다.");
+            return "error";
+        }
     }
 
     // 게시판 수정 페이지
