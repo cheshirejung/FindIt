@@ -4,8 +4,6 @@ import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.dto.BoardReqDto;
 import com.FindIt.FindIt.entity.BoardEntity;
 import com.FindIt.FindIt.entity.BoardImgEntity;
-import com.FindIt.FindIt.entity.PostEntity;
-import com.FindIt.FindIt.entity.PostImgEntity;
 import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.BoardImgRepository;
 import com.FindIt.FindIt.repository.BoardRepository;
@@ -15,14 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @Slf4j
 @Service
