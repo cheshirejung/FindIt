@@ -3,9 +3,12 @@ package com.FindIt.FindIt.service;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.PostImgEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.PostImgRepository;
 import com.FindIt.FindIt.repository.PostRepository;
+import com.FindIt.FindIt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +20,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostImgRepository postImgRepository;
     private final ImageService imageService;
+    private final UserRepository userRepository;
 
     public List<PostEntity> findAll() {
         return postRepository.findAll();
@@ -28,11 +32,13 @@ public class PostService {
 
     @Transactional
     public void savePost(PostReqDto postReqDto){
+        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+
         PostEntity postEntity = PostEntity.builder()
                 .title(postReqDto.getTitle())
                 .body(postReqDto.getBody())
                 .boardId(postReqDto.getBoardId())
-                .userId(postReqDto.getUserId())
+                .user(user)
                 .build();
 
         postRepository.save(postEntity);
