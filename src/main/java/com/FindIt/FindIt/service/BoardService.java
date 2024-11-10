@@ -6,10 +6,13 @@ import com.FindIt.FindIt.entity.BoardEntity;
 import com.FindIt.FindIt.entity.BoardImgEntity;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.PostImgEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.BoardImgRepository;
 import com.FindIt.FindIt.repository.BoardRepository;
+import com.FindIt.FindIt.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -17,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -31,6 +36,22 @@ public class BoardService {
         this.boardRepository = boardRepository;
         this.boardImgRepository = boardImgRepository;
         this.imageService = imageService;
+    private final UserRepository userRepository; //로그인 되어있는 유정 정보 조회
+
+    @Autowired
+    public BoardService(BoardRepository boardRepository, BoardImgRepository boardImgRepository, UserRepository userRepository) {
+        this.boardRepository = boardRepository;
+        this.boardImgRepository = boardImgRepository;
+        this.userRepository = userRepository;
+    }
+
+    public List<BoardDto> getBoards() {
+        List<BoardEntity> boardEntities = boardRepository.findAll();
+        List<BoardDto> boardDtos = new ArrayList<>();
+        for (BoardEntity boardEntity : boardEntities) {
+            boardDtos.add(boardEntity.toDto());
+        }
+        return boardDtos;
     }
 
     @Transactional
@@ -43,6 +64,11 @@ public class BoardService {
         boardRepository.save(boardEntity);
 
         String imagePath = imageService.uploadImage("board", boardReqDto.getBoardImage());
+        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        // BoardEntity 생성 및 저장
+        BoardEntity boardEntity = new BoardEntity(null, title, user, null);
+        BoardEntity savedBoardEntity = boardRepository.save(boardEntity);
 
         BoardImgEntity boardImgEntity = new BoardImgEntity();
         boardImgEntity.setStorePath(imagePath);

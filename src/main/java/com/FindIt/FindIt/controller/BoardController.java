@@ -18,7 +18,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public String boardPage(){
+    public String boardPage(Model model){
+        model.addAttribute("boards", boardService.getBoards());
         return "/board/boardList";
     }
 
