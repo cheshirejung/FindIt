@@ -13,10 +13,8 @@ import lombok.Setter;
 public class BoardDto {
     private Long boardId;
     private String title;
-    private Long userId;
+    private String loginId;
     private Long boardImgId;
 
-    public BoardEntity toEntity() {
-        return new BoardEntity(this.boardId, this.title, this.userId, this.boardImgId);
-    }
+
 }
