@@ -14,9 +14,12 @@ public class PostImgEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_img_id")
     private Long postImgId;
+
+
     @OneToOne
     @JoinColumn(name = "post_id", nullable = false)
-    private PostEntity postEntity;
+    private PostEntity post;
+
     @Column(name = "store_path")
     private String storePath;
 }

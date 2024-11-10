@@ -13,21 +13,20 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/comments")
+@RequestMapping("/api/post/{postId}/comment")
 public class CommentRestController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<CommentDto> createComment(
-            @RequestBody CommentDto commentDto) {
-        CommentDto createdComment = commentService.createComment(commentDto);
+    public ResponseEntity<CommentDto> createComment(@PathVariable Long postId, @ModelAttribute CommentDto commentDto) {
+        CommentDto createdComment = commentService.createComment(postId, commentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
-    @GetMapping("/post/{postId}")
+/*    @GetMapping
     public ResponseEntity<List<CommentDto>> getPostComments(@PathVariable Long postId) {
         log.debug("### postId : {}", postId);
         List<CommentDto> comments = commentService.getCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
-    }
+    }*/
 }

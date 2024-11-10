@@ -4,6 +4,8 @@ import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 //@Table(name = "comment")
 @Getter
@@ -15,8 +17,16 @@ public class CommentEntity extends BaseCreateByEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
-    private Long userId;
-    private Long postId;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "post_id")
+    private  PostEntity post;
+
     private Long parentCommentId;
+
     private String body;
 }

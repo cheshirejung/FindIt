@@ -3,12 +3,15 @@ package com.FindIt.FindIt.service;
 import com.FindIt.FindIt.dto.CommentDto;
 import com.FindIt.FindIt.entity.CommentEntity;
 import com.FindIt.FindIt.entity.PostEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.CommentRepository;
 
 import com.FindIt.FindIt.repository.PostRepository;
+import com.FindIt.FindIt.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +23,14 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Transactional
-    public CommentDto createComment(CommentDto commentDto) {
+    public CommentDto createComment(Long postId,CommentDto commentDto) {
 
-        PostEntity post = postRepository.findById(commentDto.getPostId())
+        PostEntity post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
 
         // 대댓글의 경우 부모 댓글 존재 확인
         if (commentDto.getParentCommentId() != null) {
@@ -33,11 +38,11 @@ public class CommentService {
                     .orElseThrow(() -> new EntityNotFoundException("Parent comment not found"));
         }
 
-        CommentEntity savedComment = commentRepository.save(commentDto.toEntity());
+        CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post));
         return CommentDto.fromEntity(savedComment);
     }
 
-    // 게시물의 모든 댓글 조회
+/*    // 게시물의 모든 댓글 조회
     public List<CommentDto> getCommentsByPostId(Long postId) {
         List<CommentEntity> allComments = commentRepository.findByPostIdOrderByCreatedAtAsc(postId);
 
@@ -58,7 +63,7 @@ public class CommentService {
                 });
 
         return parentComments;
-    }
+    }*/
 }
 
 
