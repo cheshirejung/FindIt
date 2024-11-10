@@ -12,7 +12,7 @@ import lombok.Setter;
 public class PostDto {
     private Long postId;
     private String title;
-    private String boardId;
+    private Long boardId;
     private String body;
     private String userId;
 }

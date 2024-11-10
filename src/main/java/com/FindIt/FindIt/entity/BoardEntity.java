@@ -30,7 +30,7 @@ public class BoardEntity extends BaseCreateByEntity {
     private Long boardImgId;
 
     public BoardDto toDto() {
-        return new BoardDto(this.boardId, this.title, this.user.getLoginId(), this.boardImgId);
+        return new BoardDto(this.boardId, this.title, this.boardImgId);
     }
 }
 

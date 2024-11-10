@@ -25,11 +25,15 @@
 
 <!-- 게시물 리스트 -->
 <form action="/post">
-    <div class="post-list" th:each="items : ${items}">
+    <div class="post-list" th:each="post : ${posts}">
         <div class="post">
-            <img src="item1.jpg" alt="item1">
-            <div class="post-title" th:text="${items.title}"></div>
-            <div class="post-createdAt" th:text="${items.createdAt}"></div>
+            <a th:href="'/post/'+${post.postId}">
+                <img src="item1.jpg" alt="item1">
+            </a>
+            <a th:href="'/post/'+${post.postId}">
+                <div class="post-title" th:text="${post.title}" ></div>
+            </a>
+            <div class="post-createdAt" th:text="${post.createdAt}"></div>
         </div>
     </div>
 </form>
@@ -48,7 +52,9 @@
 
 <!-- 등록/삭제 버튼 -->
 <div class="actions">
-    <button>등록</button>
+    <a th:href="'/post/create?boardId=' + ${boardId}">
+        <button>등록</button>
+    </a>
     <button>삭제</button>
 </div>
 

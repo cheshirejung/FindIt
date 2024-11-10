@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/comments")
 public class CommentController {
+    //게시글 데이터가 비는 관계로 RestController로 기능만 구현
     private final CommentService commentService;
 
     @PostMapping
