@@ -52,7 +52,9 @@
 
 <!-- 등록/삭제 버튼 -->
 <div class="actions">
-    <button>등록</button>
+    <a th:href="'/post/create?boardId=' + ${boardId}">
+        <button>등록</button>
+    </a>
     <button>삭제</button>
 </div>
 

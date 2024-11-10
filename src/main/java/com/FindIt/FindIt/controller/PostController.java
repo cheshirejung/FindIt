@@ -22,8 +22,8 @@ public class PostController {
 
     /* 게시글 생성 페이지 이동 */
     @GetMapping("/create")
-    public String create() {
-
+    public String create(@RequestParam(value = "boardId") Long boardId, Model model) {
+        model.addAttribute("boardId", boardId);
         return "post/create";
     }
 
@@ -31,7 +31,7 @@ public class PostController {
     public String createPost(@ModelAttribute PostReqDto postReqDto, Model model) {
         try {
             postService.savePost(postReqDto);
-            return "redirect:/post";
+            return "redirect:/post?boardId="+postReqDto.getBoardId();
         } catch (Exception e) {
             model.addAttribute("error", "게시글 생성 중 오류가 발생했습니다.");
             return "error";
@@ -42,6 +42,7 @@ public class PostController {
     public String postListPage(@RequestParam("boardId") Long boardId, Model model) {
         List<PostEntity> posts = postService.findPostsByBoardId(boardId);
         model.addAttribute("posts",posts);
+        model.addAttribute("boardId", boardId);
         return "post/postList";
     }
 
