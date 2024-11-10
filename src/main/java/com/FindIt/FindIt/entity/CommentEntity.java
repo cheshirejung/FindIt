@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.entity;
 
+import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CommentEntity extends BaseEntity {
+public class CommentEntity extends BaseCreateByEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
