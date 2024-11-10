@@ -71,6 +71,7 @@
             cursor: pointer;
         }
     </style>
+    <script src="/js/commentApi.js"></script>
 </head>
 <body>
 <div class="header">
@@ -94,6 +95,8 @@
             <input type="text" placeholder="댓글을 작성해주세요.">
             <button class="submit-button">댓글 등록</button>
         </div>
+        댓글
+        <table id="commentList" border="1"></table>
     </div>
 
     <div class="button-group">
@@ -102,5 +105,35 @@
         <button>목록</button>
     </div>
 </div>
+
+<form method="" action="/post/abc">
+    <input type="text" name="userId">
+    <input type="text" name="password">
+    <input type="submit">
+</form>
+
+<script>
+    async function drawComment(){
+        let data = await getApi("/api/comments/post/1", "GET" );
+        let html = new Array();
+
+        if(data) {
+            for(let comment of data) {
+                html.push(`<tr>`);
+                html.push(  `<td>${comment.commentId}</td>`);
+                html.push(  `<td>${comment.body}</td>`);
+                html.push(  `<td>${comment.createdAt}</td>`);
+                html.push(`</tr>`);
+            }
+        } else {
+            html.push(`<tr>`);
+            html.push(  `<td colspan="3">게시글이 없습니다.</td>`);
+            html.push(`</tr>`);
+        }
+
+        document.getElementById("commentList").innerHTML = html.join("");
+
+    }
+</script>
 </body>
 </html>
