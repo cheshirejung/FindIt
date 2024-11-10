@@ -30,20 +30,17 @@ public class BoardService {
     private final BoardRepository boardRepository; // 게시판 저장
     private final BoardImgRepository boardImgRepository; // 게시판 이미지 저장
     private final ImageService imageService; // 게시판 이미지 저장
-
-    @Autowired
-    public BoardService(BoardRepository boardRepository, BoardImgRepository boardImgRepository, ImageService imageService) {
-        this.boardRepository = boardRepository;
-        this.boardImgRepository = boardImgRepository;
-        this.imageService = imageService;
     private final UserRepository userRepository; //로그인 되어있는 유정 정보 조회
 
     @Autowired
-    public BoardService(BoardRepository boardRepository, BoardImgRepository boardImgRepository, UserRepository userRepository) {
+    public BoardService(BoardRepository boardRepository, BoardImgRepository boardImgRepository, ImageService imageService, UserRepository userRepository) {
         this.boardRepository = boardRepository;
         this.boardImgRepository = boardImgRepository;
+        this.imageService = imageService;
         this.userRepository = userRepository;
     }
+
+
 
     public List<BoardDto> getBoards() {
         List<BoardEntity> boardEntities = boardRepository.findAll();
@@ -56,19 +53,16 @@ public class BoardService {
 
     @Transactional
     public void createBoard(BoardReqDto boardReqDto) {
+        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
         BoardEntity boardEntity = BoardEntity.builder()
                 .title(boardReqDto.getTitle())
-                .userId(boardReqDto.getUserId())
+                .user(user)
                 .build();
 
         boardRepository.save(boardEntity);
 
         String imagePath = imageService.uploadImage("board", boardReqDto.getBoardImage());
-        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        // BoardEntity 생성 및 저장
-        BoardEntity boardEntity = new BoardEntity(null, title, user, null);
-        BoardEntity savedBoardEntity = boardRepository.save(boardEntity);
 
         BoardImgEntity boardImgEntity = new BoardImgEntity();
         boardImgEntity.setStorePath(imagePath);
