@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.dto;
 
+import com.FindIt.FindIt.entity.BoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,5 @@ public class BoardReqDto {
     private Long userId;
     private String title;
     private MultipartFile boardImage;
+
 }

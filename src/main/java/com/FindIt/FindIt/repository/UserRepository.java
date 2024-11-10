@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByLoginId(String loginId); // login_id로 사용자 조회 메서드
+    UserEntity findLoginUserByLoginId(String loginId);
 }

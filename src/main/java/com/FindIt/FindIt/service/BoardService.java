@@ -3,10 +3,13 @@ package com.FindIt.FindIt.service;
 import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.entity.BoardEntity;
 import com.FindIt.FindIt.entity.BoardImgEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.BoardImgRepository;
 import com.FindIt.FindIt.repository.BoardRepository;
+import com.FindIt.FindIt.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -21,11 +24,13 @@ import java.util.UUID;
 public class BoardService {
     private final BoardRepository boardRepository; // 게시판 저장
     private final BoardImgRepository boardImgRepository; // 게시판 이미지 저장
+    private final UserRepository userRepository; //로그인 되어있는 유정 정보 조회
 
     @Autowired
-    public BoardService(BoardRepository boardRepository, BoardImgRepository boardImgRepository) {
+    public BoardService(BoardRepository boardRepository, BoardImgRepository boardImgRepository, UserRepository userRepository) {
         this.boardRepository = boardRepository;
         this.boardImgRepository = boardImgRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -33,8 +38,10 @@ public class BoardService {
         //log.debug("######### createBoard 111");
         String imagePath = uploadImage("board", boardImage); // 이미지 저장 후 경로 반환
 
+        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+
         // BoardEntity 생성 및 저장
-        BoardEntity boardEntity = new BoardEntity(null, title, userId, null);
+        BoardEntity boardEntity = new BoardEntity(null, title, user, null);
         BoardEntity savedBoardEntity = boardRepository.save(boardEntity);
 
         // BoardImgEntity 생성 및 저장
