@@ -1,12 +1,14 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.PostReqDto;
+import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/post")
@@ -18,15 +20,29 @@ public class PostController {
         this.postService = postService;
     }
 
-    /* 게시판 생성 페이지 이동 */
+    /* 게시글 생성 페이지 이동 */
     @GetMapping("/create")
-    public String create() {
-        return "create";
+    public String create(@RequestParam(value = "boardId") Long boardId, Model model) {
+        model.addAttribute("boardId", boardId);
+        return "post/create";
+    }
+
+    @PostMapping("/create")
+    public String createPost(@ModelAttribute PostReqDto postReqDto, Model model) {
+        try {
+            postService.savePost(postReqDto);
+            return "redirect:/post?boardId="+postReqDto.getBoardId();
+        } catch (Exception e) {
+            model.addAttribute("error", "게시글 생성 중 오류가 발생했습니다.");
+            return "error";
+        }
     }
 
     @GetMapping
-    public String postListPage(Model model) {
-        model.addAttribute("items",postService.findAll());
+    public String postListPage(@RequestParam("boardId") Long boardId, Model model) {
+        List<PostEntity> posts = postService.findPostsByBoardId(boardId);
+        model.addAttribute("posts",posts);
+        model.addAttribute("boardId", boardId);
         return "post/postList";
     }
 
@@ -41,7 +57,7 @@ public class PostController {
     public String postUpdate(/* @PathVariable int postId, */ Model model) {
         //PostEntity post = postService.findPost(postId);
         //model.addAllAttributes("post", post);
-        return "update";
+        return "post/update";
     }
 
 }

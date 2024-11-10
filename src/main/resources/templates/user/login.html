@@ -1,69 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #7030A0;
-            margin: 0;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px; /* 요소 사이 간격 설정 */
-            width: 20vw; /* 전체 너비를 20%로 조정 */
-        }
-        label {
-            color: white;
-            font-size: 30px;
-            text-align: left; /* label들을 왼쪽 정렬 */
-        }
-        input {
-            padding: 4px;
-            font-size: 50px; /* 텍스트 크기 조정 */
-            height: 5vh; /* 높이를 화면 높이의 5%로 설정 */
-            box-sizing: border-box; /* 패딩을 포함하여 높이를 조정 */
-        }
-        .link-container {
-            display: flex;
-            justify-content: center; /* a 태그를 중앙에 정렬 */
-        }
-        a {
-            color: white;
-            font-size: 25px;
-            margin-top: 20px; /* 위쪽 여백을 추가하여 다른 요소들과 간격을 벌림 */
-            text-decoration: none;
-        }
-        .header {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header img {
-            width: 100px; /* 로고 크기 조정 */
-            height: 100px;
-        }
-        .header h1 {
-            color: white;
-            font-size: 40px;
-            margin: 0;
-        }
-    </style>
     <title>FindIt</title>
+    <link rel="stylesheet" type="text/css" href="/css/userLogin.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
     <script src="/js/alert.js"></script> <!-- 회원가입이 정상적으로 완료됐을때 알람이 뜨게하는 기능 추가 -->
 </head>
 <body>
-<div class="header">
-    <img src="logo.png" alt="Logo"> <!-- 로고 이미지의 src 경로를 실제 이미지 파일로 대체하세요 -->
-    <h1>FindIt</h1>
-</div>
+<header th:replace="~{/fragment/header :: headerFragment}"></header>
 <div class="container">
     <form action="/user/login" method="post" name="loginForm">
         <label for="loginId">ID</label>
@@ -78,8 +23,5 @@
         <a href="/user/signup">Sign Up</a>
     </div>
 </div>
-
-
-
 </body>
 </html>

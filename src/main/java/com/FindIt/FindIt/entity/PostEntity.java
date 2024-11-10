@@ -1,12 +1,11 @@
 package com.FindIt.FindIt.entity;
 
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,15 +13,22 @@ import lombok.*;
 @Setter
 @Builder
 @Entity
-public class PostEntity extends BaseEntity {
-
+public class PostEntity extends BaseCreateByEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long postId;
-    private String title;
-    private String boardId;
-    private String body;
-    private String userId;
 
+    @Column(name = "title")
+    private String title;
+    @Column(name = "board_id")
+    private Long boardId;
+    @Column(name = "body")
+    private String body;
+
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 }

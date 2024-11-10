@@ -1,12 +1,8 @@
 package com.FindIt.FindIt.entity;
 
+import com.FindIt.FindIt.global.auditing.BaseTimeEntity;
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Table(name = "user_entity") // 테이블 이름 지정
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

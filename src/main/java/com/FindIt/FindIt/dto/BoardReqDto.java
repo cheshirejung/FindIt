@@ -14,4 +14,5 @@ public class BoardReqDto {
     private Long userId;
     private String title;
     private MultipartFile boardImage;
+
 }
