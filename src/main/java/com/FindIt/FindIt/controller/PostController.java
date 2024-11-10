@@ -53,11 +53,16 @@ public class PostController {
 
     }
 
-    @GetMapping("/update"/* /{postId}/ */)
-    public String postUpdate(/* @PathVariable int postId, */ Model model) {
-        //PostEntity post = postService.findPost(postId);
-        //model.addAllAttributes("post", post);
+    @GetMapping("/update/{postId}")
+    public String postUpdatePage(@PathVariable Long postId, Model model) {
+        PostEntity post = postService.findById(postId);
+        model.addAttribute("post", post);
         return "post/update";
     }
 
+    @PatchMapping("/update/{postId}")
+    public String postUpdate(@PathVariable Long postId, @ModelAttribute PostReqDto postReqDto) {
+        postService.updatePost(postId, postReqDto);
+        return "redirect:/post/" + postId;
+    }
 }

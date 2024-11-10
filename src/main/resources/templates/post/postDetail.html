@@ -27,7 +27,9 @@
             </div>
         </div>
     <div class="button-group">
-        <button>수정</button>
+        <a th:href="@{/post/update/{postId}(postId=${post.postId})}">
+            <button>수정</button>
+        </a>
         <button>삭제</button>
         <button>목록</button>
     </div>
