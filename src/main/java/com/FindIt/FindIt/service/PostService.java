@@ -22,8 +22,12 @@ public class PostService {
     private final ImageService imageService;
     private final UserRepository userRepository;
 
-    public List<PostEntity> findAll() {
-        return postRepository.findAll();
+    //public List<PostEntity> findAll() {return postRepository.findAll();}
+
+    /*boardId로 필터링하여 게시글 검색*/
+    /*반환 타입 추후 DTO로 수정할 것*/
+    public List<PostEntity> findPostsByBoardId(Long boardId){
+        return postRepository.findByBoardId(boardId);
     }
     public PostEntity findById(Long id) {
         return postRepository.findById(id)

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -17,7 +18,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public String boardPage(){
+    public String boardPage(Model model){
+        model.addAttribute("boards", boardService.getBoards());
         return "/board/boardList";
     }
 
