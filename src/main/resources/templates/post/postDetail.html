@@ -23,7 +23,6 @@
     <div class="input-section">
         댓글
         <form th:action="'/api/post/'+ ${post.postId} + '/comment'" method="post">
-            <input type="hidden" name="parentCommentId">
             <div>
                 <input type="text" name="body" placeholder="댓글을 작성해주세요.">
                 <button class="submit-button">댓글 등록</button>
@@ -32,19 +31,25 @@
         <!--<table id="commentList" border="1"></table>-->
     </div>
     <div class="comment-list" th:each="comment : ${post.comments}">
-        <div class="message-box">
-            <div th:text="${comment.body}"></div>
-            <form th:action="'/api/post/'+ ${post.postId} + '/comment'" method="post">
-                <div th:text="${comment.commentId}"></div>
-                <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
-                <div>
-                    <input type="text" name="body" placeholder="답글을 작성해주세요.">
-                    <button class="submit-button">답글 등록</button>
-                </div>
-            </form>
-            <div class="child-comment-list">
+        <div th:if="${comment.parentComment == null}">
+            <div class="message-box">
+                <div th:text="${comment.body}"></div>
+                <form th:action="'/api/post/'+ ${post.postId} + '/comment'" method="post">
+                    <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
+                    <div>
+                        <input type="text" name="body" placeholder="답글을 작성해주세요.">
+                        <button class="submit-button">답글 등록</button>
+                    </div>
+                </form>
+                <div class="child-comment-list">
+                    <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
+                        <div class="message-box">
+                            <div th:text="${childComment.body}"></div>
+                        </div>
 
-            </div>
+                </div>
+        </div>
+
         </div>
     </div>
     <div class="button-group">

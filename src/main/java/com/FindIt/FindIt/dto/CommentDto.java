@@ -24,7 +24,7 @@ public class CommentDto {
     public static CommentDto fromEntity(CommentEntity entity) {
         return CommentDto.builder()
                 .commentId(entity.getCommentId())
-                .parentCommentId(entity.getParentComment().getCommentId())
+                .parentCommentId(entity.getParentComment() != null ? entity.getParentComment().getCommentId() : null)
                 .body(entity.getBody())
                 .isParentComment(entity.getParentComment() == null)
                 .childrenComments(new ArrayList<>())
