@@ -24,7 +24,7 @@ public class CommentController {
     }
     @PatchMapping("{commentId}")
     public String updateComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @ModelAttribute CommentDto commentDto) {
-
+        commentService.updateComment(commentId, commentDto);
         return "redirect:/post/" + postId;
     }
 }

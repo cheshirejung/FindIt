@@ -46,6 +46,14 @@ public class CommentService {
         return CommentDto.fromEntity(savedComment);
     }
 
+    public CommentDto updateComment(Long commentId, CommentDto commentDto) {
+        CommentEntity comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+        comment.setBody(commentDto.getBody());
+        commentRepository.save(comment);
+        return CommentDto.fromEntity(comment);
+    }
+
 /*    // 게시물의 모든 댓글 조회
     public List<CommentDto> getCommentsByPostId(Long postId) {
         List<CommentEntity> allComments = commentRepository.findByPostIdOrderByCreatedAtAsc(postId);
