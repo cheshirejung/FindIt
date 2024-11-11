@@ -16,6 +16,7 @@ public class PostImgEntity {
     private Long postImgId;
 
 
+
     @OneToOne
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;

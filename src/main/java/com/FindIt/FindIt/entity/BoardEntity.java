@@ -18,6 +18,7 @@ public class BoardEntity extends BaseCreateByEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long boardId;
+
     @Column(name = "title")
     private String title;
 
@@ -26,11 +27,11 @@ public class BoardEntity extends BaseCreateByEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @Column(name = "board_img_id")
-    private Long boardImgId;
+    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
+    private BoardImgEntity boardImg;
 
     public BoardDto toDto() {
-        return new BoardDto(this.boardId, this.title, this.boardImgId);
+        return new BoardDto(this.boardId, this.title);
     }
 }
 
