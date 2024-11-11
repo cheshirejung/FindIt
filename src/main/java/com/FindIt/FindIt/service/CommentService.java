@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,15 +34,15 @@ public class CommentService {
 
         UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        List<CommentDto> childrenComments = commentDto.getChildrenComments();
+        if(commentDto.isParentComment()){
+            CommentEntity parentComment = null;
+            CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,parentComment));
+            return CommentDto.fromEntity(savedComment);
+        }
+        CommentEntity parentComment = commentRepository.findById(commentDto.getParentCommentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+            CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,parentComment));
 
-        // 대댓글의 경우 부모 댓글 존재 확인
-        /*if (commentDto.getParentCommentId() != null) {
-            commentRepository.findById(commentDto.getParentCommentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Parent comment not found"));
-        }*/
-
-        CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,childrenComments));
         return CommentDto.fromEntity(savedComment);
     }
 

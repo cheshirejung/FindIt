@@ -24,19 +24,19 @@ public class CommentDto {
     public static CommentDto fromEntity(CommentEntity entity) {
         return CommentDto.builder()
                 .commentId(entity.getCommentId())
-                //.parentCommentId(entity.getParentComment().getCommentId())
+                .parentCommentId(entity.getParentComment().getCommentId())
                 .body(entity.getBody())
                 .isParentComment(entity.getParentComment() == null)
                 .childrenComments(new ArrayList<>())
                 .build();
     }
 
-    public CommentEntity toEntity(UserEntity user, PostEntity post, List<CommentDto> childrenComments) {
+    public CommentEntity toEntity(UserEntity user, PostEntity post,CommentEntity parentComment) {
         return CommentEntity.builder()
                 .user(user)
                 .post(post)
                 .body(this.body)
-
+                .parentComment(parentComment)
                 .build();
     }
 

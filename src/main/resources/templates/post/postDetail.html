@@ -34,7 +34,17 @@
     <div class="comment-list" th:each="comment : ${post.comments}">
         <div class="message-box">
             <div th:text="${comment.body}"></div>
-            <div class=""></div>
+            <form th:action="'/api/post/'+ ${post.postId} + '/comment'" method="post">
+                <div th:text="${comment.commentId}"></div>
+                <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
+                <div>
+                    <input type="text" name="body" placeholder="답글을 작성해주세요.">
+                    <button class="submit-button">답글 등록</button>
+                </div>
+            </form>
+            <div class="child-comment-list">
+
+            </div>
         </div>
     </div>
     <div class="button-group">
