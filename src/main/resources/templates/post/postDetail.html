@@ -5,7 +5,7 @@
     <title>게시글 상세 조회 페이지</title>
     <link rel="stylesheet" href="/css/postDetail.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
-    <script src="/js/commentApi.js"></script>
+    <!--<script src="/js/commentApi.js"></script>-->
 </head>
 <body>
 <header th:replace="~{/fragment/header :: headerFragment}"></header>
@@ -20,23 +20,46 @@
         </div>
 
 
-        <div class="input-section">
-            <input type="text" placeholder="댓글 목록">
+    <div class="input-section">
+        댓글
+        <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
             <div>
-                <input type="text" placeholder="댓글을 작성해주세요.">
+                <input type="text" name="body" placeholder="댓글을 작성해주세요.">
                 <button class="submit-button">댓글 등록</button>
             </div>
-        </div>
-    <div class="input-section">
-        <input type="text" placeholder="댓글 목록">
-        <div>
-            <input type="text" placeholder="댓글을 작성해주세요.">
-            <button class="submit-button">댓글 등록</button>
-        </div>
-        댓글
-        <table id="commentList" border="1"></table>
+        </form>
+        <!--<table id="commentList" border="1"></table>-->
     </div>
+    <div class="comment-list" th:each="comment : ${post.comments}">
+        <div th:if="${comment.parentComment == null}">
+            <div class="message-box">
+                <div class="comment"  th:text="${comment.body}"></div>
+                <p></p>
+                <form th:action="'/post/'+${post.postId}+'/comment/'+${comment.commentId}" method="post">
+                    <input type="hidden" name="_method" value="patch" />
 
+                    <label for="updateBody"></label>
+                    <input type="text" id="updateBody" name="body" th:value="${comment.body}">
+                    <button type="submit">수정</button>
+                </form>
+                <button>삭제</button>
+                <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
+                    <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
+                    <div>
+                        <input type="text" name="body" placeholder="답글을 작성해주세요.">
+                        <button class="submit-button">답글 등록</button>
+                    </div>
+                </form>
+                <div class="child-comment-list">
+                    <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
+                        <div  class="child-message-box">
+                            <div class = " child-comment" th:text="${childComment.body}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="button-group">
         <a th:href="@{/post/update/{postId}(postId=${post.postId})}">
             <button>수정</button>
@@ -44,15 +67,14 @@
         <button>삭제</button>
         <button>목록</button>
     </div>
-</div>
 
-<form method="" action="/post/abc">
+<!--<form method="" action="/post/abc">
     <input type="text" name="userId">
     <input type="text" name="password">
     <input type="submit">
-</form>
+</form>-->
 
-<script>
+<!--<script>
     async function drawComment(){
         let data = await getApi("/api/comments/post/1", "GET" );
         let html = new Array();
@@ -74,6 +96,6 @@
         document.getElementById("commentList").innerHTML = html.join("");
 
     }
-</script>
+</script>-->
 </body>
 </html>

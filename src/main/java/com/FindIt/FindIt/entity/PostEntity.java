@@ -23,6 +23,7 @@ public class PostEntity extends BaseCreateByEntity {
 
     @Column(name = "title")
     private String title;
+
     @Column(name = "board_id")
     private Long boardId;
 
@@ -36,4 +37,6 @@ public class PostEntity extends BaseCreateByEntity {
     @OneToOne(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
     private PostImgEntity postImg;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
+    private List<CommentEntity> comments = new ArrayList<>();
 }

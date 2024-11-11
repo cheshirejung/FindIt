@@ -1,9 +1,10 @@
 package com.FindIt.FindIt.dto;
 
 import com.FindIt.FindIt.entity.CommentEntity;
+import com.FindIt.FindIt.entity.PostEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,33 +15,29 @@ import java.util.List;
 @Builder
 public class CommentDto {
     private Long commentId;
-    private Long userId;
-    private Long postId;
     private Long parentCommentId;
     private String body;
-    private String createdAt;
-    private List<CommentDto> replies;
+    private boolean isParentComment;
 
+    private List<CommentDto> childrenComments;
 
     public static CommentDto fromEntity(CommentEntity entity) {
         return CommentDto.builder()
                 .commentId(entity.getCommentId())
-                .userId(entity.getUserId())
-                .postId(entity.getPostId())
-                .parentCommentId(entity.getParentCommentId())
+                .parentCommentId(entity.getParentComment() != null ? entity.getParentComment().getCommentId() : null)
                 .body(entity.getBody())
-                .createdAt(entity.getCreatedAt())
-                .replies(new ArrayList<>())
+                .isParentComment(entity.getParentComment() == null)
+                .childrenComments(new ArrayList<>())
                 .build();
     }
 
-    public CommentEntity toEntity() {
+    public CommentEntity toEntity(UserEntity user, PostEntity post,CommentEntity parentComment) {
         return CommentEntity.builder()
-                .commentId(this.commentId)
-                .userId(this.userId)
-                .postId(this.postId)
-                .parentCommentId(this.parentCommentId)
+                .user(user)
+                .post(post)
                 .body(this.body)
+                .parentComment(parentComment)
                 .build();
     }
+
 }

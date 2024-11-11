@@ -16,7 +16,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class BoardEntity extends BaseCreateByEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "board_id")
     private Long boardId;
 
     @Column(name = "title")
