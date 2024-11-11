@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,39 @@ public class BoardService {
         boardImgRepository.save(boardImgEntity);
 
         boardEntity.setBoardImg(boardImgEntity);
+        boardRepository.save(boardEntity);
+    }
+
+    public BoardDto getBoardById(Long boardId) {
+        BoardEntity boardEntity = boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다."));
+
+        BoardImgEntity boardImgEntity = boardImgRepository.findByBoardEntity(boardEntity);
+        String imageUrl = boardImgEntity != null ? boardImgEntity.getStorePath() : null;
+
+        return new BoardDto(boardEntity.getBoardId(), boardEntity.getTitle(), imageUrl);
+    }
+
+    public void updateBoard(BoardDto boardDto, MultipartFile imageFile) {
+        BoardEntity boardEntity = boardRepository.findById(boardDto.getBoardId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다."));
+
+        boardEntity.setTitle(boardDto.getTitle());
+
+        if (!imageFile.isEmpty()) {
+            String newImagePath = imageService.uploadImage("board_images", imageFile);
+            BoardImgEntity boardImgEntity = boardImgRepository.findByBoardEntity(boardEntity);
+
+            if (boardImgEntity != null) {
+                boardImgEntity.setStorePath(newImagePath);
+            } else {
+                boardImgEntity = new BoardImgEntity();
+                boardImgEntity.setBoardEntity(boardEntity);
+                boardImgEntity.setStorePath(newImagePath);
+                boardImgRepository.save(boardImgEntity);
+            }
+        }
+
         boardRepository.save(boardEntity);
     }
 
