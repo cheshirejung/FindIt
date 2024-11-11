@@ -30,11 +30,13 @@
         </form>
         <!--<table id="commentList" border="1"></table>-->
     </div>
+    <!--댓글 목록 출력-->
     <div class="comment-list" th:each="comment : ${post.comments}">
         <div th:if="${comment.parentComment == null}">
             <div class="message-box">
                 <div class="comment"  th:text="${comment.body}"></div>
                 <p></p>
+                <!--댓글 수정 폼-->
                 <form th:action="'/post/'+${post.postId}+'/comment/'+${comment.commentId}" method="post">
                     <input type="hidden" name="_method" value="patch" />
 
@@ -43,6 +45,7 @@
                     <button type="submit">수정</button>
                 </form>
                 <button>삭제</button>
+                <!--답글 입력 폼-->
                 <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
                     <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
                     <div>
@@ -50,6 +53,7 @@
                         <button class="submit-button">답글 등록</button>
                     </div>
                 </form>
+                <!--답글 목록 출력-->
                 <div class="child-comment-list">
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
                         <div  class="child-message-box">
