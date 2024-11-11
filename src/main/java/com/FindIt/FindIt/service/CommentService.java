@@ -30,15 +30,18 @@ public class CommentService {
 
         PostEntity post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+
         UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
 
+        List<CommentDto> childrenComments = commentDto.getChildrenComments();
+
         // 대댓글의 경우 부모 댓글 존재 확인
-        if (commentDto.getParentCommentId() != null) {
+        /*if (commentDto.getParentCommentId() != null) {
             commentRepository.findById(commentDto.getParentCommentId())
                     .orElseThrow(() -> new EntityNotFoundException("Parent comment not found"));
-        }
+        }*/
 
-        CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post));
+        CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,childrenComments));
         return CommentDto.fromEntity(savedComment);
     }
 

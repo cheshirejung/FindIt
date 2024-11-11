@@ -18,7 +18,8 @@ public class CommentRestController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<CommentDto> createComment(@PathVariable Long postId, @ModelAttribute CommentDto commentDto) {
+    public ResponseEntity<CommentDto> createComment(@PathVariable("postId") Long postId, @ModelAttribute CommentDto commentDto) {
+        log.debug("### postId : {}", postId);
         CommentDto createdComment = commentService.createComment(postId, commentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }

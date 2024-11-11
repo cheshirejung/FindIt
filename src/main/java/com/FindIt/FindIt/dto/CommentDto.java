@@ -5,7 +5,6 @@ import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.UserEntity;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,33 +15,29 @@ import java.util.List;
 @Builder
 public class CommentDto {
     private Long commentId;
-    //private Long userId;
-    //private Long postId;
     private Long parentCommentId;
     private String body;
+    private boolean isParentComment;
 
-    private List<CommentDto> replies;
-
+    private List<CommentDto> childrenComments;
 
     public static CommentDto fromEntity(CommentEntity entity) {
         return CommentDto.builder()
                 .commentId(entity.getCommentId())
-                //.userId(entity.getUserId())
-                //.postId(entity.getPostId())
-                .parentCommentId(entity.getParentCommentId())
+                //.parentCommentId(entity.getParentComment().getCommentId())
                 .body(entity.getBody())
-                //.createdAt(entity.getCreatedAt())
-                .replies(new ArrayList<>())
+                .isParentComment(entity.getParentComment() == null)
+                .childrenComments(new ArrayList<>())
                 .build();
     }
 
-    public CommentEntity toEntity(UserEntity user, PostEntity post) {
+    public CommentEntity toEntity(UserEntity user, PostEntity post, List<CommentDto> childrenComments) {
         return CommentEntity.builder()
-                .commentId(this.commentId)
                 .user(user)
                 .post(post)
-                .parentCommentId(this.parentCommentId)
                 .body(this.body)
+
                 .build();
     }
+
 }

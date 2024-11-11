@@ -5,7 +5,7 @@
     <title>게시글 상세 조회 페이지</title>
     <link rel="stylesheet" href="/css/postDetail.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
-    <script src="/js/commentApi.js"></script>
+    <!--<script src="/js/commentApi.js"></script>-->
 </head>
 <body>
 <header th:replace="~{/fragment/header :: headerFragment}"></header>
@@ -23,6 +23,7 @@
     <div class="input-section">
         댓글
         <form th:action="'/api/post/'+ ${post.postId} + '/comment'" method="post">
+            <input type="hidden" name="parentCommentId">
             <div>
                 <input type="text" name="body" placeholder="댓글을 작성해주세요.">
                 <button class="submit-button">댓글 등록</button>
@@ -34,7 +35,6 @@
         <div class="message-box">
             <div th:text="${comment.body}"></div>
             <div class=""></div>
-
         </div>
     </div>
     <div class="button-group">
