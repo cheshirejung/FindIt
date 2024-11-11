@@ -63,7 +63,7 @@ public class BoardService {
 
         boardImgRepository.save(boardImgEntity);
 
-        boardEntity.setBoardImgId(boardImgEntity.getBoardImgId());
+        boardEntity.setBoardImg(boardImgEntity);
         boardRepository.save(boardEntity);
     }
 

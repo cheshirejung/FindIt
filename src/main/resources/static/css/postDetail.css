@@ -50,3 +50,18 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
+.comment {
+    border-left: 4px solid #007BFF;
+    margin-left: 0;
+    padding-left: 1rem;
+}
+
+.child-comment-list {
+    margin-left: 2rem;
+}
+
+.reply {
+    border-left: 4px solid #28A745;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+}

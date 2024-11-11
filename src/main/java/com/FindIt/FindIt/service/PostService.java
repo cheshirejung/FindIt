@@ -52,7 +52,7 @@ public class PostService {
             String imagePath = imageService.uploadImage("post", postReqDto.getPostImage());
             PostImgEntity postImgEntity = new PostImgEntity();
             postImgEntity.setStorePath(imagePath);
-            postImgEntity.setPostEntity(postEntity);
+            postImgEntity.setPost(postEntity);
 
             postImgRepository.save(postImgEntity);
         }

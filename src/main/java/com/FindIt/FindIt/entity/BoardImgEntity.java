@@ -19,9 +19,11 @@ public class BoardImgEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_img_id")
     private Long boardImgId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
+
     @Column(name = "store_path")
     private String storePath;
 
