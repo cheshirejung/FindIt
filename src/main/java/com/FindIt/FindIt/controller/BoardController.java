@@ -1,10 +1,15 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.dto.BoardReqDto;
 import com.FindIt.FindIt.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +23,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public String boardPage(Model model){
-        model.addAttribute("boards", boardService.getBoards());
+    public String boardPage(@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC, size = 5) Pageable pageable , Model model){
+        Page<BoardDto> boardDtoPage = boardService.getBoards(pageable);
+        model.addAttribute("boards", boardDtoPage);
         return "/board/boardList";
     }
 
