@@ -33,7 +33,7 @@
     <div class="comment-list" th:each="comment : ${post.comments}">
         <div th:if="${comment.parentComment == null}">
             <div class="message-box">
-                <div th:text="${comment.body}"></div>
+                <div class="comment"  th:text="${comment.body}"></div>
                 <form th:action="'/api/post/'+ ${post.postId} + '/comment'" method="post">
                     <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
                     <div>
@@ -43,13 +43,12 @@
                 </form>
                 <div class="child-comment-list">
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
-                        <div class="message-box">
-                            <div th:text="${childComment.body}"></div>
+                        <div  class="child-message-box">
+                            <div class = " child-comment" th:text="${childComment.body}"></div>
                         </div>
-
+                    </div>
                 </div>
-        </div>
-
+            </div>
         </div>
     </div>
     <div class="button-group">
@@ -59,7 +58,6 @@
         <button>삭제</button>
         <button>목록</button>
     </div>
-</div>
 
 <!--<form method="" action="/post/abc">
     <input type="text" name="userId">
