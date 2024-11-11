@@ -54,6 +54,15 @@
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
                         <div  class="child-message-box">
                             <div class = " child-comment" th:text="${childComment.body}"></div>
+                            <p></p>
+                            <form th:action="'/post/'+${post.postId}+'/comment/'+${childComment.commentId}" method="post">
+                                <input type="hidden" name="_method" value="patch" />
+
+                                <label for="updateChildBody"></label>
+                                <input type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
+                                <button type="submit">수정</button>
+                            </form>
+                            <button>삭제</button>
                         </div>
                     </div>
                 </div>
@@ -67,35 +76,6 @@
         <button>삭제</button>
         <button>목록</button>
     </div>
-
-<!--<form method="" action="/post/abc">
-    <input type="text" name="userId">
-    <input type="text" name="password">
-    <input type="submit">
-</form>-->
-
-<!--<script>
-    async function drawComment(){
-        let data = await getApi("/api/comments/post/1", "GET" );
-        let html = new Array();
-
-        if(data) {
-            for(let comment of data) {
-                html.push(`<tr>`);
-                html.push(  `<td>${comment.commentId}</td>`);
-                html.push(  `<td>${comment.body}</td>`);
-                html.push(  `<td>${comment.createdAt}</td>`);
-                html.push(`</tr>`);
-            }
-        } else {
-            html.push(`<tr>`);
-            html.push(  `<td colspan="3">게시글이 없습니다.</td>`);
-            html.push(`</tr>`);
-        }
-
-        document.getElementById("commentList").innerHTML = html.join("");
-
-    }
-</script>-->
+</div>
 </body>
 </html>
