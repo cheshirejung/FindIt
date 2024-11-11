@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PostImgRepository extends JpaRepository<PostImgEntity, Long> {
-    Optional<PostImgEntity> findByPostEntity(PostEntity postEntity);
+    Optional<PostImgEntity> findByPost(PostEntity postEntity);
 }

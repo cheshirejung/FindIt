@@ -72,14 +72,14 @@ public class PostService {
                 .ifPresent(newImageFile -> {
                     String newImagePath = imageService.uploadImage("post", newImageFile);
 
-                    postImgRepository.findByPostEntity(post)
+                    postImgRepository.findByPost(post)
                             .map(existingImage -> {
                                 existingImage.setStorePath(newImagePath);
                                 return postImgRepository.save(existingImage);
                             })
                             .orElseGet(() -> {
                                 PostImgEntity newPostImgEntity = new PostImgEntity();
-                                newPostImgEntity.setPostEntity(post);
+                                newPostImgEntity.setPost(post);
                                 newPostImgEntity.setStorePath(newImagePath);
                                 return postImgRepository.save(newPostImgEntity);
                             });
