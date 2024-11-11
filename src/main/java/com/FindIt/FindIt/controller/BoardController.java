@@ -47,4 +47,15 @@ public class BoardController {
         return "board/update";
     }
 
+
+
+
+
+
+    @DeleteMapping("/{boardId}")
+    public String deleteBoard(@PathVariable long boardId) {
+        boardService.deleteBoard(boardId);
+        return "redirect:/board";
+    }
+
 }
