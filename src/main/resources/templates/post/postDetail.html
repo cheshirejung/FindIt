@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/postDetail.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <!--<script src="/js/commentApi.js"></script>-->
+    <script src="/js/confirmDelete.js"></script>
 </head>
 <body>
 <header th:replace="~{/fragment/header :: headerFragment}"></header>
@@ -31,7 +32,7 @@
         <!--<table id="commentList" border="1"></table>-->
     </div>
     <div class="comment-list" th:each="comment : ${post.comments}">
-        <div th:if="${comment.parentComment == null}">
+        <div th:if="${comment.parentComment == null}" th:id="'comment-' + ${comment.commentId}">
             <div class="message-box">
                 <div class="comment"  th:text="${comment.body}"></div>
                 <p></p>
@@ -42,14 +43,7 @@
                     <input type="text" id="updateBody" name="body" th:value="${comment.body}">
                     <button type="submit">수정</button>
                 </form>
-                <button>삭제</button>
-                <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
-                    <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
-                    <div>
-                        <input type="text" name="body" placeholder="답글을 작성해주세요.">
-                        <button class="submit-button">답글 등록</button>
-                    </div>
-                </form>
+                <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">삭제</button>
                 <div class="child-comment-list">
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
                         <div  class="child-message-box">
@@ -68,34 +62,58 @@
         <button>목록</button>
     </div>
 
-<!--<form method="" action="/post/abc">
-    <input type="text" name="userId">
-    <input type="text" name="password">
-    <input type="submit">
-</form>-->
+    <script>
+        function confirmDelete(event, postId, commentId) {
+            event.preventDefault();
 
-<!--<script>
-    async function drawComment(){
-        let data = await getApi("/api/comments/post/1", "GET" );
-        let html = new Array();
+            if (confirm("정말 삭제하시겠습니까?")) {
+                fetch(`/post/${postId}/comment/${commentId}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("삭제되었습니다.");
+                            location.reload(); // 삭제 후 페이지를 새로고침하여 반영
+                        } else {
+                            alert("삭제에 실패했습니다.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("삭제 중 오류가 발생했습니다:", error);
+                        alert("삭제에 실패했습니다.");
+                    });
+            }
+        }
+    </script>
 
-        if(data) {
-            for(let comment of data) {
+    <!--<form method="" action="/post/abc">
+        <input type="text" name="userId">
+        <input type="text" name="password">
+        <input type="submit">
+    </form>-->
+
+    <!--<script>
+        async function drawComment(){
+            let data = await getApi("/api/comments/post/1", "GET" );
+            let html = new Array();
+
+            if(data) {
+                for(let comment of data) {
+                    html.push(`<tr>`);
+                    html.push(  `<td>${comment.commentId}</td>`);
+                    html.push(  `<td>${comment.body}</td>`);
+                    html.push(  `<td>${comment.createdAt}</td>`);
+                    html.push(`</tr>`);
+                }
+            } else {
                 html.push(`<tr>`);
-                html.push(  `<td>${comment.commentId}</td>`);
-                html.push(  `<td>${comment.body}</td>`);
-                html.push(  `<td>${comment.createdAt}</td>`);
+                html.push(  `<td colspan="3">게시글이 없습니다.</td>`);
                 html.push(`</tr>`);
             }
-        } else {
-            html.push(`<tr>`);
-            html.push(  `<td colspan="3">게시글이 없습니다.</td>`);
-            html.push(`</tr>`);
+
+            document.getElementById("commentList").innerHTML = html.join("");
+
         }
-
-        document.getElementById("commentList").innerHTML = html.join("");
-
-    }
-</script>-->
+    </script>-->
 </body>
 </html>
