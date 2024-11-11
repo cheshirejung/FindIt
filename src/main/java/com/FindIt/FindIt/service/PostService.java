@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -58,4 +59,32 @@ public class PostService {
         }
     }
 
+    @Transactional
+    public void updatePost(Long postId, PostReqDto postReqDto) {
+        PostEntity post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        post.setTitle(postReqDto.getTitle());
+        post.setBody(postReqDto.getBody());
+
+        Optional.ofNullable(postReqDto.getPostImage())
+                .filter(newImageFile -> !newImageFile.isEmpty())
+                .ifPresent(newImageFile -> {
+                    String newImagePath = imageService.uploadImage("post", newImageFile);
+
+                    postImgRepository.findByPostEntity(post)
+                            .map(existingImage -> {
+                                existingImage.setStorePath(newImagePath);
+                                return postImgRepository.save(existingImage);
+                            })
+                            .orElseGet(() -> {
+                                PostImgEntity newPostImgEntity = new PostImgEntity();
+                                newPostImgEntity.setPostEntity(post);
+                                newPostImgEntity.setStorePath(newImagePath);
+                                return postImgRepository.save(newPostImgEntity);
+                            });
+                });
+
+        postRepository.save(post);
+    }
 }
