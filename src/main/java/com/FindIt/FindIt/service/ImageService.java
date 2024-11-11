@@ -43,4 +43,17 @@ public class ImageService {
 
         return dbPath;
     }
+
+    public void deleteImage(String imagePath) {
+        if (imagePath != null && !imagePath.isEmpty()) {
+            String localPath = "C:/webserver_storage/" + imagePath.replaceFirst("/upload/", "");
+            File file = new File(localPath);
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (!deleted) {
+                    throw new RuntimeException("Failed to delete image: " + imagePath);
+                }
+            }
+        }
+    }
 }
