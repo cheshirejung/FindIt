@@ -30,14 +30,18 @@ public class CommentService {
 
         UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        if(commentDto.isParentComment()){
+        if(commentDto.getParentCommentId() == null){
             CommentEntity parentComment = null;
             CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,parentComment));
             return CommentDto.fromEntity(savedComment);
         }
+
         CommentEntity parentComment = commentRepository.findById(commentDto.getParentCommentId())
                     .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
-            CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,parentComment));
+
+
+
+        CommentEntity savedComment = commentRepository.save(commentDto.toEntity(user,post,parentComment));
 
         return CommentDto.fromEntity(savedComment);
     }
