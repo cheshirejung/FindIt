@@ -1,15 +1,19 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -39,9 +43,9 @@ public class PostController {
     }
 
     @GetMapping
-    public String postListPage(@RequestParam("boardId") Long boardId, Model model) {
-        List<PostEntity> posts = postService.findPostsByBoardId(boardId);
-        model.addAttribute("posts",posts);
+    public String postListPage(@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC, size = 5) Pageable pageable,@RequestParam("boardId") Long boardId, Model model) {
+        Page<PostDto> postDtos = postService.findPostsByBoardId(boardId, pageable);
+        model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
         return "post/postList";
     }
@@ -65,4 +69,17 @@ public class PostController {
         postService.updatePost(postId, postReqDto);
         return "redirect:/post/" + postId;
     }
+
+    @DeleteMapping("/{postId}")
+    public String deletePost(@PathVariable Long postId, @RequestParam Long boardId) {
+        try {
+            postService.deletePost(postId);
+            return "redirect:/post?boardId=" + boardId;
+        } catch (Exception e) {
+            // 에러 처리
+            return "error";
+
+        }
+    }
 }
+
