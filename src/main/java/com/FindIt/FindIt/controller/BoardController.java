@@ -62,11 +62,12 @@ public class BoardController {
     @DeleteMapping("/{boardId}")
     public String deleteBoard(@PathVariable long boardId) {
         boardService.deleteBoard(boardId);
-
-    @PostMapping("/update")
-    public String updateBoard(@ModelAttribute BoardDto boardDto, @RequestParam("image") MultipartFile imageFile) {
-        boardService.updateBoard(boardDto, imageFile);
         return "redirect:/board";
     }
 
+    @PostMapping("/update")
+    public String updateBoard(@ModelAttribute BoardDto boardDto,@RequestParam("image") MultipartFile imageFile) {
+        boardService.updateBoard(boardDto, imageFile);
+        return "redirect:/board";
+    }
 }
