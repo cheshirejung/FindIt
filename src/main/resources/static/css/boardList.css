@@ -8,37 +8,67 @@ body {
     padding: 1rem;
     background-color: #f5f5f5;
     min-height: calc(100vh - 60px);
+    margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
 }
-
-.lab-section {
-    background-color: white;
+/* 각 게시판 항목을 감싸는 컨테이너 */
+.board-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 800px;
     margin: 1rem auto;
     padding: 1.5rem;
+    background-color: white;
     border-radius: 8px;
-    max-width: 800px;
-    cursor: pointer;
     transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.board-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 항목 내부에 있는 lab-section 스타일 */
+.lab-section {
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
-.lab-section:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
+/* lab-section 안의 아이콘 */
 .lab-icon {
     width: 30px;
     height: 30px;
 }
 
+/* lab-section 안의 제목 스타일 */
 .lab-title {
     font-size: 1.2rem;
     color: #7030A0;
     font-weight: bold;
 }
 
+/* 수정 버튼 스타일 */
+.edit-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    color: #333;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+    background-color: #d0d0d0;
+}
+
+/* 관리자 버튼 섹션 */
 .admin-section {
     text-align: center;
     padding: 1rem;

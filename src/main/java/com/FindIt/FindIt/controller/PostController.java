@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -65,4 +64,17 @@ public class PostController {
         postService.updatePost(postId, postReqDto);
         return "redirect:/post/" + postId;
     }
+
+    @DeleteMapping("/{postId}")
+    public String deletePost(@PathVariable Long postId, @RequestParam Long boardId) {
+        try {
+            postService.deletePost(postId);
+            return "redirect:/post?boardId=" + boardId;
+        } catch (Exception e) {
+            // 에러 처리
+            return "error";
+
+        }
+    }
 }
+

@@ -2,7 +2,10 @@ package com.FindIt.FindIt.controller;
 
 import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.dto.BoardReqDto;
+import com.FindIt.FindIt.dto.CustomUserDetails;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.BoardService;
+import com.FindIt.FindIt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
@@ -21,11 +26,14 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
     @Autowired
     private final BoardService boardService;
+    private final UserService userService;
 
+    /* userRole을 확인하기 위해서 userDtails 추가 */
     @GetMapping
-    public String boardPage(@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC, size = 5) Pageable pageable , Model model){
+    public String boardPage(@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC, size = 5) Pageable pageable ,Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
         Page<BoardDto> boardDtoPage = boardService.getBoards(pageable);
         model.addAttribute("boards", boardDtoPage);
+        model.addAttribute("userRole", userDetails.getRole());
         return "/board/boardList";
     }
 
@@ -48,9 +56,23 @@ public class BoardController {
     }
 
     // 게시판 수정 페이지
-    @GetMapping("/update")
-    public String boardUpdatePage() {
+    @GetMapping("/update/{boardId}")
+    public String showUpdatePage(@PathVariable Long boardId, Model model) {
+        BoardDto boardDto = boardService.getBoardById(boardId);
+        model.addAttribute("boardDto", boardDto);
         return "board/update";
     }
 
+
+    @DeleteMapping("/{boardId}")
+    public String deleteBoard(@PathVariable long boardId) {
+        boardService.deleteBoard(boardId);
+        return "redirect:/board";
+    }
+
+    @PostMapping("/update")
+    public String updateBoard(@ModelAttribute BoardDto boardDto,@RequestParam("image") MultipartFile imageFile) {
+        boardService.updateBoard(boardDto, imageFile);
+        return "redirect:/board";
+    }
 }

@@ -57,4 +57,9 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    /* role을 확인하기 위해 추가 */
+    public Object getRole() {
+        return user.getRole();
+    }
 }

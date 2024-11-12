@@ -31,7 +31,10 @@ public class BoardEntity extends BaseCreateByEntity {
     private BoardImgEntity boardImg;
 
     public BoardDto toDto() {
-        return new BoardDto(this.boardId, this.title);
+        // 이미지 경로가 존재하는 경우에만 가져옴
+        String imageUrl = boardImg != null ? boardImg.getStorePath() : null;
+
+        return new BoardDto(this.boardId, this.title, imageUrl);
     }
 }
 

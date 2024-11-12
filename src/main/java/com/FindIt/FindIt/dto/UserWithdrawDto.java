@@ -1,6 +1,5 @@
 package com.FindIt.FindIt.dto;
 
-import com.FindIt.FindIt.entity.BoardImgEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BoardDto {
-    private Long boardId;
-    private String title;
-    private String imageUrl;
-
+public class UserWithdrawDto {
+    private String loginId;
+    private String delPassword;
 }

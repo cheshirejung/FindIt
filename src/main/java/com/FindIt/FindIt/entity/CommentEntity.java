@@ -33,7 +33,7 @@ public class CommentEntity extends BaseCreateByEntity {
     @JoinColumn(name = "parent_comment_id")
     private CommentEntity parentComment;
 
-    @OneToMany(mappedBy = "parentComment", orphanRemoval = true)
+    @OneToMany(mappedBy = "parentComment", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommentEntity> childrenComments = new ArrayList<>();
 
     private String body;
