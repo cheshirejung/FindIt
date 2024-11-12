@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/postDetail.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <!--<script src="/js/commentApi.js"></script>-->
+    <script src="/js/confirmDelete.js"></script>
 </head>
 <body>
 <header th:replace="~{/fragment/header :: headerFragment}"></header>
@@ -28,24 +29,22 @@
                 <button class="submit-button">댓글 등록</button>
             </div>
         </form>
-        <!--<table id="commentList" border="1"></table>-->
     </div>
-    <!--댓글 목록 출력-->
+    <!--댓글 리스트 출력-->
     <div class="comment-list" th:each="comment : ${post.comments}">
         <div th:if="${comment.parentComment == null}" th:id="'comment-' + ${comment.commentId}">
             <div class="message-box">
                 <div class="comment"  th:text="${comment.body}"></div>
                 <p></p>
-                <!--댓글 수정 폼-->
+                <!-- 댓글 수정폼 -->
                 <form th:action="'/post/'+${post.postId}+'/comment/'+${comment.commentId}" method="post">
                     <input type="hidden" name="_method" value="patch" />
-
                     <label for="updateBody"></label>
                     <input type="text" id="updateBody" name="body" th:value="${comment.body}">
                     <button type="submit">수정</button>
                 </form>
                 <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">삭제</button>
-                <!--답글 입력 폼-->
+                <!--답글 입력폼-->
                 <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
                     <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
                     <div>
@@ -54,12 +53,13 @@
                     </div>
                 </form>
 
-                <!--답글 목록 출력-->
+                <!--대댓글 출력-->
                 <div class="child-comment-list">
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
                         <div  class="child-message-box">
                             <div class = " child-comment" th:text="${childComment.body}"></div>
                             <p></p>
+                            <!--대댓글 수정 폼-->
                             <form th:action="'/post/'+${post.postId}+'/comment/'+${childComment.commentId}" method="post">
                                 <input type="hidden" name="_method" value="patch" />
 
