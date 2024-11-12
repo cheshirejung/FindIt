@@ -10,13 +10,16 @@ import com.FindIt.FindIt.repository.BoardRepository;
 import com.FindIt.FindIt.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -37,18 +40,23 @@ public class BoardService {
 
 
 
-    public List<BoardDto> getBoards() {
-        List<BoardEntity> boardEntities = boardRepository.findAll();
-        List<BoardDto> boardDtos = new ArrayList<>();
-        for (BoardEntity boardEntity : boardEntities) {
-            boardDtos.add(boardEntity.toDto());
-        }
-        return boardDtos;
+    public Page<BoardDto> getBoards(Pageable pageable) {
+
+        Page<BoardEntity> boardEntityPage = boardRepository.findAll(pageable);
+
+        List<BoardDto> boardDtos = boardEntityPage.getContent().stream()
+                .map(BoardEntity::toDto)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(boardDtos, pageable, boardEntityPage.getTotalElements());
     }
 
     @Transactional
     public void createBoard(BoardReqDto boardReqDto) {
         UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+
+
+
         BoardEntity boardEntity = BoardEntity.builder()
                 .title(boardReqDto.getTitle())
                 .user(user)

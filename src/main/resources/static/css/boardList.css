@@ -10,7 +10,6 @@ body {
     min-height: calc(100vh - 60px);
     margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
 }
-
 /* 각 게시판 항목을 감싸는 컨테이너 */
 .board-item {
     display: flex;
@@ -89,4 +88,17 @@ body {
 
 .admin-button:hover {
     background-color: #5b2683;
+}
+
+/* 페이지 네비게이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    font-size: 18px;
+}
+.current-page {
+    font-weight: bold;
+    color: blue;
 }
