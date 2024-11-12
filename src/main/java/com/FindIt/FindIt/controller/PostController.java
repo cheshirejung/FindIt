@@ -43,11 +43,20 @@ public class PostController {
     }
 
     @GetMapping
-    public String postListPage(@PageableDefault(page = 1) Pageable pageable,@RequestParam("boardId") Long boardId, Model model) {
+    public String postListPage(@PageableDefault(page = 1) Pageable pageable,
+                               @RequestParam(value = "category", defaultValue = "전체") String category,
+                               @RequestParam("boardId") Long boardId,
+                               Model model) {
+
         int page = pageable.getPageNumber() - 1;
 
         pageable = PageRequest.of(page, 5,Sort.Direction.DESC, "postId");
-        Page<PostDto> postDtos = postService.findPostsByBoardId(boardId, pageable);
+        Page<PostDto> postDtos;
+        if("전체".equals(category)) {
+            postDtos = postService.findPostsByBoardId(boardId, pageable);
+        } else {
+            postDtos = postService.findPostsByBoardIdAndCategory(boardId, category, pageable);
+        }
         model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
         model.addAttribute("pageNo", page);

@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<PostEntity,Long> {
     Page<PostEntity> findByBoardId(Long boardId, Pageable pageable);
+    Page<PostEntity> findPostsByBoardIdAndCategory(Long boardId, String Category, Pageable pageable);
 }
