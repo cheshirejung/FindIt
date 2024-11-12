@@ -1,6 +1,7 @@
 package com.FindIt.FindIt.service;
 
 import com.FindIt.FindIt.dto.UserSignupDto;
+import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,17 @@ public class UserService {
 
         UserEntity user = userSignupDto.toEntity(new UserEntity(), passwordEncoder);
         userRepository.save(user);
+    }
+
+    @Transactional
+    public boolean deleteUser(UserWithdrawDto userWithdrawDto) {
+        UserEntity user = userRepository.findLoginUserByLoginId(userWithdrawDto.getLoginId());
+
+        if (user != null && passwordEncoder.matches(userWithdrawDto.getDelPassword(), user.getPassword())) {
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
     }
 
 }

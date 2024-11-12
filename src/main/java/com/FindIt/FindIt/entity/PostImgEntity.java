@@ -15,9 +15,12 @@ public class PostImgEntity {
     @Column(name = "post_img_id")
     private Long postImgId;
 
+
+
     @OneToOne
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
+
     @Column(name = "store_path")
     private String storePath;
 }

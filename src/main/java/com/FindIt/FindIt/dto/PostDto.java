@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,4 +17,6 @@ public class PostDto {
     private Long boardId;
     private String body;
     private String userId;
+    private String postImgUrl;
+    private List<CommentDto> comments;
 }
