@@ -73,6 +73,7 @@ public class PostController {
         } catch (Exception e) {
             // 에러 처리
             return "error";
+
         }
     }
 }
