@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.entity;
 
+import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.global.auditing.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,4 +35,11 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "role", nullable = false)
     private String role;
 
+    public UserDto toDto(UserEntity user) {
+        return UserDto.builder()
+                .loginId(user.getLoginId())
+                .userName(user.getUserName())
+                .email(user.getEmail())
+                .build();
+    }
 }

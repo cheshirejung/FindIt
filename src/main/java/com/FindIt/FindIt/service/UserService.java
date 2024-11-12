@@ -1,10 +1,12 @@
 package com.FindIt.FindIt.service;
 
+import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,13 @@ public class UserService {
 
         UserEntity user = userSignupDto.toEntity(new UserEntity(), passwordEncoder);
         userRepository.save(user);
+    }
+
+    public UserDto getUser() {
+        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserDto userDto = user.toDto(user);
+
+        return userDto;
     }
 
     @Transactional
