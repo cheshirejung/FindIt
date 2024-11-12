@@ -69,6 +69,11 @@ public class BoardService {
         boardRepository.save(boardEntity);
     }
 
+    @Transactional
+    public void deleteBoard(Long boardId) {
+        boardRepository.deleteById(boardId);
+
+    }
     public BoardDto getBoardById(Long boardId) {
         BoardEntity boardEntity = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다."));
@@ -98,7 +103,6 @@ public class BoardService {
                 boardImgRepository.save(boardImgEntity);
             }
         }
-
         boardRepository.save(boardEntity);
     }
 

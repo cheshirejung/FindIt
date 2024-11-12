@@ -58,11 +58,16 @@ public class BoardController {
         return "board/update";
     }
 
-    // 게시판 수정 api
-    @PostMapping("/update")
-    public String updateBoard(@ModelAttribute BoardDto boardDto, @RequestParam("image") MultipartFile imageFile) {
-        boardService.updateBoard(boardDto, imageFile);
+
+    @DeleteMapping("/{boardId}")
+    public String deleteBoard(@PathVariable long boardId) {
+        boardService.deleteBoard(boardId);
         return "redirect:/board";
     }
 
+    @PostMapping("/update")
+    public String updateBoard(@ModelAttribute BoardDto boardDto,@RequestParam("image") MultipartFile imageFile) {
+        boardService.updateBoard(boardDto, imageFile);
+        return "redirect:/board";
+    }
 }
