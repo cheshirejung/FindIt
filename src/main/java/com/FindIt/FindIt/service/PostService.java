@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.service;
 
+import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.PostImgEntity;
@@ -8,12 +9,16 @@ import com.FindIt.FindIt.repository.PostImgRepository;
 import com.FindIt.FindIt.repository.PostRepository;
 import com.FindIt.FindIt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -27,8 +32,13 @@ public class PostService {
 
     /*boardId로 필터링하여 게시글 검색*/
     /*반환 타입 추후 DTO로 수정할 것*/
-    public List<PostEntity> findPostsByBoardId(Long boardId){
-        return postRepository.findByBoardId(boardId);
+    public Page<PostDto> findPostsByBoardId(Long boardId, Pageable pageable){
+        Page<PostEntity> postEntitiePage = postRepository.findByBoardId(boardId,pageable);
+
+        List<PostDto> postDtos = postEntitiePage.getContent().stream()
+                .map(PostEntity::toDto)
+                .collect(Collectors.toList());
+        return new PageImpl<>(postDtos, pageable, postEntitiePage.getTotalElements());
     }
     public PostEntity findById(Long id) {
         return postRepository.findById(id)

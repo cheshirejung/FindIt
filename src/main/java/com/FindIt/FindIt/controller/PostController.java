@@ -1,9 +1,14 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +43,9 @@ public class PostController {
     }
 
     @GetMapping
-    public String postListPage(@RequestParam("boardId") Long boardId, Model model) {
-        List<PostEntity> posts = postService.findPostsByBoardId(boardId);
-        model.addAttribute("posts",posts);
+    public String postListPage(@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC, size = 5) Pageable pageable,@RequestParam("boardId") Long boardId, Model model) {
+        Page<PostDto> postDtos = postService.findPostsByBoardId(boardId, pageable);
+        model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
         return "post/postList";
     }

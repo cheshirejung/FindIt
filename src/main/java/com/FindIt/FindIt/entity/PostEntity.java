@@ -1,5 +1,7 @@
 package com.FindIt.FindIt.entity;
 
+import com.FindIt.FindIt.dto.CommentDto;
+import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.global.auditing.BaseCreateByEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,4 +41,12 @@ public class PostEntity extends BaseCreateByEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
     private List<CommentEntity> comments = new ArrayList<>();
+
+    public PostDto toDto() {
+        List<CommentDto> commentDtos = new ArrayList<>();
+        for (CommentEntity comment : comments) {
+            commentDtos.add(CommentDto.fromEntity(comment));
+        }
+         return new PostDto(this.postId,this.title,this.boardId,this.body,this.postImg.getStorePath(),commentDtos );
+    }
 }

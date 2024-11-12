@@ -42,15 +42,12 @@ public class BoardService {
 
 
     public Page<BoardDto> getBoards(Pageable pageable) {
-        // Page<BoardEntity>를 Pageable로 가져옵니다.
         Page<BoardEntity> boardEntityPage = boardRepository.findAll(pageable);
 
-        // BoardEntity를 BoardDto로 변환합니다.
         List<BoardDto> boardDtos = boardEntityPage.getContent().stream()
                 .map(BoardEntity::toDto)
                 .collect(Collectors.toList());
 
-        // 변환된 BoardDto를 포함하는 Page 객체를 반환합니다.
         return new PageImpl<>(boardDtos, pageable, boardEntityPage.getTotalElements());
     }
 
