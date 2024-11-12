@@ -14,6 +14,7 @@ public class PostReqDto {
     private String title;
     private String body;
     private MultipartFile postImage;
+    private String category;
     private Long boardId;
     private String userId;
 }

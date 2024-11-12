@@ -4,18 +4,32 @@ body {
     margin: 0;
     padding: 0;
 }
-
-/* 탭 메뉴 스타일 */
-.tabs {
+/* 카테고리 선택 및 제목 검색 */
+.options {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    border-bottom: 2px solid black;
-}
-.tab {
+    justify-content: flex-end;
+    gap: 20px;
     padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
+    align-items: center;
+}
+.category-select, .title-search {
+    display: flex;
+    align-items: center;
+}
+.category-select select {
+    padding: 5px;
+    font-size: 16px;
+}
+.title-search input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+}
+.title-search button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    font-size: 16px;
+    background-color: #d1e7c5;
+    border: none;
     cursor: pointer;
 }
 /* 검색바 스타일 */
@@ -39,11 +53,11 @@ body {
 
 /* 게시물 리스트 스타일 */
 .post-list {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
     gap: 20px;
     padding: 20px;
-    flex-wrap: wrap;
+    margin-top: 20px;
 }
 .post {
     text-align: center;
