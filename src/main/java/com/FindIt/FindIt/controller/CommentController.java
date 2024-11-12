@@ -4,6 +4,8 @@ import com.FindIt.FindIt.dto.CommentDto;
 import com.FindIt.FindIt.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,4 +30,16 @@ public class CommentController {
         commentService.updateComment(commentId, commentDto);
         return "redirect:/post/" + postId;
     }
+
+    @DeleteMapping("{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        try {
+            commentService.deleteComment(commentId);
+            return ResponseEntity.noContent().build(); // 204 No Content 응답
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 에러가 발생하면 500 응답
+        }
+    }
+
+
 }

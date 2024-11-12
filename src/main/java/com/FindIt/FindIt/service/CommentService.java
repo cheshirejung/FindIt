@@ -54,6 +54,13 @@ public class CommentService {
         return CommentDto.fromEntity(comment);
     }
 
+    @Transactional
+    public void deleteComment(Long commentId) {
+        CommentEntity comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+        commentRepository.delete(comment);
+    }
+
 /*    // 게시물의 모든 댓글 조회
     public List<CommentDto> getCommentsByPostId(Long postId) {
         List<CommentEntity> allComments = commentRepository.findByPostIdOrderByCreatedAtAsc(postId);

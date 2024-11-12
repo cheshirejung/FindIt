@@ -13,12 +13,19 @@
 
   <div class="title">게시판 수정</div>
 
-  <form action="/update-board" method="POST" enctype="multipart/form-data">
+  <!-- 기존 게시물 ID 전달용 hidden 필드 추가 -->
+  <form th:action="@{/board/update}" th:object="${boardDto}" method="post" enctype="multipart/form-data">
     <div class="input-box">
-      <!-- 기존 게시판 이름을 불러와서 입력 필드에 표시 -->
-      <input type="text" name="boardName" value="기존 게시판 이름" placeholder="게시판 이름을 입력해 주세요"><br>
-      <!-- 기존 파일을 불러와서 첨부파일 필드로 표시 -->
-      <input type="file" name="boardFile">
+      <input type="hidden" th:field="*{boardId}">
+
+      <label for="title"></label>
+      <input type="text" id="title" th:field="*{title}">
+
+      <label for="image"></label>
+      <input type="file" id="image" name="image">
+      <div>
+        <img th:src="${boardDto.imageUrl}" alt="이미지 미리보기" style="max-width: 200px;">
+      </div>
     </div>
 
     <div class="buttons">
