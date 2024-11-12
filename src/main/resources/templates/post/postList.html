@@ -27,10 +27,10 @@
 <form action="/post">
     <div class="post-list" th:each="post : ${posts}">
         <div class="post">
-            <a th:href="'/post/'+${post.postId}">
+            <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
                 <img src="item1.jpg" alt="item1">
             </a>
-            <a th:href="'/post/'+${post.postId}">
+            <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
                 <div class="post-title" th:text="${post.title}" ></div>
             </a>
             <div class="post-createdAt" th:text="${post.createdAt}"></div>
@@ -42,13 +42,13 @@
 <!-- 페이지 네비게이션 -->
 <div class="pagination">
     <!-- 이전 페이지 버튼 -->
-    <a th:href="@{/post(page=${posts.number - 1},boardId=${boardId})}" th:if="${posts.hasPrevious()}" class="page-link">&lt;</a>
+    <a th:href="@{/post(page=${posts.number},boardId=${boardId})}" th:if="${posts.hasPrevious()}" class="page-link">&lt;</a>
 
     <!-- 페이지 번호 -->
-    <span th:each="pageNum : ${#numbers.sequence(0, posts.totalPages - 1)}">
+    <span th:each="pageNum : ${#numbers.sequence(1, posts.totalPages)}">
         <a th:href="@{/post(page=${pageNum},boardId=${boardId})}"
-           th:text="${pageNum + 1}"
-           th:classappend="${pageNum == posts.number} ? 'current-page' : ''"></a>
+           th:text="${pageNum}"
+           th:classappend="${pageNum - 1== posts.number} ? 'current-page' : ''"></a>
     </span>
 
     <!-- 다음 페이지 버튼 -->
@@ -62,7 +62,7 @@
     </a>
     <form th:action="'/board/'+${boardId}" method="post">
         <input type="hidden" name="_method" value="delete">
-        <button type="submit">Delete Board</button>
+        <button type="submit">게시판 삭제</button>
     </form>
 </div>
 

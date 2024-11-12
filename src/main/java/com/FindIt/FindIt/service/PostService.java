@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,8 @@ public class PostService {
                 .collect(Collectors.toList());
         return new PageImpl<>(postDtos, pageable, postEntitiePage.getTotalElements());
     }
+
+
     public PostEntity findById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다"));

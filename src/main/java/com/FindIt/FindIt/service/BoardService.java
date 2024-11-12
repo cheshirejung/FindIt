@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +41,7 @@ public class BoardService {
 
 
     public Page<BoardDto> getBoards(Pageable pageable) {
+
         Page<BoardEntity> boardEntityPage = boardRepository.findAll(pageable);
 
         List<BoardDto> boardDtos = boardEntityPage.getContent().stream()

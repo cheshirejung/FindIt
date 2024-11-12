@@ -6,6 +6,7 @@ import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -43,7 +43,10 @@ public class PostController {
     }
 
     @GetMapping
-    public String postListPage(@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC, size = 5) Pageable pageable,@RequestParam("boardId") Long boardId, Model model) {
+    public String postListPage(@PageableDefault(page = 1) Pageable pageable,@RequestParam("boardId") Long boardId, Model model) {
+        int page = pageable.getPageNumber() - 1;
+
+        pageable = PageRequest.of(page, 5,Sort.Direction.DESC, "postId");
         Page<PostDto> postDtos = postService.findPostsByBoardId(boardId, pageable);
         model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
@@ -51,10 +54,10 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String postDetailPage(@PathVariable Long postId, Model model) {
+    public String postDetailPage( @RequestParam("pageNo") int pageNo, @PathVariable Long postId, Model model) {
         model.addAttribute("post", postService.findById(postId));
+        model.addAttribute("pageNo", pageNo);
         return "post/postDetail";
-
     }
 
     @GetMapping("/update/{postId}")

@@ -29,19 +29,18 @@
     <!-- 페이지 네비게이션 -->
     <div class="pagination">
         <!-- 이전 페이지 버튼 -->
-        <a th:href="@{/board(page=${boards.number - 1})}" th:if="${boards.hasPrevious()}" class="page-link">&lt;</a>
+        <a th:href="@{/board(page=${boards.number})}" th:if="${boards.hasPrevious()}" class="page-link">&lt;</a>
 
         <!-- 페이지 번호 -->
-        <span th:each="pageNum : ${#numbers.sequence(0, boards.totalPages - 1)}">
+        <span th:each="pageNum : ${#numbers.sequence(1, boards.totalPages)}">
         <a th:href="@{/board(page=${pageNum})}"
-           th:text="${pageNum + 1}"
-           th:classappend="${pageNum == boards.number} ? 'current-page' : ''"></a>
+           th:text="${pageNum}"
+           th:classappend="${pageNum - 1 == boards.number} ? 'current-page' : ''"></a>
     </span>
 
         <!-- 다음 페이지 버튼 -->
         <a th:href="@{/board(page=${boards.number + 1})}" th:if="${boards.hasNext()}" class="page-link">&gt;</a>
     </div>
-
 </div>
 </body>
 </html>
