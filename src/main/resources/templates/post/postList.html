@@ -41,13 +41,18 @@
 
 <!-- 페이지 네비게이션 -->
 <div class="pagination">
-    <span>&lt;</span>
-    <span>1</span>
-    <span>2</span>
-    <span>3</span>
-    <span>4</span>
-    <span>5</span>
-    <span>&gt;</span>
+    <!-- 이전 페이지 버튼 -->
+    <a th:href="@{/post(page=${posts.number - 1},boardId=${boardId})}" th:if="${posts.hasPrevious()}" class="page-link">&lt;</a>
+
+    <!-- 페이지 번호 -->
+    <span th:each="pageNum : ${#numbers.sequence(0, posts.totalPages - 1)}">
+        <a th:href="@{/post(page=${pageNum},boardId=${boardId})}"
+           th:text="${pageNum + 1}"
+           th:classappend="${pageNum == posts.number} ? 'current-page' : ''"></a>
+    </span>
+
+    <!-- 다음 페이지 버튼 -->
+    <a th:href="@{/post(page=${posts.number + 1},boardId=${boardId})}" th:if="${posts.hasNext()}" class="page-link">&gt;</a>
 </div>
 
 <!-- 등록/삭제 버튼 -->

@@ -48,6 +48,7 @@ public class UserController {
         return "user/mypage";
     }
 
+
     // 회원 탈퇴 api
     @DeleteMapping("/delete")
     public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {

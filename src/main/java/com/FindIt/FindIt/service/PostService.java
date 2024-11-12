@@ -9,6 +9,7 @@ import com.FindIt.FindIt.repository.PostImgRepository;
 import com.FindIt.FindIt.repository.PostRepository;
 import com.FindIt.FindIt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

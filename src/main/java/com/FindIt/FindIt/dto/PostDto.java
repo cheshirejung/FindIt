@@ -17,5 +17,6 @@ public class PostDto {
     private Long boardId;
     private String body;
     private String postImgUrl;
+    private String createdAt;
     private List<CommentDto> comments;
 }
