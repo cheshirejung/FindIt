@@ -1,4 +1,6 @@
+/*
 function updateProfile(event) {
+
     event.preventDefault();
 
     // 비밀번호 확인
@@ -40,4 +42,4 @@ function updateProfile(event) {
             console.error('Error:', error);
             alert('오류가 발생했습니다.');
         });
-}
+}*/

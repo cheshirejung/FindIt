@@ -2,6 +2,7 @@ package com.FindIt.FindIt.service;
 
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
+import com.FindIt.FindIt.dto.UserUpdateDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.repository.UserRepository;
@@ -44,6 +45,33 @@ public class UserService {
         UserDto userDto = user.toDto(user);
 
         return userDto;
+    }
+
+    @Transactional
+    public void updateUser(UserUpdateDto userUpdateDto) {
+        // 현재 로그인한 사용자 정보 가져오기
+        UserEntity user = userRepository.findLoginUserByLoginId(
+                SecurityContextHolder.getContext().getAuthentication().getName());
+
+        if (user == null) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+
+        // 비밀번호 변경을 원하는 경우
+        if (userUpdateDto.getPassword() != null && !userUpdateDto.getPassword().isEmpty()) {
+            // 비밀번호 일치 여부 확인
+            if (!userUpdateDto.getPassword().equals(userUpdateDto.getRePassword())) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+            // 새 비밀번호 암호화
+            user.setPassword(passwordEncoder.encode(userUpdateDto.getPassword()));
+        }
+
+        // 나머지 정보 업데이트
+        user.setUserName(userUpdateDto.getUserName());
+        user.setEmail(userUpdateDto.getEmail());
+
+        userRepository.save(user);
     }
 
     @Transactional
