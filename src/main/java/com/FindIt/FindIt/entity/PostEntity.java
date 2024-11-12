@@ -32,6 +32,9 @@ public class PostEntity extends BaseCreateByEntity {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "category")
+    private String category;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
