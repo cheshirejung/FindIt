@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.service.UserService;
@@ -47,6 +48,8 @@ public class UserController {
         /* @AuthenticationPrincipal : 스프링 시큐리티인데 현재 로그인한 사용자의 정보를 가져오는데 쓴다고 함 */
         return "user/mypage";
     }
+
+
 
     // 회원 탈퇴 api
     @DeleteMapping("/delete")
