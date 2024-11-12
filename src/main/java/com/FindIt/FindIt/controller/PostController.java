@@ -50,6 +50,7 @@ public class PostController {
         Page<PostDto> postDtos = postService.findPostsByBoardId(boardId, pageable);
         model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
+        model.addAttribute("pageNo", page);
         return "post/postList";
     }
 
