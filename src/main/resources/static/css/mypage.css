@@ -53,3 +53,15 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
+
+.button-group button:hover {
+    background-color: #677c5f;
+}
+
+#deleteBtn {
+    background-color: lightcoral;
+}
+
+#deleteBtn:hover {
+    background-color: #ea4444;
+}
