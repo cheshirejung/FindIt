@@ -87,4 +87,20 @@ public class PostService {
 
         postRepository.save(post);
     }
+
+    @Transactional
+    public void deletePost(Long postId) {
+        PostEntity post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        postImgRepository.findByPost(post).ifPresent(postImg -> {
+
+            imageService.deleteImage(postImg.getStorePath());
+
+            postImgRepository.delete(postImg);
+        });
+
+        postRepository.delete(post);
+
+    }
 }
