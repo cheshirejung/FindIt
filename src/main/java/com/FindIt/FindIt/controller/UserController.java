@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.service.UserService;
@@ -44,11 +45,16 @@ public class UserController {
     /* 마이페이지 접근 */
     @GetMapping("/mypage")
     public String myPage(Model model) {
-        /* @AuthenticationPrincipal : 스프링 시큐리티인데 현재 로그인한 사용자의 정보를 가져오는데 쓴다고 함 */
+        // 현재 로그인한 사용자의 정보를 가져옴
+        UserDto userInfo = userService.getUser();
+        model.addAttribute("user", userInfo);
         return "user/mypage";
+
     }
 
-    // 회원 탈퇴 api
+
+
+// 회원 탈퇴 api
     @DeleteMapping
     public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {
         String sessionLoginId = (String) session.getAttribute("loginId");
