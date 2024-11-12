@@ -49,7 +49,7 @@ public class UserController {
     }
 
     // 회원 탈퇴 api
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {
         String sessionLoginId = (String) session.getAttribute("loginId");
 
