@@ -5,6 +5,7 @@
     <title>마이페이지</title>
     <link rel="stylesheet" type="text/css" href="/css/mypage.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/modalPage.css">
     <script src="/js/userApi.js"></script>
 </head>
 <body>
@@ -35,24 +36,26 @@
         <div class="button-group">
             <button type="submit">수정</button>
             <button type="button" onclick="location.href='/cancel'">취소</button>
+            <button id="deleteBtn" type="button" onclick="openDeleteModal()">탈퇴</button>
         </div>
-        <button id="deleteBtn" onclick="openDeleteModal()">회원 탈퇴</button>
     </form>
 </div>
 
 <div id="deleteModal" class="modal" style="display:none;">
     <div class="modal-content">
-        <span class="close" onclick="closeDeleteModal()">&times;</span>
-        <h2>정말 탈퇴하시겠습니까?</h2>
+        <div class="modal-header">
+            <h3>정말 탈퇴하시겠습니까?</h3>
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+        </div>
         <p>탈퇴 시 회원 정보는 되돌릴 수 없습니다.</p>
-        <form action="/user" method="post">
+        <form th:action="@{/user}" method="post">
             <input type="hidden" name="_method" value="delete">
             <input type="hidden" id="loginId" name="loginId" th:value="${user.loginId}">
 
-            <label for="delPassword">비밀번호</label>
+            <label for="delPassword">비밀번호:</label>
             <input type="password" id="delPassword" name="delPassword" required>
 
-            <div class="button-group">
+            <div class="button-group2">
                 <button type="submit">확인</button>
                 <button type="button" onclick="closeDeleteModal()">취소</button>
             </div>
