@@ -62,13 +62,13 @@ public class PostService {
     }
 
     @Transactional
-    public void savePost(PostReqDto postReqDto, CustomUserDetails userDetails){
+    public void savePost(PostReqDto postReqDto,Long boardId, CustomUserDetails userDetails){
         UserEntity user = userDetails.getUser();
 
         PostEntity postEntity = PostEntity.builder()
                 .title(postReqDto.getTitle())
                 .body(postReqDto.getBody())
-                .boardId(postReqDto.getBoardId())
+                .boardId(boardId)
                 .category(postReqDto.getCategory())
                 .user(user)
                 .build();

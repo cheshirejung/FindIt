@@ -4,9 +4,7 @@ import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
-import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +15,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/post")
@@ -65,10 +62,8 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public String postDetailPage( @RequestParam("pageNo") int pageNo, @PathVariable Long postId, Model model) {
-        PostEntity post = postService.findById(postId);
         model.addAttribute("post", postService.findById(postId));
         model.addAttribute("pageNo", pageNo);
-        model.addAttribute("boardId", post.getBoardId());
         return "post/postDetail";
     }
 

@@ -5,6 +5,7 @@ import com.FindIt.FindIt.dto.BoardReqDto;
 import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.service.BoardService;
 import com.FindIt.FindIt.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +33,8 @@ public class BoardController {
     /* userRole을 확인하기 위해서 userDtails 추가 */
     @GetMapping
     public String boardPage(@PageableDefault(page = 1) Pageable pageable ,Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
-        int page = pageable.getPageNumber() - 1;
 
+        int page = pageable.getPageNumber() - 1;
         pageable = PageRequest.of(page, 5, Sort.Direction.DESC, "boardId");
 
         Page<BoardDto> boardDtoPage = boardService.getBoards(pageable);
@@ -43,13 +45,17 @@ public class BoardController {
 
     // 게시판 생성 페이지
     @GetMapping("/create")
-    public String boardCreatePage() {
+    public String boardCreatePage(Model model) {
+        model.addAttribute("boardReqDto", new BoardReqDto());
         return "/board/create";
     }
 
     // 게시판 생성 api
     @PostMapping("/create")
-    public String createBoard(@ModelAttribute BoardReqDto boardReqDto, Model model,@AuthenticationPrincipal CustomUserDetails userDetails ) {
+    public String createBoard(@Valid @ModelAttribute BoardReqDto boardReqDto, BindingResult bindingResult, Model model, @AuthenticationPrincipal CustomUserDetails userDetails ) {
+        if (bindingResult.hasErrors()) {
+            return "/board/create";
+        }
         try {
             boardService.createBoard(boardReqDto,userDetails);
             return "redirect:/board";

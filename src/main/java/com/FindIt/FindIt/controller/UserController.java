@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserUpdateDto;
@@ -7,9 +8,13 @@ import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -34,7 +39,12 @@ public class UserController {
 
     // 회원 가입 api
     @PostMapping("/signup")
-    public String registerUser(@ModelAttribute UserSignupDto userSignupDto, Model model) {
+    public String registerUser(@Valid @ModelAttribute UserSignupDto userSignupDto,
+                               BindingResult bindingResult,
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            return "user/signup";
+        }
         try { // 로그인 id 중복 검사
             userService.registerUser(userSignupDto);
             return "redirect:/user/login?success=true";
@@ -51,13 +61,14 @@ public class UserController {
         // 현재 로그인한 사용자의 정보를 가져옴
         UserDto userInfo = userService.getUser();
         model.addAttribute("user", userInfo);
+        model.addAttribute("userUpdateDto", new UserUpdateDto());
         return "user/mypage";
 
     }
 
 
     /* 회원 정보 수정 */
-    @PostMapping
+    @PatchMapping
     public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, Model model) {
         try {
             userService.updateUser(userUpdateDto);
@@ -71,22 +82,21 @@ public class UserController {
 
     // 회원 탈퇴 api
     @DeleteMapping
-    public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {
-        //String sessionLoginId = (String) session.getAttribute("loginId");
-        //User sessionUser = (User) session.getAttribute("user");
+    public ResponseEntity<Void> deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {
         log.debug("########## login id : " + userWithdrawDto.getLoginId());
+        boolean isDelete = userService.deleteUser(userWithdrawDto);
+        //log.debug("########## service result: {}", userDto.getLoginId());
 
-        boolean isDeleted = userService.deleteUser(userWithdrawDto);
-        log.debug("########## service result: {}", isDeleted);
-        if (isDeleted) {
+        if (isDelete) {
             session.invalidate();
-            return "redirect:/user/login";
+            log.debug("########## user delete : success");
+            return ResponseEntity.ok().build();
         } else {
-            model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-            log.debug("########## modelAttribute");
-            return "redirect:/user/mypage";
+            log.debug("########## user delete : fail");
+            return ResponseEntity.status(401).build();
         }
     }
+
 
     /*로그인 페이지 접근*/
     @GetMapping("/login")

@@ -50,6 +50,6 @@ public class PostEntity extends BaseCreateByEntity {
         for (CommentEntity comment : comments) {
             commentDtos.add(CommentDto.fromEntity(comment));
         }
-         return new PostDto(this.postId,this.title,this.boardId,this.body,this.postImg.getStorePath(),this.getCreatedAt().toString(),commentDtos);
+         return new PostDto(this.postId,this.title,this.boardId,this.body,this.postImg.getStorePath(),this.getCreatedAt().toString(),this.getCreatedBy(),commentDtos);
     }
 }

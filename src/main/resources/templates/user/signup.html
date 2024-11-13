@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>회원가입 페이지</title>
     <link rel="stylesheet" href="/css/userSignup.css">
+    <link rel="stylesheet" href="/css/fieldError.css">
     <script src="/js/validatePassword.js"></script> <!-- 비밀번호 확인 JS파일 추가 -->
 </head>
 <body>
@@ -14,20 +15,25 @@
             <p th:text="${errorMessage}"></p>
         </div>
 
-        <label for="loginId">ID</label>
-        <input type="text" id="loginId" th:field="*{loginId}" placeholder="ID를 입력해주세요" required>
+        <label for="loginId">ID</label>                                                                         <!--메세지는 출력이 되지만 css가 적용이 안됨-->
+        <input type="text"  id="loginId" th:field="*{loginId}" placeholder="ID를 입력해주세요" th:class="${#fields.hasErrors('loginId')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}">Invalid date</p>
 
         <label for="userName">이름</label>
-        <input type="text" id="userName" th:field="*{userName}" placeholder="이름을 입력해주세요." required>
+        <input type="text"  id="userName" th:field="*{userName}" placeholder="이름을 입력해주세요." th:class="${#fields.hasErrors('userName')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Invalid date</p>
 
         <label for="email">이메일</label>
-        <input type="email" id="email" th:field="*{email}" placeholder="이메일을 입력해주세요." required>
+        <input type="text"  id="email" th:field="*{email}" placeholder="이메일를 입력해주세요." th:class="${#fields.hasErrors('email')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Invalid date</p>
 
         <label for="password">비밀번호</label>
-        <input type="password" id="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요." required>
+        <input type="password"  id="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요." th:class="${#fields.hasErrors('password')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid date</p>
 
         <label for="rePassword">비밀번호 확인</label>
-        <input type="password" id="rePassword" name="rePassword" placeholder="비밀번호를 다시 입력해주세요." required>
+        <input type="password"  id="rePassword" th:field="*{rePassword}" placeholder="이메일를 입력해주세요." th:class="${#fields.hasErrors('rePassword')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}">Invalid date</p>
 
         <div class="button-group">
             <button type="submit">회원가입</button>
