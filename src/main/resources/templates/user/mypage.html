@@ -17,20 +17,25 @@
 <div class="form-container">
     <form th:action="@{/user}" th:object="${user}" method="post">
         <input type="hidden" name="_method" value="patch" />
-        <label for="name">이름</label>
-        <input type="text" id="name" name="name" th:value="${user.userName}">
 
-        <label for="id">아이디</label>
-        <input type="text" id="id" name="id" th:value="${user.loginId}" readonly> <!-- readonly : 읽기 전용, 수정 불가 -->
+        <label for="userName">이름</label>
+        <input type="text" id="userName" name="userName" th:value="${user.userName}">
+
+        <label for="loginId">아이디</label>
+        <input type="text" id="id" name="loginId" th:value="${user.loginId}" readonly> <!-- readonly : 읽기 전용, 수정 불가 -->
 
         <label for="email">이메일</label>
         <input type="text" id="email" name="email" th:value="${user.email}">
 
         <label for="password">비밀번호</label>
-        <input type="password" id="password" name="password" placeholder="비밀번호 입력">
+        <input type="password" id="password" name="password" placeholder="변경하려면 입력하세요">
 
-        <label for="re_password">비밀번호 확인</label>
-        <input type="password" id="re_password" name="re_password" placeholder="비밀번호 재입력">
+        <label for="rePassword">비밀번호 확인</label>
+        <input type="password" id="rePassword" name="rePassword" placeholder="비밀번호 재입력">
+
+        <!-- 메시지 표시 영역 -->
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
 
         <!-- 버튼 그룹 -->
         <div class="button-group">

@@ -3,15 +3,18 @@ package com.FindIt.FindIt.controller;
 import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
+import com.FindIt.FindIt.dto.UserUpdateDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -36,7 +39,12 @@ public class UserController {
 
     // 회원 가입 api
     @PostMapping("/signup")
-    public String registerUser(@ModelAttribute UserSignupDto userSignupDto, Model model) {
+    public String registerUser(@Valid @ModelAttribute UserSignupDto userSignupDto,
+                               BindingResult bindingResult,
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            return "user/signup";
+        }
         try { // 로그인 id 중복 검사
             userService.registerUser(userSignupDto);
             return "redirect:/user/login?success=true";
@@ -53,8 +61,26 @@ public class UserController {
         // 현재 로그인한 사용자의 정보를 가져옴
         UserDto userInfo = userService.getUser();
         model.addAttribute("user", userInfo);
+        model.addAttribute("userUpdateDto", new UserUpdateDto());
         return "user/mypage";
 
+    }
+
+
+    /* 회원 정보 수정 */
+    @PatchMapping
+    public String updateUser(@Valid @ModelAttribute UserUpdateDto userUpdateDto,BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/user/mypage";
+        }
+        try {
+            userService.updateUser(userUpdateDto);
+            model.addAttribute("message", "프로필이 성공적으로 업데이트되었습니다.");
+            return "redirect:/user/mypage";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "redirect:/user/mypage";
+        }
     }
 
     // 회원 탈퇴 api
