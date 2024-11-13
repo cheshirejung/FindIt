@@ -5,6 +5,7 @@ import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,10 +24,11 @@ public class CommentController {
     @PostMapping
     public /*ResponseEntity<CommentDto>*/ String createComment(@PathVariable("postId") Long postId,
                                                                @ModelAttribute CommentDto commentDto,
-                                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
+                                                               @AuthenticationPrincipal CustomUserDetails userDetails,
+                                                               Pageable pageable) {
         commentService.createComment(postId, commentDto,userDetails);
         /*return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);*/
-        return "redirect:/post/" + postId;
+        return "redirect:/post/" + postId +"?pageNo=" + pageable.getPageNumber();
     }
 
     @PatchMapping("{commentId}")
