@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
@@ -7,6 +8,7 @@ import com.FindIt.FindIt.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,20 +58,22 @@ public class UserController {
 
     // 회원 탈퇴 api
     @DeleteMapping
-    public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {
+    public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model,
+                             @AuthenticationPrincipal CustomUserDetails userDetails) {
         //String sessionLoginId = (String) session.getAttribute("loginId");
         //User sessionUser = (User) session.getAttribute("user");
         log.debug("########## login id : " + userWithdrawDto.getLoginId());
 
-        boolean isDeleted = userService.deleteUser(userWithdrawDto);
-        log.debug("########## service result: {}", isDeleted);
-        if (isDeleted) {
+        UserDto userDto = userService.deleteUser(userWithdrawDto, userDetails);
+        log.debug("########## service result: {}", userDto.getLoginId());
+        if (userDto == null) {
             session.invalidate();
             return "redirect:/user/login";
         } else {
+            model.addAttribute("user", userDto);
             model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
             log.debug("########## modelAttribute");
-            return "redirect:/user/mypage";
+            return "user/mypage";
         }
     }
 

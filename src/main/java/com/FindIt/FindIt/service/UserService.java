@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.service;
 
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
@@ -49,14 +50,16 @@ public class UserService {
     }
 
     @Transactional
-    public boolean deleteUser(UserWithdrawDto userWithdrawDto) {
+    public UserDto deleteUser(UserWithdrawDto userWithdrawDto, CustomUserDetails userDetails) {
         UserEntity user = userRepository.findLoginUserByLoginId(userWithdrawDto.getLoginId());
+        UserEntity loginUser = userDetails.getUser(); // 현재 로그인된 사용자
+        UserDto loginUserDto = loginUser.toDto(loginUser); // Dto 변환
 
         if (user != null && passwordEncoder.matches(userWithdrawDto.getDelPassword(), user.getPassword())) {
             userRepository.delete(user);
-            return true;
+            return null;
         }
-        return false;
+        return loginUserDto;
     }
 
 
