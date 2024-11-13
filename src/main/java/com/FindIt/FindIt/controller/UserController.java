@@ -66,10 +66,7 @@ public class UserController {
 
     /* 회원 정보 수정 */
     @PatchMapping
-    public String updateUser(@Valid @ModelAttribute UserUpdateDto userUpdateDto,BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/user/mypage";
-        }
+    public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, Model model) {
         try {
             userService.updateUser(userUpdateDto);
             model.addAttribute("message", "프로필이 성공적으로 업데이트되었습니다.");
