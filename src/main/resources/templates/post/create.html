@@ -37,7 +37,7 @@
         <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Invalid date</p>
 
         <label for="file"></label>
-        <input type="file" id="file" th:field="*{postImage}"  th:class="${#fields.hasErrors('body')} ? 'fieldError' : ''">
+        <input type="file" id="file" th:field="*{postImage}"  th:class="${#fields.hasErrors('postImage')} ? 'fieldError' : ''">
         <p th:if="${#fields.hasErrors('postImage')}" th:errors="*{postImage}">Invalid date</p>
 
         <!-- 버튼 그룹 -->

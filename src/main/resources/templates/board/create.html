@@ -12,13 +12,16 @@
   <!--헤더-->
   <div class="title">게시판 등록</div>
 
-  <form action="/board/create" method="POST" enctype="multipart/form-data">
+  <form th:action="@{/board/create}" th:object="${boardReqDto}" method="POST" enctype="multipart/form-data">
     <div class="input-box">
       <label for="title"></label>
-      <input type="text" id="title" name="title" placeholder="게시판 이름을 입력해 주세요" required><br>
+      <input type="text" id="title" th:field="*{title}" placeholder="게시판 이름을 입력해 주세요" th:class="${#fields.hasErrors('title')} ? 'fieldError' : ''"><br>
+      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid date</p>
       <div class="file-box">
         <label for="file"></label>
-        <input type="file" id="file" name="boardImage" accept="image/*" required>
+        <input type="file" id="file" th:field="*{boardImage}"  th:class="${#fields.hasErrors('boardImage')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('boardImage')}" th:errors="*{boardImage}">Invalid date</p>
+
       </div>
     </div>
 
