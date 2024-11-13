@@ -2,8 +2,8 @@
 .header {
     background-color: #6a2c91;
     color: #ffffff;
-    height: 120px; /* 고정 높이 설정 */
-    padding: 0 40px; /* padding 값 조정 */
+    height: 80px; /* 고정 높이 설정 */
+    padding: 0 20px; /* padding 값 조정 */
     text-align: center;
     position: fixed;
     top: 0;
