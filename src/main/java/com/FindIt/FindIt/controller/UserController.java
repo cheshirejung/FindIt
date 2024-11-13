@@ -68,7 +68,8 @@ public class UserController {
             return "redirect:/user/login";
         } else {
             model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-            return "user/mypage";
+            log.debug("########## modelAttribute");
+            return "redirect:/user/mypage";
         }
     }
 
