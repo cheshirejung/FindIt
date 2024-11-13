@@ -119,13 +119,10 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
         postImgRepository.findByPost(post).ifPresent(postImg -> {
-
             imageService.deleteImage(postImg.getStorePath());
-
             postImgRepository.delete(postImg);
         });
 
         postRepository.delete(post);
-
     }
 }

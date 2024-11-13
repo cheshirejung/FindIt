@@ -85,62 +85,18 @@
         <a th:href="@{/post/update/{postId}(postId=${post.postId})}">
             <button>수정</button>
         </a>
-        <button th:onclick="deletePost([[${post.postId}]], [[${post.boardId}]])">삭제</button>
+        <!-- 작성자인 경우에만 삭제 버튼 표시 -->
+        <th:block th:if="${session.user != null and session.user.userId == post.user.userId}">
+            <form th:action="@{/post/{postId}(postId=${post.postId})}" method="post" style="display: inline;">
+                <input type="hidden" name="_method" value="DELETE"/>
+                <input type="hidden" name="boardId" th:value="${post.boardId}"/>
+                <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+            </form>
+        </th:block>삭제</button>
         <button th:onclick="|location.href='@{/post(boardId=${post.boardId}, pageNo=${pageNo + 1})}'|">목록</button>
     </div>
 </div>
-<script>
-    function confirmDelete(event, postId, commentId) {
-        event.preventDefault();
 
-        if (confirm("정말 삭제하시겠습니까?")) {
-            fetch(`/post/${postId}/comment/${commentId}`, {
-                method: 'DELETE'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("삭제되었습니다.");
-                        location.reload(); // 삭제 후 페이지를 새로고침하여 반영
-                    } else {
-                        alert("삭제에 실패했습니다.");
-                    }
-                })
-                .catch(error => {
-                    console.error("삭제 중 오류가 발생했습니다:", error);
-                    alert("삭제에 실패했습니다.");
-                });
-        }
-    }
-</script>
-
-
-<script>
-    function deletePost(postId, boardId) {
-        console.log('deletePost called with postId:', postId, 'boardId:', boardId); // 디버깅용 로그
-
-
-        if (confirm('정말 삭제하시겠습니까?')) {
-            console.log(`Sending DELETE request to: /post/${postId}?boardId=${boardId}`); // 요청 URL 확인
-
-            fetch(`/post/${postId}?boardId=${boardId}`, {
-                method: 'DELETE',
-            })
-                .then(response => {
-                    console.log('Response status:', response.status); // 응답 상태 확인
-                    if (response.ok) {
-                        alert('삭제되었습니다.');
-                        window.location.href = `/post?boardId=${boardId}`;
-                    } else {
-                        alert('삭제 중 오류가 발생했습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error); // 자세한 에러 정보
-                    alert('삭제 중 오류가 발생했습니다.');
-                });
-        }
-    }
-</script>
 
 </body>
 </html>

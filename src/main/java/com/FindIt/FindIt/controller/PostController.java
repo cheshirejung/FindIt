@@ -4,7 +4,9 @@ import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -83,14 +85,26 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public String deletePost(@PathVariable Long postId, @RequestParam Long boardId) {
+    public String deletePost(@PathVariable Long postId,
+                             @RequestParam Long boardId,
+                             HttpSession session,
+                             Model model) {
         try {
+            // 세션에서 현재 로그인한 사용자 정보 가져오기
+            UserEntity loginUser = (UserEntity) session.getAttribute("user");
+            PostEntity post = postService.findById(postId);
+
+            // 게시글 작성자와 현재 로그인한 사용자 비교
+            if(!post.getUser().getUserId().equals(loginUser.getUserId())) {
+                model.addAttribute("errorMessage", "삭제 권한이 없습니다.");
+                return "redirect:/post/" + postId;
+            }
+
             postService.deletePost(postId);
             return "redirect:/post?boardId=" + boardId;
         } catch (Exception e) {
-            // 에러 처리
-            return "error";
-
+            model.addAttribute("errorMessage", "게시글 삭제 중 오류가 발생했습니다.");
+            return "redirect:/post/" + postId;
         }
     }
 }
