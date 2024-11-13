@@ -4,7 +4,6 @@ import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
-import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
