@@ -8,6 +8,7 @@ import com.FindIt.FindIt.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,24 +59,24 @@ public class UserController {
 
     // 회원 탈퇴 api
     @DeleteMapping
-    public String deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model,
-                             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        //String sessionLoginId = (String) session.getAttribute("loginId");
-        //User sessionUser = (User) session.getAttribute("user");
+    public ResponseEntity<Void> deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto,
+                                           HttpSession session,
+                                           Model model,
+                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
         log.debug("########## login id : " + userWithdrawDto.getLoginId());
+        boolean isDelete = userService.deleteUser(userWithdrawDto, userDetails);
+        //log.debug("########## service result: {}", userDto.getLoginId());
 
-        UserDto userDto = userService.deleteUser(userWithdrawDto, userDetails);
-        log.debug("########## service result: {}", userDto.getLoginId());
-        if (userDto == null) {
+        if (isDelete) {
             session.invalidate();
-            return "redirect:/user/login";
+            log.debug("########## user delete : success");
+            return ResponseEntity.ok().build();
         } else {
-            model.addAttribute("user", userDto);
-            model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-            log.debug("########## modelAttribute");
-            return "user/mypage";
+            log.debug("########## user delete : fail");
+            return ResponseEntity.status(401).build();
         }
     }
+
 
     /*로그인 페이지 접근*/
     @GetMapping("/login")

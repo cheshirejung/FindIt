@@ -1,52 +1,37 @@
-function updateProfile(event) {
-    event.preventDefault();
+document.getElementById("deleteUserForm").addEventListener('submit', function(event) {
+    event.preventDefault(); // 폼의 기본 제출 동작 방지
 
-    // 비밀번호 확인
-    const password = document.getElementById('password').value;
-    const rePassword = document.getElementById('re_password').value;
+    const form = event.target;
+    const formData = new FormData(form);
 
-    if (password !== rePassword) {
-        alert('비밀번호가 일치하지 않습니다.');
-        return;
-    }
-
-    // 변경된 데이터만 포함하는 객체 생성
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value
-    };
-
-    // 비밀번호가 입력된 경우에만 포함
-    if (password) {
-        formData.password = password;
-    }
-
-    fetch('/api/user/profile', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+    fetch('/user', {
+        method: 'DELETE',
+        body: formData
     })
         .then(response => {
-            if (response.ok) {
-                alert('프로필이 업데이트되었습니다.');
-                location.reload(); // 페이지 새로고침
+            // 응답 상태 코드 확인
+            if (response.ok) { // 200번대 응답
+                console.log("삭제 성공");
+                alert("성공적으로 삭제되었습니다!");
+                location.href = '/user/login';
+            } else if (response.status === 401) { // 비밀번호 불일치 (401 Unauthorized)
+                console.log("비밀번호 불일치");
+                alert('비밀번호가 맞지 않습니다!');
             } else {
-                alert('프로필 업데이트에 실패했습니다.');
+                throw new Error("요청 실패"); // 그 외 에러 처리
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('오류가 발생했습니다.');
+            console.error("에러 발생:", error);
+            alert('문제가 발생했습니다. 다시 시도해주세요.');
         });
-}
+});
 
-// window.onload = function() {
-//     if (sessionStorage.getItem('modalOpen') === 'true') {
-//         openDeleteModal();
-//     }
-// }
+window.onload = function() {
+    if (sessionStorage.getItem('modalOpen') === 'true') {
+        openDeleteModal();
+    }
+}
 
 function openDeleteModal() {
     document.getElementById('deleteModal').style.display = 'block';

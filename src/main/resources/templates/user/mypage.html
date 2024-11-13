@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/css/mypage.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/modalPage.css">
-    <script src="/js/userApi.js"></script>
+    <script src="/js/userApi.js" defer></script>
 </head>
 <body>
 
@@ -48,8 +48,7 @@
             <span class="close" onclick="closeDeleteModal()">&times;</span>
         </div>
         <p>탈퇴 시 회원 정보는 되돌릴 수 없습니다.</p>
-        <form th:action="@{/user}" method="post">
-            <input type="hidden" name="_method" value="delete">
+        <form id= "deleteUserForm">
             <input type="hidden" id="loginId" name="loginId" th:value="${user.loginId}">
 
             <label for="delPassword">비밀번호:</label>

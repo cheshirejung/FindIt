@@ -50,16 +50,16 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto deleteUser(UserWithdrawDto userWithdrawDto, CustomUserDetails userDetails) {
+    public boolean deleteUser(UserWithdrawDto userWithdrawDto, CustomUserDetails userDetails) {
         UserEntity user = userRepository.findLoginUserByLoginId(userWithdrawDto.getLoginId());
         UserEntity loginUser = userDetails.getUser(); // 현재 로그인된 사용자
         UserDto loginUserDto = loginUser.toDto(loginUser); // Dto 변환
 
         if (user != null && passwordEncoder.matches(userWithdrawDto.getDelPassword(), user.getPassword())) {
             userRepository.delete(user);
-            return null;
+            return true;
         }
-        return loginUserDto;
+        return false;
     }
 
 
