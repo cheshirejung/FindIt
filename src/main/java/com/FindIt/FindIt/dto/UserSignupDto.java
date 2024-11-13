@@ -27,7 +27,7 @@ public class UserSignupDto {
     private String email;
 
     @NotBlank(message="비밀번호는 공백일 수 없습니다.")
-    @Pattern(regexp="[a-zA-Z1-9]{6,12}", message = "비밀번호는 영어와 숫자로 포함해서 6~12자리 이내로 입력해주세요.")
+    @Pattern(regexp="^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,15}", message = "비밀번호는 영어와 숫자로 포함해서 8~15자리 이내로 입력해주세요.")
     private String password;
 
     @NotBlank(message="비밀번호를 다시한번 입력해주셔야합니다")
