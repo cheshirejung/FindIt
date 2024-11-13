@@ -93,7 +93,7 @@
                 <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
             </form>
         </th:block>
-        <button th:onclick="|location.href='@{/post(boardId=${post.boardId}, page=${pageNo})}'|">목록</button>
+        <button th:onclick="|location.href='@{/post(boardId=${boardId}, page=${pageNo + 1})}'|">목록</button>
     </div>
 </div>
 <script>

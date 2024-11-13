@@ -84,9 +84,11 @@ public class PostController {
     public String postDetailPage( @RequestParam("pageNo") int pageNo,
                                   @PathVariable Long postId, Model model,
                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
+        PostEntity post = postService.findById(postId);
         model.addAttribute("loginId", userDetails.getUsername());
         model.addAttribute("post", postService.findById(postId));
         model.addAttribute("pageNo", pageNo);
+        model.addAttribute("boardId", post.getBoardId());
         return "post/postDetail";
     }
 
