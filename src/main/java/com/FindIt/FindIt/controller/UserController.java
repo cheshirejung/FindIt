@@ -5,9 +5,11 @@ import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -31,7 +33,15 @@ public class UserController {
 
     // 회원 가입 api
     @PostMapping("/signup")
-    public String registerUser(@ModelAttribute UserSignupDto userSignupDto, Model model) {
+    public String registerUser(@Valid @ModelAttribute("userSignupDto") UserSignupDto userSignupDto,
+                               BindingResult bindingResult,
+                               Model model
+                               ) {
+
+        //입력 받은 값 유효성 검사
+        if(bindingResult.hasErrors()) {
+            return "user/signup";
+        }
         try { // 로그인 id 중복 검사
             userService.registerUser(userSignupDto);
             return "redirect:/user/login?success=true";

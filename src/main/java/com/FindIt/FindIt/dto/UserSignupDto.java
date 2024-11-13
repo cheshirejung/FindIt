@@ -1,6 +1,8 @@
 package com.FindIt.FindIt.dto;
 
 import com.FindIt.FindIt.entity.UserEntity;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Setter
 public class UserSignupDto {
 
+    @NotBlank(message = "아이디는 공백일 수 없습니다.")
     private String loginId;
+
+    @NotBlank(message = "이름은 공백일 수 없습니다.")
     private String userName;
+
+    @NotBlank(message = "이메일은 공백일 수 없습니다.")
+    @Email(message = "올바른 이메일 형식이어야 합니다.")
     private String email;
+
+    @NotBlank(message="비밀번호는 공백일 수 없습니다.")
     private String password;
+
+    @NotBlank(message="비밀번호를 다시한번 입력해주셔야합니다")
     private String rePassword; // 비밀번호 확인 필드 추가
 
     public UserEntity toEntity(UserEntity user, PasswordEncoder passwordEncoder) {
