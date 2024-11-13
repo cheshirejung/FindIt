@@ -2,6 +2,7 @@ package com.FindIt.FindIt.service;
 
 import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.dto.BoardReqDto;
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.entity.BoardEntity;
 import com.FindIt.FindIt.entity.BoardImgEntity;
 import com.FindIt.FindIt.entity.UserEntity;
@@ -52,10 +53,8 @@ public class BoardService {
     }
 
     @Transactional
-    public void createBoard(BoardReqDto boardReqDto) {
-        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
-
-
+    public void createBoard(BoardReqDto boardReqDto, CustomUserDetails userDetails) {
+        UserEntity user = userDetails.getUser();
 
         BoardEntity boardEntity = BoardEntity.builder()
                 .title(boardReqDto.getTitle())

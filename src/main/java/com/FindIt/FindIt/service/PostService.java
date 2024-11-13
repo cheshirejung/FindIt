@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.service;
 
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
@@ -59,8 +60,8 @@ public class PostService {
     }
 
     @Transactional
-    public void savePost(PostReqDto postReqDto){
-        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+    public void savePost(PostReqDto postReqDto, CustomUserDetails userDetails){
+        UserEntity user = userDetails.getUser();
 
         PostEntity postEntity = PostEntity.builder()
                 .title(postReqDto.getTitle())
