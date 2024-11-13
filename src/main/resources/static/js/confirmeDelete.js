@@ -19,3 +19,8 @@ function confirmDelete(event, postId, commentId) {
             });
     }
 }
+
+function toggleEditForm(commentId) {
+    const editForm = document.getElementById('edit-form-' + commentId);
+    editForm.style.display = (editForm.style.display === 'none' || editForm.style.display === '') ? 'block' : 'none';
+}

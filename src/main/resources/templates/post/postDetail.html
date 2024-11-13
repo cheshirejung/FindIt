@@ -11,25 +11,25 @@
 <body>
 <header th:replace="~{/fragment/header :: headerFragment}"></header>
 <div class="content">
-        <div class="message-box">
-            <div th:text="${post.title}"></div>
-        </div>
-        <p th:text="${post.createdAt}"></p>
+    <div class="message-box">
+        <div class="title" th:text="${post.title}"></div>
+    </div>
+    <p th:text="${post.createdAt}" class="post-date"></p>
 
-        <div class="message-box">
-            <div th:text="${post.body}"></div>
-        </div>
+    <div class="message-box">
+        <div class="message-box-body" th:text="${post.body}"></div>
+    </div>
 
 
-    <div class="input-section">
-        댓글
+    <div class="comment-section">
+        <div class="comment-title">댓글 목록</div>
         <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
             <div>
                 <input type="text" name="body" placeholder="댓글을 작성해주세요.">
                 <button class="submit-button">댓글 등록</button>
             </div>
         </form>
-    </div>
+
     <!--댓글 리스트 출력-->
     <div class="comment-list" th:each="comment : ${post.comments}">
         <div th:if="${comment.parentComment == null}" th:id="'comment-' + ${comment.commentId}">
@@ -37,13 +37,17 @@
                 <div class="comment"  th:text="${comment.body}"></div>
                 <p></p>
                 <!-- 댓글 수정폼 -->
-                <form th:action="'/post/'+${post.postId}+'/comment/'+${comment.commentId}" method="post">
+                <form th:action="'/post/'+${post.postId}+'/comment/'+${comment.commentId}" method="post" style="display: flex; align-items: center;">
                     <input type="hidden" name="_method" value="patch" />
-                    <label for="updateBody"></label>
-                    <input type="text" id="updateBody" name="body" th:value="${comment.body}">
-                    <button type="submit">수정</button>
+                    <label for="updateBody" style="display: none;"></label>
+                    <input type="text" id="updateBody" name="body" th:value="${comment.body}" style="flex: 1; margin-right: 0.5rem;">
+                    <div class="button-group">
+                        <button type="submit">수정</button>
+                        <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">삭제</button>
+                    </div>
                 </form>
-                <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">삭제</button>
+
+
                 <!--답글 입력폼-->
                 <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
                     <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
@@ -65,14 +69,17 @@
 
                                 <label for="updateChildBody"></label>
                                 <input type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
-                                <button type="submit">수정</button>
+                                <div class="button-group">
+                                    <button type="submit">수정</button>
+                                    <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${childComment.commentId})|">삭제</button>
+                                </div>
                             </form>
-                            <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">삭제</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="button-group">
         <a th:href="@{/post/update/{postId}(postId=${post.postId})}">
@@ -82,29 +89,29 @@
         <button th:onclick="|location.href='@{/post(boardId=${post.boardId}, page=${pageNo})}'|">목록</button>
     </div>
 </div>
-    <script>
-        function confirmDelete(event, postId, commentId) {
-            event.preventDefault();
+<script>
+    function confirmDelete(event, postId, commentId) {
+        event.preventDefault();
 
-            if (confirm("정말 삭제하시겠습니까?")) {
-                fetch(`/post/${postId}/comment/${commentId}`, {
-                    method: 'DELETE'
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("삭제되었습니다.");
-                            location.reload(); // 삭제 후 페이지를 새로고침하여 반영
-                        } else {
-                            alert("삭제에 실패했습니다.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("삭제 중 오류가 발생했습니다:", error);
+        if (confirm("정말 삭제하시겠습니까?")) {
+            fetch(`/post/${postId}/comment/${commentId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("삭제되었습니다.");
+                        location.reload(); // 삭제 후 페이지를 새로고침하여 반영
+                    } else {
                         alert("삭제에 실패했습니다.");
-                    });
-            }
+                    }
+                })
+                .catch(error => {
+                    console.error("삭제 중 오류가 발생했습니다:", error);
+                    alert("삭제에 실패했습니다.");
+                });
         }
-    </script>
+    }
+</script>
 
 
 <script>
@@ -127,7 +134,7 @@
                 });
         }
     }
- </script>
+</script>
 
 </body>
 </html>
