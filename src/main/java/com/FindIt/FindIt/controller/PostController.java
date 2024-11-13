@@ -1,9 +1,15 @@
 package com.FindIt.FindIt.controller;
 
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostReqDto;
+import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.entity.PostEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
+import com.FindIt.FindIt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +19,12 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final UserService userService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
     /* 게시글 생성 페이지 이동 */
@@ -46,8 +54,10 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String postDetailPage(@PathVariable Long postId, Model model) {
+    public String postDetailPage(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         model.addAttribute("post", postService.findById(postId));
+        model.addAttribute("userId", userDetails.getUserId());
+        model.addAttribute("userName", userDetails.getName());
         return "post/postDetail";
 
     }
