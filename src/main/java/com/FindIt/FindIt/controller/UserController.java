@@ -85,12 +85,9 @@ public class UserController {
 
     // 회원 탈퇴 api
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto,
-                                           HttpSession session,
-                                           Model model,
-                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<Void> deleteUser(@ModelAttribute UserWithdrawDto userWithdrawDto, HttpSession session, Model model) {
         log.debug("########## login id : " + userWithdrawDto.getLoginId());
-        boolean isDelete = userService.deleteUser(userWithdrawDto, userDetails);
+        boolean isDelete = userService.deleteUser(userWithdrawDto);
         //log.debug("########## service result: {}", userDto.getLoginId());
 
         if (isDelete) {
