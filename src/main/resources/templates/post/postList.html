@@ -31,7 +31,7 @@
         <div class="post-list" th:each="post : ${posts}">
             <div class="post">
                 <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
-                    <img src="item1.jpg" alt="item1">
+                    <img th:src="${post.postImgUrl}" alt="item1">
                 </a>
                 <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
                     <div class="post-title" th:text="${post.title}" ></div>
