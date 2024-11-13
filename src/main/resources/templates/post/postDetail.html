@@ -82,11 +82,11 @@
     </div>
     </div>
     <div class="button-group">
-        <a th:href="@{/post/update/{postId}(postId=${post.postId})}">
-            <button>수정</button>
-        </a>
-        <!-- 작성자와 로그인한 사용자가 같을 때만 삭제 폼 표시 -->
+        <!-- 작성자와 로그인한 사용자가 같을 때만 수정, 삭제 버튼 표시 -->
         <th:block th:if="${loginId == post.createdBy}">
+            <a th:href="@{/post/update/{postId}(postId=${post.postId})}">
+                <button>수정</button>
+            </a>
             <form th:action="@{/post/{postId}(postId=${post.postId})}" method="post" style="display: inline;">
                 <input type="hidden" name="_method" value="DELETE"/>
                 <input type="hidden" name="boardId" th:value="${post.boardId}"/>
