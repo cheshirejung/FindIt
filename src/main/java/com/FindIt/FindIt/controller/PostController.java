@@ -5,6 +5,7 @@ import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -29,14 +31,21 @@ public class PostController {
     /* 게시글 생성 페이지 이동 */
     @GetMapping("/create")
     public String create(@RequestParam(value = "boardId") Long boardId, Model model) {
+        model.addAttribute("postReqDto", new PostReqDto());
         model.addAttribute("boardId", boardId);
         return "post/create";
     }
 
     @PostMapping("/create")
-    public String createPost(@ModelAttribute PostReqDto postReqDto, Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
-        postService.savePost(postReqDto,userDetails);
-        return "redirect:/post?boardId="+postReqDto.getBoardId();
+    public String createPost(@Valid @ModelAttribute("postReqDto") PostReqDto postReqDto,
+                             BindingResult bindingResult,
+                             @RequestParam("boardId") Long boardId,
+                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            return "post/create";
+        }
+        postService.savePost(postReqDto,boardId,userDetails);
+        return "redirect:/post?boardId="+boardId;
     }
 
     @GetMapping
