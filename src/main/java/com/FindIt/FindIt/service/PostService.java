@@ -53,6 +53,16 @@ public class PostService {
         return new PageImpl<>(postDtos, pageable, postEntitiePage.getTotalElements());
     }
 
+    public Page<PostDto> findPostsByBoardIdAndTitleContaining(Long boardId, String keyword, Pageable pageable){
+        return postRepository.findPostsByBoardIdAndTitleContaining(boardId, keyword, pageable)
+                .map(PostEntity::toDto);
+    }
+
+    public Page<PostDto> findPostsByBoardIdCategoryAndTitleContaining(Long boardId, String category, String keyword, Pageable pageable){
+        return postRepository.findByBoardIdAndCategoryAndTitleContaining(boardId, category,keyword, pageable)
+                .map(PostEntity::toDto);
+    }
+
 
     public PostEntity findById(Long id) {
         return postRepository.findById(id)

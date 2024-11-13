@@ -52,20 +52,31 @@ public class PostController {
     public String postListPage(@PageableDefault(page = 1) Pageable pageable,
                                @RequestParam(value = "category", defaultValue = "전체") String category,
                                @RequestParam("boardId") Long boardId,
+                               @RequestParam(value = "keyword", required = false) String keyword,
                                Model model) {
 
         int page = pageable.getPageNumber() - 1;
 
         pageable = PageRequest.of(page, 5,Sort.Direction.DESC, "postId");
         Page<PostDto> postDtos;
-        if("전체".equals(category)) {
-            postDtos = postService.findPostsByBoardId(boardId, pageable);
-        } else {
-            postDtos = postService.findPostsByBoardIdAndCategory(boardId, category, pageable);
+        if ("전체".equals(category)) {//카테고리 = "전체"
+            if (keyword == null || keyword.isEmpty()) {//키워드 X
+                postDtos = postService.findPostsByBoardId(boardId, pageable);
+            } else { //키워드 O
+                postDtos = postService.findPostsByBoardIdAndTitleContaining(boardId, keyword, pageable);
+            }
+        } else { // 특정 카테고리
+            if (keyword == null || keyword.isEmpty()) { //키워드 X
+                postDtos = postService.findPostsByBoardIdAndCategory(boardId, category, pageable);
+            } else { //키워드 O
+                postDtos = postService.findPostsByBoardIdCategoryAndTitleContaining(boardId, category, keyword, pageable);
+            }
         }
         model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
         model.addAttribute("pageNo", page);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
         return "post/postList";
     }
 

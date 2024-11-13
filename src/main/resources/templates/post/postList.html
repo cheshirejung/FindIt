@@ -16,14 +16,14 @@
         <div class="options">
             <div class="category-select">
                 <input type="hidden" name="boardId" th:value="${boardId}">
-                <select id="category" name="category"  onchange="this.form.submit()">
-                    <option value="전체">전체</option>
-                    <option value="잃어버렸습니다">잃어버렸습니다</option>
-                    <option value="주웠습니다">주웠습니다</option>
+                <select id="category" name="category" onchange="this.form.submit()">
+                    <option value="전체" th:selected="${category == '전체'}">전체</option>
+                    <option value="잃어버렸습니다" th:selected="${category == '잃어버렸습니다'}">잃어버렸습니다</option>
+                    <option value="주웠습니다" th:selected="${category == '주웠습니다'}">주웠습니다</option>
                 </select>
             </div>
             <div class="title-search">
-                <input type="text" placeholder="제목 검색">
+                <input type="text" name="keyword" placeholder="제목 검색" th:value="${keyword}">
                 <button>검색</button>
             </div>
         </div>
