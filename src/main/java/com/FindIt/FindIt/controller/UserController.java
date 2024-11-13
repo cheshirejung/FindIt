@@ -2,6 +2,7 @@ package com.FindIt.FindIt.controller;
 
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
+import com.FindIt.FindIt.dto.UserUpdateDto;
 import com.FindIt.FindIt.dto.UserWithdrawDto;
 import com.FindIt.FindIt.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -52,6 +53,20 @@ public class UserController {
         model.addAttribute("user", userInfo);
         return "user/mypage";
 
+    }
+
+
+    /* 회원 정보 수정 */
+    @PostMapping
+    public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, Model model) {
+        try {
+            userService.updateUser(userUpdateDto);
+            model.addAttribute("message", "프로필이 성공적으로 업데이트되었습니다.");
+            return "redirect:/user/mypage";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "redirect:/user/mypage";
+        }
     }
 
     // 회원 탈퇴 api
