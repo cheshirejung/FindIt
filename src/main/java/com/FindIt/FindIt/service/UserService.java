@@ -84,7 +84,8 @@ public class UserService {
         //UserDto loginUserDto = loginUser.toDto(loginUser); // Dto 변환
 
         if (user != null && passwordEncoder.matches(userWithdrawDto.getDelPassword(), user.getPassword())) {
-            userRepository.delete(user);
+            //userRepository.delete(user);
+            user.setActive("N");
             return true;
         }
         return false;

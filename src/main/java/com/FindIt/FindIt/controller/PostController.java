@@ -81,7 +81,10 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String postDetailPage( @RequestParam("pageNo") int pageNo, @PathVariable Long postId, Model model) {
+    public String postDetailPage( @RequestParam("pageNo") int pageNo,
+                                  @PathVariable Long postId, Model model,
+                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
+        model.addAttribute("loginId", userDetails.getUsername());
         model.addAttribute("post", postService.findById(postId));
         model.addAttribute("pageNo", pageNo);
         return "post/postDetail";

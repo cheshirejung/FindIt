@@ -35,6 +35,9 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "active", nullable = false)
+    private String active;
+
     public UserDto toDto(UserEntity user) {
         return UserDto.builder()
                 .loginId(user.getLoginId())
