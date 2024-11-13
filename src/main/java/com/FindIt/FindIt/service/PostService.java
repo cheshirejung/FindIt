@@ -10,6 +10,7 @@ import com.FindIt.FindIt.repository.PostImgRepository;
 import com.FindIt.FindIt.repository.PostRepository;
 import com.FindIt.FindIt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -124,5 +126,6 @@ public class PostService {
         });
 
         postRepository.delete(post);
+        log.info("게시글 삭제 완료. postId: {}", postId);
     }
 }
