@@ -8,6 +8,6 @@ public class ValidFileValidator implements ConstraintValidator<ValidFile, Multip
 
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext constraintValidatorContext) {
-        return false;
+        return multipartFile != null && !multipartFile.isEmpty();
     }
 }
