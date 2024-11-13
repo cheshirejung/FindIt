@@ -1,5 +1,6 @@
 package com.FindIt.FindIt.dto;
 
+import com.FindIt.FindIt.global.vlidation.ValidFile;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class PostReqDto {
     @NotBlank(message = "내용은 공백일 수 없습니다.")
     private String body;
 
-    @NotNull(message = "물건 사진은 업로드 해주셔야 합니다")
+    @ValidFile(message = "물건 사진은 업로드 해주셔야 합니다")
     private MultipartFile postImage;
 
     @NotBlank(message = "카테고리를 선택해주셔야 합니다")

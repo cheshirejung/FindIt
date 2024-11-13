@@ -33,8 +33,8 @@ public class BoardController {
     /* userRole을 확인하기 위해서 userDtails 추가 */
     @GetMapping
     public String boardPage(@PageableDefault(page = 1) Pageable pageable ,Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
-        int page = pageable.getPageNumber() - 1;
 
+        int page = pageable.getPageNumber() - 1;
         pageable = PageRequest.of(page, 5, Sort.Direction.DESC, "boardId");
 
         Page<BoardDto> boardDtoPage = boardService.getBoards(pageable);
