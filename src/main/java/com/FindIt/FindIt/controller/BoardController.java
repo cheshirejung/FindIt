@@ -49,9 +49,9 @@ public class BoardController {
 
     // 게시판 생성 api
     @PostMapping("/create")
-    public String createBoard(@ModelAttribute BoardReqDto boardReqDto, Model model) {
+    public String createBoard(@ModelAttribute BoardReqDto boardReqDto, Model model,@AuthenticationPrincipal CustomUserDetails userDetails ) {
         try {
-            boardService.createBoard(boardReqDto);
+            boardService.createBoard(boardReqDto,userDetails);
             return "redirect:/board";
         } catch (Exception e) {
             model.addAttribute("error", "게시판 생성 중 오류가 발생했습니다.");
