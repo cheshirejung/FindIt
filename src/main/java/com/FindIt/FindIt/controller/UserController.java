@@ -36,7 +36,12 @@ public class UserController {
 
     // 회원 가입 api
     @PostMapping("/signup")
-    public String registerUser(@ModelAttribute UserSignupDto userSignupDto, Model model) {
+    public String registerUser(@Valid @ModelAttribute UserSignupDto userSignupDto,
+                               BindingResult bindingResult,
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            return "user/signup";
+        }
         try { // 로그인 id 중복 검사
             userService.registerUser(userSignupDto);
             return "redirect:/user/login?success=true";
