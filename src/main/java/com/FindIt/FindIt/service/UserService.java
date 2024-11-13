@@ -85,7 +85,7 @@ public class UserService {
 
         if (user != null && passwordEncoder.matches(userWithdrawDto.getDelPassword(), user.getPassword())) {
             //userRepository.delete(user);
-            user.setActive("n");
+            user.setActive("N");
             return true;
         }
         return false;

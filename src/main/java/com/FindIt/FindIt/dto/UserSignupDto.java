@@ -39,7 +39,7 @@ public class UserSignupDto {
         user.setUserName(this.userName);
         user.setEmail(this.email);
         // 비밀번호 암호화
-        user.setActive("y");
+        user.setActive("Y");
         user.setPassword(passwordEncoder.encode(this.password));
         user.setRole("USER"); // 디폴트 값으로 일반 유저로 할당
         return user;
