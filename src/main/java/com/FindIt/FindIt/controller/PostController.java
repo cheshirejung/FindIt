@@ -35,13 +35,8 @@ public class PostController {
 
     @PostMapping("/create")
     public String createPost(@ModelAttribute PostReqDto postReqDto, Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
-        try {
-            postService.savePost(postReqDto,userDetails);
-            return "redirect:/post?boardId="+postReqDto.getBoardId();
-        } catch (Exception e) {
-            model.addAttribute("error", "게시글 생성 중 오류가 발생했습니다.");
-            return "error";
-        }
+        postService.savePost(postReqDto,userDetails);
+        return "redirect:/post?boardId="+postReqDto.getBoardId();
     }
 
     @GetMapping
