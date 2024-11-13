@@ -4,7 +4,9 @@ import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -29,14 +32,21 @@ public class PostController {
     /* 게시글 생성 페이지 이동 */
     @GetMapping("/create")
     public String create(@RequestParam(value = "boardId") Long boardId, Model model) {
+        model.addAttribute("postReqDto", new PostReqDto());
         model.addAttribute("boardId", boardId);
         return "post/create";
     }
 
     @PostMapping("/create")
-    public String createPost(@ModelAttribute PostReqDto postReqDto, Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
-        postService.savePost(postReqDto,userDetails);
-        return "redirect:/post?boardId="+postReqDto.getBoardId();
+    public String createPost(@Valid @ModelAttribute("postReqDto") PostReqDto postReqDto,
+                             BindingResult bindingResult,
+                             @RequestParam("boardId") Long boardId,
+                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            return "post/create";
+        }
+        postService.savePost(postReqDto,boardId,userDetails);
+        return "redirect:/post?boardId="+boardId;
     }
 
     @GetMapping
@@ -61,7 +71,10 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String postDetailPage( @RequestParam("pageNo") int pageNo, @PathVariable Long postId, Model model) {
+    public String postDetailPage( @RequestParam("pageNo") int pageNo,
+                                  @PathVariable Long postId, Model model,
+                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
+        model.addAttribute("loginId", userDetails.getUsername());
         model.addAttribute("post", postService.findById(postId));
         model.addAttribute("pageNo", pageNo);
         return "post/postDetail";
@@ -81,28 +94,14 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public String deletePost(@PathVariable Long postId,
-                             @RequestParam Long boardId,
-                             HttpSession session,
-                             RedirectAttributes redirectAttributes) {
+    public String deletePost(@PathVariable Long postId, @RequestParam Long boardId) {
         try {
-            UserEntity loginUser = (UserEntity) session.getAttribute("user");
-            if (loginUser == null) {
-                redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
-                return "redirect:/post/" + postId;
-            }
-
-            PostEntity post = postService.findById(postId);
-            if (!post.getUser().getUserId().equals(loginUser.getUserId())) {
-                redirectAttributes.addFlashAttribute("errorMessage", "삭제 권한이 없습니다.");
-                return "redirect:/post/" + postId;
-            }
-
             postService.deletePost(postId);
             return "redirect:/post?boardId=" + boardId;
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "게시글 삭제 중 오류가 발생했습니다.");
-            return "redirect:/post/" + postId;
+            // 에러 처리
+            return "error";
+
         }
     }
 }
