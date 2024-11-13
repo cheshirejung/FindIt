@@ -63,7 +63,13 @@ public class CustomUserDetails implements UserDetails {
         return user.getRole();
     }
 
+    /*UserEntity를 DB 조회없이 가져옴*/
     public UserEntity getUser() {
         return user;
     }
+    /*active 상태를 가져옴*/
+    public String getActive(){
+        return user.getActive();
+    }
+
 }
