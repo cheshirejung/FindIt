@@ -1,5 +1,7 @@
 package com.FindIt.FindIt.service;
 
+import com.FindIt.FindIt.dto.CustomUserDetails;
+import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.PostImgEntity;
@@ -8,12 +10,18 @@ import com.FindIt.FindIt.repository.PostImgRepository;
 import com.FindIt.FindIt.repository.PostRepository;
 import com.FindIt.FindIt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -27,22 +35,39 @@ public class PostService {
 
     /*boardId로 필터링하여 게시글 검색*/
     /*반환 타입 추후 DTO로 수정할 것*/
-    public List<PostEntity> findPostsByBoardId(Long boardId){
-        return postRepository.findByBoardId(boardId);
+    public Page<PostDto> findPostsByBoardId(Long boardId, Pageable pageable){
+        Page<PostEntity> postEntitiePage = postRepository.findByBoardId(boardId,pageable);
+
+        List<PostDto> postDtos = postEntitiePage.getContent().stream()
+                .map(PostEntity::toDto)
+                .collect(Collectors.toList());
+        return new PageImpl<>(postDtos, pageable, postEntitiePage.getTotalElements());
     }
+
+    public Page<PostDto> findPostsByBoardIdAndCategory(Long boardId, String category, Pageable pageable){
+        Page<PostEntity> postEntitiePage = postRepository.findPostsByBoardIdAndCategory(boardId,category,pageable);
+
+        List<PostDto> postDtos = postEntitiePage.getContent().stream()
+                .map(PostEntity::toDto)
+                .collect(Collectors.toList());
+        return new PageImpl<>(postDtos, pageable, postEntitiePage.getTotalElements());
+    }
+
+
     public PostEntity findById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다"));
     }
 
     @Transactional
-    public void savePost(PostReqDto postReqDto){
-        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+    public void savePost(PostReqDto postReqDto, CustomUserDetails userDetails){
+        UserEntity user = userDetails.getUser();
 
         PostEntity postEntity = PostEntity.builder()
                 .title(postReqDto.getTitle())
                 .body(postReqDto.getBody())
                 .boardId(postReqDto.getBoardId())
+                .category(postReqDto.getCategory())
                 .user(user)
                 .build();
 

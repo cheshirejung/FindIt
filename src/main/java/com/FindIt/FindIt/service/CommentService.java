@@ -1,6 +1,7 @@
 package com.FindIt.FindIt.service;
 
 import com.FindIt.FindIt.dto.CommentDto;
+import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.entity.CommentEntity;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.UserEntity;
@@ -23,12 +24,12 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public CommentDto createComment(Long postId,CommentDto commentDto) {
+    public CommentDto createComment(Long postId, CommentDto commentDto, CustomUserDetails userDetails) {
 
         PostEntity post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
 
-        UserEntity user = userRepository.findLoginUserByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserEntity user = userDetails.getUser();
 
         if(commentDto.getParentCommentId() == null){
             CommentEntity parentComment = null;

@@ -9,28 +9,31 @@
 <body>
 
 <!-- 헤더 -->
-<header th:replace="~{/fragment/header :: headerFragment}"></header>
+<!--<header th:replace="~{/fragment/header :: headerFragment}"></header>-->
 
-<!-- 탭 메뉴 -->
-<div class="tabs">
-    <div class="tab">찾고있어요</div>
-    <div class="tab">습득했어요</div>
-</div>
-
-<!-- 검색바 -->
-<div class="search-bar">
-    <input type="text" placeholder="검색어 입력">
-    <button>검색</button>
-</div>
-
-<!-- 게시물 리스트 -->
 <form action="/post">
+    <!-- 카테고리 선택 및 제목 검색 -->
+    <div class="options">
+        <div class="category-select">
+            <input type="hidden" name="boardId" th:value="${boardId}">
+            <select id="category" name="category"  onchange="this.form.submit()">
+                <option value="전체">전체</option>
+                <option value="잃어버렸습니다">잃어버렸습니다</option>
+                <option value="주웠습니다">주웠습니다</option>
+            </select>
+        </div>
+        <div class="title-search">
+            <input type="text" placeholder="제목 검색">
+            <button>검색</button>
+        </div>
+    </div>
+    <!-- 게시물 리스트 -->
     <div class="post-list" th:each="post : ${posts}">
         <div class="post">
-            <a th:href="'/post/'+${post.postId}">
+            <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
                 <img src="item1.jpg" alt="item1">
             </a>
-            <a th:href="'/post/'+${post.postId}">
+            <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
                 <div class="post-title" th:text="${post.title}" ></div>
             </a>
             <div class="post-createdAt" th:text="${post.createdAt}"></div>
@@ -41,13 +44,18 @@
 
 <!-- 페이지 네비게이션 -->
 <div class="pagination">
-    <span>&lt;</span>
-    <span>1</span>
-    <span>2</span>
-    <span>3</span>
-    <span>4</span>
-    <span>5</span>
-    <span>&gt;</span>
+    <!-- 이전 페이지 버튼 -->
+    <a th:href="@{/post(page=${posts.number},boardId=${boardId})}" th:if="${posts.hasPrevious()}" class="page-link">&lt;</a>
+
+    <!-- 페이지 번호 -->
+    <span th:each="pageNum : ${#numbers.sequence(1, posts.totalPages)}">
+        <a th:href="@{/post(page=${pageNum},boardId=${boardId})}"
+           th:text="${pageNum}"
+           th:classappend="${pageNum - 1== posts.number} ? 'current-page' : ''"></a>
+    </span>
+
+    <!-- 다음 페이지 버튼 -->
+    <a th:href="@{/post(page=${posts.number + 1},boardId=${boardId})}" th:if="${posts.hasNext()}" class="page-link">&gt;</a>
 </div>
 
 <!-- 등록/삭제 버튼 -->
@@ -57,7 +65,7 @@
     </a>
     <form th:action="'/board/'+${boardId}" method="post">
         <input type="hidden" name="_method" value="delete">
-        <button type="submit">Delete Board</button>
+        <button type="submit">게시판 삭제</button>
     </form>
 </div>
 
