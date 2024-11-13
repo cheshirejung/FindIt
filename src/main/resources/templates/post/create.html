@@ -14,32 +14,36 @@
 <!-- 게시글 등록 폼 -->
 <div class="form-container">
     <h1>게시글 등록</h1>
-    <form action="/post/create" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="boardId" th:value="${boardId}" />
+    <form th:action="@{/post/create(boardId=${boardId})}" th:object="${postReqDto}" method="post" enctype="multipart/form-data">
 
         <label for="title"></label>
-        <input type="text" id="title" name="title" placeholder="제목을 입력하세요.">
+
+        <input type="text"  id="title" th:field="*{title}" placeholder="제목을 입력하세요." th:class="${#fields.hasErrors('title')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid date</p>
 
         <div>
-            <input type="radio" id="miss" name="category" value="잃어버렸습니다" checked />
+            <input type="radio" id="miss" th:field="*{category}" value="잃어버렸습니다" checked />
             <label for="miss">잃어버렸습니다</label>
         </div>
 
         <div>
-            <input type="radio" id="get" name="category" value="주웠습니다" />
+            <input type="radio" id="get" th:field="*{category}" value="주웠습니다" />
             <label for="get">주웠습니다</label>
         </div>
+        <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Invalid category</p>
 
         <label for="content"></label>
-        <textarea id="content" name="body" placeholder="내용을 입력하세요."></textarea>
+        <textarea id="content" th:field="*{body}" placeholder="내용을 입력하세요." th:class="${#fields.hasErrors('body')} ? 'fieldError' : ''" > </textarea>
+        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Invalid date</p>
 
         <label for="file"></label>
-        <input type="file" id="file" name="postImage">
+        <input type="file" id="file" th:field="*{postImage}"  th:class="${#fields.hasErrors('postImage')} ? 'fieldError' : ''">
+        <p th:if="${#fields.hasErrors('postImage')}" th:errors="*{postImage}">Invalid date</p>
 
         <!-- 버튼 그룹 -->
         <div class="button-group">
             <button type="submit">등록</button>
-            <button type="button" onclick="location.href='/post'">취소</button>
+            <button type="button" th:onclick="|location.href='/post?boardId=' + ${boardId}|">취소</button>
         </div>
     </form>
 </div>
