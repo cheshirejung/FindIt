@@ -1,7 +1,9 @@
 package com.FindIt.FindIt.global.config;
 
+import com.FindIt.FindIt.global.handler.LoginFailHandler;
 import com.FindIt.FindIt.global.handler.LoginSuccessHandler;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.java.Log;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -41,7 +44,7 @@ public class SecurityConfig {
                         .usernameParameter("loginId")  // 기본 인자값이 username로 설정되어 있어 인자값을 loginId로 설정
                         .defaultSuccessUrl("/board", true) // 로그인 성공 시 리다이렉트할 경로
                         .successHandler(new LoginSuccessHandler())
-                        .failureUrl("/user/login?error=true") // 로그인 실패 시 리다이렉트할 경로
+                        .failureHandler(loginFailHandler())
                         .permitAll());
         http
                 .logout((auth) -> auth.logoutUrl("/user/logout")
@@ -64,5 +67,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new LoginSuccessHandler();
+    }
+
+    @Bean
+    public LoginFailHandler loginFailHandler(){
+        return new LoginFailHandler();
     }
 }
