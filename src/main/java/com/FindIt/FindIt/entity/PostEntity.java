@@ -45,6 +45,10 @@ public class PostEntity extends BaseCreateByEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
     private List<CommentEntity> comments = new ArrayList<>();
 
+    public String getPostImgPath() {
+        return postImg != null ? postImg.getStorePath() : null;
+    }
+
     public PostDto toDto() {
         List<CommentDto> commentDtos = new ArrayList<>();
         for (CommentEntity comment : comments) {

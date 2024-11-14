@@ -18,6 +18,13 @@ body {
     font-weight: bold;
 }
 
+.detail {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    gap: 10px;
+}
+
 .message-box {
     margin: 1rem 0;
     padding: 1rem;
@@ -26,6 +33,11 @@ body {
     display: flex;
     align-items: center; /* 수직으로 가운데 정렬 */
     gap: 0.5rem; /* 이름과 댓글 간격 조정 */
+}
+
+.message-box img {
+    width: 300px;
+    height: 200px;
 }
 
 .child-message-box {
@@ -46,6 +58,13 @@ body {
     min-height: 150px; /* 최소 높이 설정 */
     display: flex;
     align-items: center; /* 세로 가운데 정렬 */
+}
+
+.post-username {
+    font-size: 0.875rem; /* 글씨 크기를 줄입니다. 원하는 크기로 조정 가능 */
+    text-align: right; /* 오른쪽 정렬 */
+    color: #888888; /* 색상을 회색으로 지정 (선택 사항) */
+    margin: 0; /* 필요한 경우 상하 여백을 줄이기 */
 }
 
 .post-date {
