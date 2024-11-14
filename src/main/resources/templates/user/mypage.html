@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/modalPage.css">
     <script src="/js/userApi.js" defer></script>
+    <script src="/js/validatePassword.js" defer></script>
+    <script src="/js/myPagePassword.js" defer></script>
 </head>
 <body>
 
@@ -15,7 +17,7 @@
 
 <!-- 폼 컨테이너 -->
 <div class="form-container">
-    <form th:action="@{/user}" th:object="${user}" method="post">
+    <form th:action="@{/user}" th:object="${user}" method="post" onsubmit="return validateMyPagePassword()">
         <input type="hidden" name="_method" value="patch" />
 
         <label for="userName">이름</label>
@@ -28,10 +30,12 @@
         <input type="text" id="email" name="email" th:value="${user.email}">
 
         <label for="password">비밀번호</label>
-        <input type="password" id="password" name="password" placeholder="변경하려면 입력하세요">
+        <input type="password" id="password" name="password" placeholder="변경을 원하시는 비밀번호를 입력하세요">
 
         <label for="rePassword">비밀번호 확인</label>
         <input type="password" id="rePassword" name="rePassword" placeholder="비밀번호 재입력">
+
+        <div id="passwordError" style="color: red; display: none;">비밀번호가 일치하지 않습니다.</div>
 
         <!-- 메시지 표시 영역 -->
         <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
