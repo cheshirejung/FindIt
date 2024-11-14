@@ -10,6 +10,7 @@ import com.FindIt.FindIt.repository.PostImgRepository;
 import com.FindIt.FindIt.repository.PostRepository;
 import com.FindIt.FindIt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -53,6 +55,16 @@ public class PostService {
         return new PageImpl<>(postDtos, pageable, postEntitiePage.getTotalElements());
     }
 
+    public Page<PostDto> findPostsByBoardIdAndTitleContaining(Long boardId, String keyword, Pageable pageable){
+        return postRepository.findPostsByBoardIdAndTitleContaining(boardId, keyword, pageable)
+                .map(PostEntity::toDto);
+    }
+
+    public Page<PostDto> findPostsByBoardIdCategoryAndTitleContaining(Long boardId, String category, String keyword, Pageable pageable){
+        return postRepository.findByBoardIdAndCategoryAndTitleContaining(boardId, category,keyword, pageable)
+                .map(PostEntity::toDto);
+    }
+
 
     public PostEntity findById(Long id) {
         return postRepository.findById(id)
@@ -60,13 +72,13 @@ public class PostService {
     }
 
     @Transactional
-    public void savePost(PostReqDto postReqDto, CustomUserDetails userDetails){
+    public void savePost(PostReqDto postReqDto,Long boardId, CustomUserDetails userDetails){
         UserEntity user = userDetails.getUser();
 
         PostEntity postEntity = PostEntity.builder()
                 .title(postReqDto.getTitle())
                 .body(postReqDto.getBody())
-                .boardId(postReqDto.getBoardId())
+                .boardId(boardId)
                 .category(postReqDto.getCategory())
                 .user(user)
                 .build();
@@ -119,13 +131,11 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
         postImgRepository.findByPost(post).ifPresent(postImg -> {
-
             imageService.deleteImage(postImg.getStorePath());
-
             postImgRepository.delete(postImg);
         });
 
         postRepository.delete(post);
-
+        log.info("게시글 삭제 완료. postId: {}", postId);
     }
 }

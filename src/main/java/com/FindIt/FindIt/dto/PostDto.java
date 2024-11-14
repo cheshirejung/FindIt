@@ -18,5 +18,6 @@ public class PostDto {
     private String body;
     private String postImgUrl;
     private String createdAt;
+    private String createdBy;
     private List<CommentDto> comments;
 }

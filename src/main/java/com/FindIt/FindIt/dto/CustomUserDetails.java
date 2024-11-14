@@ -67,5 +67,15 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public Object getName() { return user.getUserName();
+
+    /*UserEntity를 DB 조회없이 가져옴*/
+    public UserEntity getUser() {
+        return user;
     }
+    
+    /*active 상태를 가져옴*/
+    public String getActive(){
+        return user.getActive();
+    }
+
 }
