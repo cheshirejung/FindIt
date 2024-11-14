@@ -33,7 +33,7 @@
 
     <!-- 관리자 섹션 -->
     <div class="admin-section">
-        <button class="admin-button" onclick="location.href='/board/create'">admin</button>
+        <button class="admin-button" th:if="${userRole == 'ADMIN'}" th:onclick="|location.href='/board/update'|">추가</button>
     </div>
     <!-- 페이지 네비게이션 -->
     <div class="pagination">

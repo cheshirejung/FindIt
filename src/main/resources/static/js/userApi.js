@@ -46,10 +46,5 @@ function closeDeleteModal() {
 }
 
 function confirmUpdate() {
-    if (confirm("수정하시겠습니까?")) {
-        alert("수정이 완료되었습니다.");
-        return true;
-    } else {
-        return false;
-    }
+    return confirm("정말 수정하시겠습니까?");
 }
