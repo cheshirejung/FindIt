@@ -4,14 +4,14 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #e8d9f1; /* 연보라색 배경 */
+    background-color: #e8d9f1;
     margin: 0;
 }
 
 /* 폼 배경 및 크기 */
 .container {
-    background-color: #6d2a8b; /* 진한 보라색 */
-    padding: 40px 30px;
+    background-color: #6d2a8b;
+    padding: 25px 30px 40px 30px;
     border-radius: 10px;
     width: 350px;
     box-sizing: border-box;
@@ -22,6 +22,7 @@ body {
     display: block;
     color: white;
     font-size: 16px;
+    margin-top: 15px;
     margin-bottom: 8px;
     font-weight: bold;
 }
@@ -31,18 +32,21 @@ body {
 .container input[type="email"] {
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
 }
 
+.container .error {
+    color: red;
+}
+
 /* 버튼 스타일 */
 .button-group {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 35px;
 }
 
 .button-group button {
@@ -50,7 +54,7 @@ body {
     padding: 12px;
     border: none;
     border-radius: 5px;
-    background-color: #d8f0c1; /* 연한 녹색 */
+    background-color: #d8f0c1;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -59,8 +63,4 @@ body {
 /* 버튼 호버 효과 */
 .button-group button:hover {
     background-color: #c2e0a6;
-}
-
-p {
-  color: red;
 }
