@@ -1,15 +1,21 @@
 package com.FindIt.FindIt.controller;
 
 import com.FindIt.FindIt.dto.CustomUserDetails;
+import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.entity.PostEntity;
 import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
 import com.FindIt.FindIt.service.UserService;
+import com.FindIt.FindIt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,31 +41,38 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String createPost(@ModelAttribute PostReqDto postReqDto, Model model) {
-        try {
-            postService.savePost(postReqDto);
-            return "redirect:/post?boardId="+postReqDto.getBoardId();
-        } catch (Exception e) {
-            model.addAttribute("error", "게시글 생성 중 오류가 발생했습니다.");
-            return "error";
-        }
+    public String createPost(@ModelAttribute PostReqDto postReqDto, Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
+        postService.savePost(postReqDto,userDetails);
+        return "redirect:/post?boardId="+postReqDto.getBoardId();
     }
 
     @GetMapping
-    public String postListPage(@RequestParam("boardId") Long boardId, Model model) {
-        List<PostEntity> posts = postService.findPostsByBoardId(boardId);
-        model.addAttribute("posts",posts);
+    public String postListPage(@PageableDefault(page = 1) Pageable pageable,
+                               @RequestParam(value = "category", defaultValue = "전체") String category,
+                               @RequestParam("boardId") Long boardId,
+                               Model model) {
+
+        int page = pageable.getPageNumber() - 1;
+
+        pageable = PageRequest.of(page, 5,Sort.Direction.DESC, "postId");
+        Page<PostDto> postDtos;
+        if("전체".equals(category)) {
+            postDtos = postService.findPostsByBoardId(boardId, pageable);
+        } else {
+            postDtos = postService.findPostsByBoardIdAndCategory(boardId, category, pageable);
+        }
+        model.addAttribute("posts",postDtos);
         model.addAttribute("boardId", boardId);
         return "post/postList";
     }
 
     @GetMapping("/{postId}")
-    public String postDetailPage(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public String postDetailPage(@RequestParam("pageNo") int pageNo, @PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         model.addAttribute("post", postService.findById(postId));
         model.addAttribute("userId", userDetails.getUserId());
         model.addAttribute("userName", userDetails.getName());
+        model.addAttribute("pageNo", pageNo);
         return "post/postDetail";
-
     }
 
     @GetMapping("/update/{postId}")

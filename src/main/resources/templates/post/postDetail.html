@@ -74,6 +74,7 @@
                             <!--대댓글 수정 폼-->
                             <form th:action="'/post/'+${post.postId}+'/comment/'+${childComment.commentId}" method="post">
                                 <input type="hidden" name="_method" value="patch" />
+
                                 <label for="updateChildBody"></label>
                                 <input th:if="${comment.user.userId == userId}" type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
                                 <div class="button-group">
@@ -93,7 +94,7 @@
             <button>수정</button>
         </a>
         <button th:onclick="deletePost([[${post.postId}]], [[${post.boardId}]])">삭제</button>
-        <button th:onclick="|location.href='@{/post(boardId=${post.boardId})}'|">목록</button>
+        <button th:onclick="|location.href='@{/post(boardId=${post.boardId}, page=${pageNo})}'|">목록</button>
     </div>
 </div>
 <script>
