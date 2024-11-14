@@ -3,8 +3,11 @@ package com.FindIt.FindIt.controller;
 import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.PostDto;
 import com.FindIt.FindIt.dto.PostReqDto;
+import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.entity.PostEntity;
+import com.FindIt.FindIt.entity.UserEntity;
 import com.FindIt.FindIt.service.PostService;
+import com.FindIt.FindIt.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,14 +21,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 @Controller
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final UserService userService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
     /* 게시글 생성 페이지 이동 */
@@ -87,6 +93,8 @@ public class PostController {
         PostEntity post = postService.findById(postId);
         model.addAttribute("loginId", userDetails.getUsername());
         model.addAttribute("post", postService.findById(postId));
+        model.addAttribute("userId", userDetails.getUserId());
+        model.addAttribute("userName", userDetails.getName());
         model.addAttribute("pageNo", pageNo);
         model.addAttribute("boardId", post.getBoardId());
         return "post/postDetail";
