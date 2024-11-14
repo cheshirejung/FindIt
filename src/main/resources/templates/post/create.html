@@ -21,14 +21,16 @@
         <input type="text"  id="title" th:field="*{title}" placeholder="제목을 입력하세요." th:class="${#fields.hasErrors('title')} ? 'fieldError' : ''">
         <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid date</p>
 
-        <div>
-            <input type="radio" id="miss" th:field="*{category}" value="잃어버렸습니다" checked />
-            <label for="miss">잃어버렸습니다</label>
-        </div>
+        <div class="radio-group">
+            <div class="radio-item">
+                <input type="radio" id="miss" th:field="*{category}" value="잃어버렸습니다" checked />
+                <label class="radio-label" for="miss">잃어버렸습니다</label>
+            </div>
 
-        <div>
-            <input type="radio" id="get" th:field="*{category}" value="주웠습니다" />
-            <label for="get">주웠습니다</label>
+            <div class="radio-item">
+                <input type="radio" id="get" th:field="*{category}" value="주웠습니다" />
+                <label class="radio-label" for="get">주웠습니다</label>
+            </div>
         </div>
         <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Invalid category</p>
 

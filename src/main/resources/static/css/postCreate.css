@@ -23,6 +23,25 @@ body {
     margin-bottom: 60px;
 }
 
+.radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.radio-item {
+    margin-right: 10px;
+}
+
+.radio-group input {
+    margin-right: 5px;
+}
+
+.radio-group .radio-label {
+    display: inline-block;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
 .form-container label {
     display: block;
     margin: 10px 0 5px;
