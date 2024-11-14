@@ -20,4 +20,5 @@ public class PostDto {
     private String createdAt;
     private String createdBy;
     private List<CommentDto> comments;
+    private String category;
 }

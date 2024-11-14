@@ -17,6 +17,10 @@
         <div class="options">
             <div class="category-select">
                 <input type="hidden" name="boardId" th:value="${boardId}">
+                <div class="tooltip-container">
+                    <img src="/images/postCategoryInfo.png" alt="info" class="info-icon">
+                    <span class="tooltip-text">카테고리를 선택하면 게시물을 분류해서 볼 수 있어요!</span>
+                </div>
                 <select id="category" name="category" onchange="this.form.submit()">
                     <option value="전체" th:selected="${category == '전체'}">전체</option>
                     <option value="잃어버렸습니다" th:selected="${category == '잃어버렸습니다'}">잃어버렸습니다</option>
@@ -37,6 +41,7 @@
                 <a th:href="@{/post/{postId}(postId=${post.postId}, pageNo=${pageNo})}">
                     <div class="post-title" th:text="${post.title}" ></div>
                 </a>
+                <div class="post-category" th:text="'<' + ${post.category} + '>'"></div>
                 <div class="post-createdAt" th:text="${post.createdAt}"></div>
             </div>
         </div>

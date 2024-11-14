@@ -125,3 +125,57 @@ body {
 h2 {
     text-align: center;
 }
+
+.tooltip-container {
+    display: inline-block;
+    position: relative;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.info-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 170%; /* 아이콘 위에 띄우기 위해 */
+    left: 35%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+}
+
+/* 툴팁 화살표 */
+.tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* 툴팁 아래에 위치 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.post-category {
+    font-size: 14px;
+    color: #555;
+}
