@@ -24,7 +24,7 @@
     <div class="comment-section">
         <div class="comment-title">댓글 목록</div>
         <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
-            <div>
+            <div class="comment-input-container">
                 <input type="text" name="body" placeholder="댓글을 작성해주세요.">
                 <button class="submit-button">댓글 등록</button>
             </div>
@@ -34,16 +34,22 @@
     <div class="comment-list" th:each="comment : ${post.comments}">
         <div th:if="${comment.parentComment == null}" th:id="'comment-' + ${comment.commentId}">
             <div class="message-box">
-                <div class="comment"  th:text="${comment.body}"></div>
+                <span class="comment-author" th:text="${comment.user.userName}">이름</span>
+                <div class="comment" th:text="${comment.body}"></div>
+            </div>
                 <p></p>
                 <!-- 댓글 수정폼 -->
                 <form th:action="'/post/'+${post.postId}+'/comment/'+${comment.commentId}" method="post" style="display: flex; align-items: center;">
                     <input type="hidden" name="_method" value="patch" />
                     <label for="updateBody" style="display: none;"></label>
-                    <input type="text" id="updateBody" name="body" th:value="${comment.body}" style="flex: 1; margin-right: 0.5rem;">
+                    <input th:if="${comment.user.userId == userId}" type="text" id="updateBody" name="body" th:value="${comment.body}" style="flex: 1; margin-right: 0.5rem;">
                     <div class="button-group">
-                        <button type="submit">수정</button>
-                        <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">삭제</button>
+                        <button th:if="${comment.user.userId == userId}" type="submit">수정</button>
+                        <button th:if="${comment.user.userId == userId}"
+                                class="delete-button"
+                                th:onclick="|confirmDelete(event, ${post.postId}, ${comment.commentId})|">
+                            삭제
+                        </button>
                     </div>
                 </form>
 
@@ -51,7 +57,7 @@
                 <!--답글 입력폼-->
                 <form th:action="'/post/'+ ${post.postId} + '/comment'" method="post">
                     <input type="hidden" name="parentCommentId" th:value="${comment.commentId}">
-                    <div>
+                    <div class="comment-input-container">
                         <input type="text" name="body" placeholder="답글을 작성해주세요.">
                         <button class="submit-button">답글 등록</button>
                     </div>
@@ -61,17 +67,19 @@
                 <div class="child-comment-list">
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
                         <div  class="child-message-box">
+                            <span class="comment-author" th:text="${comment.user.userName}">이름</span>
                             <div class = " child-comment" th:text="${childComment.body}"></div>
+                        </div>
                             <p></p>
                             <!--대댓글 수정 폼-->
                             <form th:action="'/post/'+${post.postId}+'/comment/'+${childComment.commentId}" method="post">
                                 <input type="hidden" name="_method" value="patch" />
 
                                 <label for="updateChildBody"></label>
-                                <input type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
+                                <input th:if="${comment.user.userId == userId}" type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
                                 <div class="button-group">
-                                    <button type="submit">수정</button>
-                                    <button class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${childComment.commentId})|">삭제</button>
+                                    <button th:if="${comment.user.userId == userId}" type="submit">수정</button>
+                                    <button th:if="${comment.user.userId == userId}" class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${childComment.commentId})|">삭제</button>
                                 </div>
                             </form>
                         </div>
