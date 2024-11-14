@@ -80,7 +80,7 @@
                                 <input type="hidden" name="_method" value="patch" />
 
                                 <label for="updateChildBody"></label>
-                                <input th:if="${comment.user.userId == userId}" type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
+                                <input th:if="${childComment.user.userId == userId}" type="text" id="updateChildBody" name="body" th:value="${childComment.body}">
                                 <div class="button-group">
                                     <button th:if="${childComment.user.userId == userId}" type="submit">수정</button>
                                     <button th:if="${childComment.user.userId == userId}" class="delete-button" th:onclick="|confirmDelete(event, ${post.postId}, ${childComment.commentId})|">삭제</button>
