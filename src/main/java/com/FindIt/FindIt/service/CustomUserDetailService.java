@@ -24,7 +24,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
 
         if(user != null) {
-            if("y".equals(user.getActive())){
+            if("Y".equals(user.getActive())){
                 return new CustomUserDetails(user);
             }
             return null;
