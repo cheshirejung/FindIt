@@ -44,3 +44,7 @@ function closeDeleteModal() {
     document.body.classList.remove('modal-open');
     // sessionStorage.removeItem('modalOpen');
 }
+
+function confirmUpdate() {
+    return confirm("정말 수정하시겠습니까?");
+}
