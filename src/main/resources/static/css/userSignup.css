@@ -60,3 +60,7 @@ body {
 .button-group button:hover {
     background-color: #c2e0a6;
 }
+
+p {
+  color: red;
+}
