@@ -14,9 +14,13 @@
     <div class="message-box">
         <div class="title" th:text="${post.title}"></div>
     </div>
+    <div class="detail">
+    <p th:text="${post.user.userName}" class="post-username"></p>
     <p th:text="${post.createdAt}" class="post-date"></p>
+    </div>
 
     <div class="message-box">
+        <img th:src="${post.postImgPath}">
         <div class="message-box-body" th:text="${post.body}"></div>
     </div>
 
