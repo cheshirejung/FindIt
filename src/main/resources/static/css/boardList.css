@@ -52,7 +52,14 @@ body {
     font-weight: bold;
 }
 
-/* 수정 버튼 스타일 */
+/* 버튼 그룹 스타일 */
+ .button-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* 수정/삭제 버튼 공통 스타일 */
 .edit-button {
     padding: 0.5rem 1rem;
     border: none;
@@ -66,6 +73,11 @@ body {
 
 .edit-button:hover {
     background-color: #d0d0d0;
+}
+
+/* 삭제 버튼 form 스타일 수정 */
+.button-group form {
+    margin: 0;
 }
 
 /* 관리자 버튼 섹션 */
