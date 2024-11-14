@@ -87,7 +87,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String postDetailPage( @RequestParam("pageNo") int pageNo,
+    public String postDetailPage( @RequestParam(value ="pageNo", defaultValue = "1", required = false) int pageNo,
                                   @PathVariable Long postId, Model model,
                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
         PostEntity post = postService.findById(postId);

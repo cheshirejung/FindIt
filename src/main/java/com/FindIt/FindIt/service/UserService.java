@@ -34,11 +34,6 @@ public class UserService {
             throw new IllegalArgumentException("이미 사용 중인 ID입니다.");
         }
 
-        // 비밀번호 일치 확인
-        if (!userSignupDto.getPassword().equals(userSignupDto.getRePassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
         UserEntity user = userSignupDto.toEntity(new UserEntity(), passwordEncoder);
         userRepository.save(user);
     }

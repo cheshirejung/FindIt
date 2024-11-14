@@ -32,7 +32,7 @@
         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid date</p>
 
         <label for="rePassword">비밀번호 확인</label>
-        <input type="password"  id="rePassword" th:field="*{rePassword}" placeholder="이메일를 입력해주세요." th:class="${#fields.hasErrors('rePassword')} ? 'fieldError' : ''">
+        <input type="password"  id="rePassword" th:field="*{rePassword}" placeholder="비밀번호를 다시 입력해주세요." th:class="${#fields.hasErrors('rePassword')} ? 'fieldError' : ''">
         <p th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}">Invalid date</p>
 
         <div class="button-group">
