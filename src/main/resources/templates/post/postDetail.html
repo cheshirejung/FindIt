@@ -71,7 +71,7 @@
                 <div class="child-comment-list">
                     <div class="comment-list" th:each="childComment : ${comment.childrenComments}">
                         <div  class="child-message-box">
-                            <span class="comment-author" th:text="${comment.user.userName}">이름</span>
+                            <span class="comment-author" th:text="${childComment.user.userName}">이름</span>
                             <div class = " child-comment" th:text="${childComment.body}"></div>
                         </div>
                             <p></p>
