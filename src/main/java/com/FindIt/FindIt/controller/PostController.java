@@ -46,8 +46,10 @@ public class PostController {
     public String createPost(@Valid @ModelAttribute("postReqDto") PostReqDto postReqDto,
                              BindingResult bindingResult,
                              @RequestParam("boardId") Long boardId,
-                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+                             @AuthenticationPrincipal CustomUserDetails userDetails,
+                             Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("boardId",boardId);
             return "post/create";
         }
         postService.savePost(postReqDto,boardId,userDetails);
