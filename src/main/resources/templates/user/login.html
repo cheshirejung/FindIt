@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <title>FindIt</title>
     <link rel="stylesheet" type="text/css" href="/css/userLogin.css">
-    <script src="/js/alert.js"></script> <!-- 회원가입이 정상적으로 완료됐을때 알람이 뜨게하는 기능 추가 -->
 </head>
 <body>
 <div id="logo">FindIt</div>
 <div class="container">
     <form action="/user/login" method="post" name="loginForm">
         <label for="loginId">ID</label>
-        <input type="text" id="loginId" name="loginId"/>
+        <input type="text" id="loginId" name="loginId" required/>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password"/>
+        <input type="password" id="password" name="password" required/>
 
         <input id="login-btn" type="submit" value="login">
     </form>
@@ -23,4 +22,24 @@
     </div>
 </div>
 </body>
+<script>
+    // URL에서 'error'와 'exception' 파라미터를 가져오는 함수
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // 페이지 로드 시 'error' 파라미터와 'exception' 파라미터가 존재하면 alert 띄우기
+    window.onload = function() {
+        const error = getUrlParameter('error');
+        const exception = getUrlParameter('exception');
+
+        if (error === 'true' && exception) {
+            // URL 파라미터에 'error=true'와 'exception'이 있으면
+            // 디코딩된 메시지를 alert으로 띄움
+            const decodedMessage = decodeURIComponent(exception);
+            alert(decodedMessage);
+        }
+    };
+</script>
 </html>
