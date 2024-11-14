@@ -66,7 +66,7 @@ public class CustomUserDetails implements UserDetails {
     public Object getUserId() { return user.getUserId();
     }
 
-    public Object getName() { return user.getUserName();
+    public Object getName() { return user.getUserName();}
 
     /*UserEntity를 DB 조회없이 가져옴*/
     public UserEntity getUser() {
@@ -77,5 +77,4 @@ public class CustomUserDetails implements UserDetails {
     public String getActive(){
         return user.getActive();
     }
-
 }
