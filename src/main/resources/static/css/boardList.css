@@ -19,7 +19,6 @@ body {
     margin: 1rem auto;
     padding: 1.5rem;
     background-color: white;
-    border-radius: 8px;
     transition: transform 0.2s;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -27,6 +26,12 @@ body {
 .board-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.board-item .board-image {
+    width: 250px;
+    height: 180px;
+    border-radius: 5%;
 }
 
 /* 항목 내부에 있는 lab-section 스타일 */
@@ -47,7 +52,8 @@ body {
 
 /* lab-section 안의 제목 스타일 */
 .lab-title {
-    font-size: 1.2rem;
+    margin-left: 15px;
+    font-size: 2.0rem;
     color: #7030A0;
     font-weight: bold;
 }

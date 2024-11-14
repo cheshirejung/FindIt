@@ -14,7 +14,7 @@
     <div th:each="board : ${boards}" class="board-item">
         <a th:href="'/post?boardId=' + ${board.boardId}" class="board-link">
             <div class="lab-section">
-                <img th:src="${board.getImageUrl()}" alt="Logo" class="logo">
+                <img th:src="${board.getImageUrl()}" alt="board-image" class="board-image">
                 <div class="lab-title" th:text="${board.title}"></div>
             </div>
         </a>
