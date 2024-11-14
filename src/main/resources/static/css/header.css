@@ -41,9 +41,10 @@
 
 .header .center {
     flex-grow: 1;
-    text-align: center;
+    position: fixed;
     font-size: 32px; /* 센터 로고 글씨 크기 증가 */
     font-weight: bold;
+    right: 711px;
 }
 
 .logout-btn {
