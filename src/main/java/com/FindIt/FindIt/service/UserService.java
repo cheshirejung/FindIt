@@ -1,6 +1,5 @@
 package com.FindIt.FindIt.service;
 
-import com.FindIt.FindIt.dto.CustomUserDetails;
 import com.FindIt.FindIt.dto.UserDto;
 import com.FindIt.FindIt.dto.UserSignupDto;
 import com.FindIt.FindIt.dto.UserUpdateDto;

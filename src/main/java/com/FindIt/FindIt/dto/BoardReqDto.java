@@ -2,7 +2,6 @@ package com.FindIt.FindIt.dto;
 
 import com.FindIt.FindIt.global.vlidation.ValidFile;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

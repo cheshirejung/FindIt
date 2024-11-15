@@ -3,7 +3,6 @@ package com.FindIt.FindIt.global.config;
 import com.FindIt.FindIt.global.handler.LoginFailHandler;
 import com.FindIt.FindIt.global.handler.LoginSuccessHandler;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.java.Log;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -31,7 +29,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/user/login","/user/signup","/css/**","/js/**").permitAll()
-                        .requestMatchers("/board/create").hasAuthority("ADMIN")
+                        .requestMatchers("/board/create").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
 

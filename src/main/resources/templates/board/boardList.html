@@ -22,7 +22,7 @@
         <!--<button class="edit-button" th:if="${userRole == 'ADMIN'}" th:onclick="|location.href='/board/update/' + ${board.boardId}|">수정</button>-->
 
             <!-- 관리자에게만 보이는 수정/삭제 버튼 그룹 -->
-         <div class="button-group" th:if="${userRole == 'ADMIN'}">
+         <div class="button-group" th:if="${userRole == 'ROLE_ADMIN'}">
                 <button class="edit-button" th:onclick="|location.href='/board/update/' + ${board.boardId}|">수정</button>
                 <form th:action="@{'/board/' + ${board.boardId}}" method="post" style="display: inline;" onsubmit="return confirm('정말 삭제하시겠습니까?');">
                     <input type="hidden" name="_method" value="delete">
@@ -33,7 +33,7 @@
 
     <!-- 관리자 섹션 -->
     <div class="admin-section">
-        <button class="admin-button" th:if="${userRole == 'ADMIN'}" th:onclick="|location.href='/board/create'|">추가</button>
+        <button class="admin-button" th:if="${userRole == 'ROLE_ADMIN'}" th:onclick="|location.href='/board/create'|">추가</button>
     </div>
     <!-- 페이지 네비게이션 -->
     <div class="pagination">
