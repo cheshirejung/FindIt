@@ -39,7 +39,7 @@ public class BoardController {
 
         Page<BoardDto> boardDtoPage = boardService.getBoards(pageable);
         model.addAttribute("boards", boardDtoPage);
-        model.addAttribute("userRole", userDetails.getRole());
+        model.addAttribute("userRole", userDetails.getAuthorities().iterator().next().getAuthority());
         return "/board/boardList";
     }
 
