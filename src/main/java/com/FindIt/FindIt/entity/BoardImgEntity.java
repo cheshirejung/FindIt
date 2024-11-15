@@ -1,9 +1,7 @@
 package com.FindIt.FindIt.entity;
 
-import com.FindIt.FindIt.dto.BoardDto;
 import com.FindIt.FindIt.dto.BoardImgDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

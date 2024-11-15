@@ -10,7 +10,6 @@ import java.util.List;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-//@Table(name = "comment")
 @Getter
 @Setter
 @NoArgsConstructor
