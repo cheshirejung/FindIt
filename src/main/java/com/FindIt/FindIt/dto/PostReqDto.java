@@ -3,6 +3,7 @@ package com.FindIt.FindIt.dto;
 import com.FindIt.FindIt.global.vlidation.ValidFile;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PostReqDto {
 
     @NotBlank(message = "제목은 공백일 수 없습니다.")
+    @Size(max = 50,message = "게시글 제목은 50자 이하만 가능합니다")
     private String title;
 
     @NotBlank(message = "내용은 공백일 수 없습니다.")
