@@ -1,6 +1,7 @@
 package com.FindIt.FindIt.entity;
 
 import com.FindIt.FindIt.dto.UserDto;
+import com.FindIt.FindIt.entity.type.Role;
 import com.FindIt.FindIt.global.auditing.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,8 +33,8 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "role", nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "active", nullable = false)
     private String active;

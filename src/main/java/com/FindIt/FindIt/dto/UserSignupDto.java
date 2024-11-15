@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.FindIt.FindIt.entity.type.Role.USER;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -40,7 +42,7 @@ public class UserSignupDto {
         // 비밀번호 암호화
         user.setActive("Y");
         user.setPassword(passwordEncoder.encode(this.password));
-        user.setRole("USER"); // 디폴트 값으로 일반 유저로 할당
+        user.setRole(USER); // 디폴트 값으로 일반 유저로 할당
         return user;
     }
 }
