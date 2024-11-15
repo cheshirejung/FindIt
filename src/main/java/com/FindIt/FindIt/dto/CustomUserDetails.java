@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 public class CustomUserDetails implements UserDetails {
     private final UserEntity user;
 
@@ -58,11 +57,6 @@ public class CustomUserDetails implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-    /* role을 확인하기 위해 추가 */
-    public Object getRole() {
-        return user.getRole();
-    }
-
     public Object getUserId() { return user.getUserId();
     }
 
@@ -72,9 +66,5 @@ public class CustomUserDetails implements UserDetails {
     public UserEntity getUser() {
         return user;
     }
-    
-    /*active 상태를 가져옴*/
-    public String getActive(){
-        return user.getActive();
-    }
+
 }
