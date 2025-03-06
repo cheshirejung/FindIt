@@ -45,6 +45,7 @@ input {
     display: flex;
     justify-content: center; /* a 태그를 중앙에 정렬 */
 }
+
 a {
     color: white;
     font-size: 25px;
